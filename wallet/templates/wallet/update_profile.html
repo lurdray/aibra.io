@@ -1,0 +1,67 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Update Profile</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-8">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			
+						  			first name
+						  			<input type="text" name="first_name" placeholder="First name" value="{{ app_user.user.first_name }}"><br /><br />
+
+						  			last name
+						  			<input type="text" name="last_name" placeholder="Last name" value="{{ app_user.user.last_name }}"><br /><br />
+
+						  			age
+						  			<input type="number" name="age" placeholder="Age" value="{{ app_user.age }}"><br /><br />
+
+						  			address
+						  			<input type="text" name="address" placeholder="Address" value="{{ app_user.address }}"><br /><br />
+
+						  			country
+						  			<input type="text" name="country" placeholder="Country" value="{{ app_user.country }}"><br />
+
+						  			<button type="submit">Update.</button>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Available Recruits for you.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	
+						  	<div class="col-lg-5">
+						  		{% for item in recruits %}
+						  			<a href="{% url 'app_user:app_user_detail' item.id %}">{{ item.user.first_name }} {{ item.user.last_name }}
+
+						  			({{ item.resume.titles.all.0 }})
+
+						  		</a><br />
+						  		{% endfor %}
+						  	</div>
+
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

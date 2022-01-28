@@ -1,0 +1,48 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">wallet</h4>
+						</div>
+						<div class="box-body">
+
+							<div class="row">
+								<div class="col-md-3">
+									<a href="{% url 'wallet:update_profile' %}">Update Profile</a>
+								</div>
+								<div class="col-md-3">
+									<a href="{% url 'resume:update_resume1' %}">Update Resume</a>
+								</div>
+								<div class="col-md-3">
+									<a href="{% url 'job:my_applications' %}">My Applications</a>
+								</div>
+								<div class="col-md-3">
+									<a href="{% url 'resume:update_resume1' %}">New Jobs</a>
+								</div>
+								
+							</div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  .....
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

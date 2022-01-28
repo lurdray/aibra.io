@@ -1,0 +1,92 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Let Recruiters Know About Your Work Experience.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-6">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			
+						  			Title
+						  			<input type="text" name="work_experience"><br /><br />
+
+						  			Detail
+						  			<textarea name="detail"></textarea><br /><br />
+
+						  			From
+						  			<input type="text" name="date_from"><br /><br />
+
+									To
+						  			<input type="text" name="date_to"><br /><br />
+						  			
+						  			<button type="submit">Add Experience ({{ app_user.resume.resume_cent }}%).</button>
+						  			<a class="btn btn-primary" href="{% url 'resume:update_resume3' %}">Proceed</a>
+						  			<a class="btn btn-primary" href="{% url 'app_user:app' %}">Do this later</a>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-4">
+						  		<ul>My Work Experiences
+						  			{% if work_experiences %}
+							  			{% for item in work_experiences.all %}
+							  			<li>
+							  				Title: {{ item.word_experience }}<br />
+							  				Detail: {{ item.detail }}<br />
+							  				From: {{ item.date_from }}<br />
+							  				To: {{ item.date_to }}<br />
+							  			</li>
+							  			{% endfor %}
+						  			{% else %}
+						  				<p>Sorry, you dont have any yet! Add some!</p>
+						  			{% endif %}
+						  		</ul>
+						  	</div>
+
+						  	<div class="col-lg-2">
+						  		<a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
+						  		<a href="{% url 'resume:update_resume2' %}">Experience</a><br />
+						  		<a href="{% url 'resume:add_career' %}">Career</a><br />
+						  		<a href="{% url 'resume:add_education' %}">Education</a><br />
+						  		<a href="{% url 'resume:add_skill' %}">Skill</a><br />
+
+						  		<a href="{% url 'resume:add_project' %}">Project</a><br />
+						  		<a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
+						  		<a href="{% url 'resume:add_award' %}">Awards</a><br />
+						  		<a href="{% url 'resume:add_referee' %}">Referee</a><br />
+						  	</div>
+
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

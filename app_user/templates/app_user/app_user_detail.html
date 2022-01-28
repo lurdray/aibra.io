@@ -1,0 +1,142 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Interesting things about {{ recruit.user.first_name }} {{ recruit.user.last_name }}.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	
+						  	<div class="col-lg-5">
+						  		<p>Name: {{ recruit.user.first_name }} {{ recruit.user.last_name }}</p>
+						  		<p>Address: {{ recruit.address }}</p>
+						  		<p>Country: {{ recruit.country }}</p>
+						  		<p>Phone: {{ recruit.phone }}</p>
+						  		<p>Email: {{ recruit.user.email }}</p>
+						  		<p>Age: {{ recruit.age }}</p><br />
+
+
+						  		<h3>({{ recruit.resume.titles.all.0 }}):</h3>
+						  		<h3>{{ recruit.resume.opening_statements.all.0 }}</h3><br /><br />
+
+						  		<h3>Work Experiences:</h3><br />
+						  		{% for item in recruit.resume.work_experiences.all %}
+						  			<p>Title: {{ item.work_experience }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>From: {{ item.date_from }}</p>
+						  			<p>To: {{ item.date_to }}</p><br />
+
+						  		{% endfor %}
+
+
+						  		<h3>Work Careers:</h3><br />
+						  		{% for item in recruit.resume.careers.all %}
+						  			<p>Title: {{ item.career }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>From: {{ item.date_from }}</p>
+						  			<p>To: {{ item.date_to }}</p><br />
+
+						  		{% endfor %}
+
+								<h3>Educations:</h3><br />
+						  		{% for item in recruit.resume.educations.all %}
+						  			<p>Title: {{ item.education }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>From: {{ item.date_from }}</p>
+						  			<p>To: {{ item.date_to }}</p><br />
+
+						  		{% endfor %}
+
+						  		<h3>Skills:</h3><br />
+						  		{% for item in recruit.resume.skills.all %}
+						  			<p>Title: {{ item.skill }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>From: {{ item.date_from }}</p>
+						  			<p>To: {{ item.date_to }}</p><br />
+
+						  		{% endfor %}
+
+
+						  		<h3>Projects:</h3><br />
+						  		{% for item in recruit.resume.projects.all %}
+						  			<p>Title: {{ item.title }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>Link: {{ item.link }}</p>
+
+						  		{% endfor %}
+
+
+
+						  		<h3>Involvements:</h3><br />
+						  		{% for item in recruit.resume.involvements.all %}
+						  			<p>Title: {{ item.title }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>Link: {{ item.link }}</p>
+
+						  		{% endfor %}
+
+
+						  		<h3>Certifications:</h3><br />
+						  		{% for item in recruit.resume.certifications.all %}
+						  			<p>Title: {{ item.certification }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>Year: {{ item.year }}</p>
+						  			<p>Link: {{ item.link }}</p>
+
+						  		{% endfor %}
+
+						  		<h3>Award:</h3><br />
+						  		{% for item in recruit.resume.awards.all %}
+						  			<p>Title: {{ item.award }}</p>
+						  			<p>Detail: {{ item.detail }}</p>
+						  			<p>Year: {{ item.year }}</p>
+						  			<p>Link: {{ item.link }}</p>
+
+						  		{% endfor %}
+
+						  		<h3>Hobbies:</h3><br />
+						  		{% for item in recruit.resume.hobbies.all %}
+						  			<p>{{ item.hobby }}</p>
+
+						  		{% endfor %}
+
+
+						  		<h3>Referees:</h3><br />
+						  		{% for item in recruit.resume.referees.all %}
+						  			<p>Name: {{ item.referee }}</p>
+						  			<p>Name: {{ item.phone_no }}</p>
+						  			<p>Name: {{ item.place_of_work }}</p>
+
+						  		{% endfor %}
+
+
+
+						  	</div>
+
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

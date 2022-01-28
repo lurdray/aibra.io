@@ -1,0 +1,68 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Add Project.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-8">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			
+						  			Title
+						  			<input type="text" name="project"><br /><br />
+						  			Detail
+						  			<input type="text" name="detail"><br /><br />
+						  			Link
+						  			<input type="text" name="link"><br /><br />
+
+						  			<button type="submit">Submit.</button>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-2">
+						  		<a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
+						  		<a href="{% url 'resume:update_resume2' %}">Experience</a><br />
+						  		<a href="{% url 'resume:add_career' %}">Career</a><br />
+						  		<a href="{% url 'resume:add_education' %}">Education</a><br />
+						  		<a href="{% url 'resume:add_skill' %}">Skill</a><br />
+
+						  		<a href="{% url 'resume:add_project' %}">Project</a><br />
+						  		<a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
+						  		<a href="{% url 'resume:add_award' %}">Awards</a><br />
+						  		<a href="{% url 'resume:add_referee' %}">Referee</a><br />
+						  	</div>
+
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

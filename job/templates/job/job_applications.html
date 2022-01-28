@@ -1,0 +1,48 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Job Applications.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-4">
+						  		<h2>{{ job.title }}</h2>
+						  		<p>{{ job.description }}</p>
+						  		
+						  	</div>
+						  	
+						  	<div class="col-lg-4">
+						  		<h3>See who applied:</h3>
+						  		{% for item in applications %}
+						  			<a href="{% url 'app_user:app_user_detail' item.app_user.id %}">{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</a><br />
+						  		{% endfor %}
+						  	</div>
+
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}

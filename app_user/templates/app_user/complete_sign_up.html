@@ -1,0 +1,50 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+		<div class="container h-p100">
+		<div class="row align-items-center justify-content-md-center h-p100">
+			
+			<div class="col-12">
+				<div class="row justify-content-center g-0">
+					<div class="col-lg-5 col-md-5 col-12">
+						<div class="bg-white rounded10 shadow-lg">
+							<div class="content-top-agile p-20 pb-0">
+								<h2 class="text-primary">Authenticate Your Account</h2>
+								<p class="mb-0">Enter your otp code...</p>							
+							</div>
+							<div class="p-40">
+								<form method="post">
+									{% csrf_token %}
+
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
+											<input name="otp" type="text" class="form-control ps-15 bg-transparent" placeholder="Enter your otp code..">
+										</div>
+									</div>
+
+
+
+									  <div class="row">
+										<!-- /.col -->
+										<div class="col-12 text-center">
+										  <button type="submit" class="btn btn-info margin-top-10">SIGN IN</button>
+										</div>
+										<!-- /.col -->
+									  </div>
+								</form>				
+
+							</div>
+						</div>								
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+
+
+	{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'app_user/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Jobs.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-8">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			Edit Job<br /><br />
+						  			
+						  			Title
+						  			<input type="text" name="title" value="{{ job.title }}"><br /><br />
+						  			Description
+						  			<input type="text" name="description" value="{{ job.description }}"><br /><br />
+						  			<div class="form-group">
+									    <label for="job_type">Job Type:</label>
+										<select name="job_type" id="job_type">
+										  <option value="full_time">Full time</option>
+										  <option value="part_time">Part time</option>
+										  <option value="remote">Remote</option>
+										  <option value="hybrid">Hybrid</option>
+										</select> 
+									</div>
+
+						  			Responsibility
+						  			<input type="text" name="responsibility" value="responsibility"><br /><br />
+						  			Requirement
+						  			<input type="text" name="requirement" value="requirement"><br /><br />
+						  			Phone to contact
+						  			<input type="text" name="contact_phone", value="contact_phone"><br /><br />
+						  			Email to send CV/contact
+						  			<input type="text" name="contact_email", value="contact_email"><br /><br />
+						  			Deadline
+						  			<input type="date" name="deadline", value="deadline"><br /><br />
+
+						  			<button type="submit">Submit.</button>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	
+
+						  </div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+						  Footer
+						</div>
+						<!-- /.box-footer-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	  
+
+
+
+
+{% endblock %}
