@@ -57,7 +57,7 @@
                   <div class="text-center profile-details"><a href="{% url 'app_user:app_user_detail' item.app_user.id %}">
                       <h4>{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</h4></a>
                     <h6>{{ item.app_user.resume.titles.last }}</h6>
-                    <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light">View Resume</a>
+                    <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light">View Resume</a> <a href="{{ item.app_user.cv.url }}" class="btn btn-primary-light" download>Download Resume</a>
                   </div>
                   
                 </div>

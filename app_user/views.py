@@ -167,6 +167,11 @@ def UpdateAppuserView(request):
 			profile_photo = app_user.profile_photo	
 
 		try:
+			cv = request.FILES["cv"]
+		except:
+			cv = app_user.cv	
+
+		try:
 			agency_name = request.POST.get("agency_name")
 		except:
 			agency_name = app_user.agency_name
@@ -177,6 +182,7 @@ def UpdateAppuserView(request):
 			agency_logo = app_user.agency_logo
 
 
+		app_user.cv = cv
 		first_name = request.POST.get("first_name")
 		last_name = request.POST.get("last_name")
 		age = request.POST.get("age")

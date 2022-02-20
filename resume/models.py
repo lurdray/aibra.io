@@ -77,7 +77,7 @@ class Skill(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.title
+		return self.skill
 
 
 
@@ -91,7 +91,7 @@ class Project(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.title
+		return self.project
 
 
 
@@ -120,7 +120,7 @@ class Certification(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.title
+		return self.certification
 
 
 
@@ -135,7 +135,7 @@ class Award(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.title
+		return self.award
 
 
 
@@ -167,6 +167,7 @@ class Referee(models.Model):
 
 class Resume(models.Model):
 
+	str_tag = models.CharField(default="resume x", max_length=20)
 	resume_cent = models.IntegerField(default=0)
 	resume_status = models.BooleanField(default=False)
 	work_experience_status = models.BooleanField(default=False)
@@ -191,7 +192,7 @@ class Resume(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.user.username
+		return self.status
 
 
 

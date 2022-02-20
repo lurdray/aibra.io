@@ -129,7 +129,8 @@ def UpdateResume2View(request):
 		date_to = request.POST.get("date_to")
 
 		current_date = request.POST.get("current_date")
-
+		if current_date:
+			date_to = "Currently works here!"
 		work_experience = WorkExperience.objects.create(work_experience=work_experience, company=company, detail=detail, date_from=date_from, date_to=date_to, status=True)
 		work_experience.save()
 
@@ -173,11 +174,13 @@ def EditCareerView(request, career_id):
 	if request.method == "POST":
 		app_user = AppUser.objects.get(user__pk=request.user.id)
 
-		career = request.POST.get("career")
+		career_obj = request.POST.get("career")
+		detail = request.POST.get("detail")
 		date_from = request.POST.get("date_from")
 		date_to = request.POST.get("date_to")
 
 		career.career = career_obj
+		career.detail = detail
 		career.date_from = date_from
 		career.date_to =date_to
 		career.save()
@@ -201,10 +204,11 @@ def AddCareerView(request):
 		app_user = AppUser.objects.get(user__pk=request.user.id)
 
 		career = request.POST.get("career")
+		detail = request.POST.get("detail")
 		date_from = request.POST.get("date_from")
 		date_to = request.POST.get("date_to")
 
-		career = Career.objects.create(career=career, date_from=date_from, date_to=date_to, status=True)
+		career = Career.objects.create(career=career, detail=detail, date_from=date_from, date_to=date_to, status=True)
 		career.save()
 
 		rc = ResumeCareerConnector(resume=app_user.resume, career=career)
@@ -349,7 +353,12 @@ def EditProjectView(request, project_id):
 		app_user = AppUser.objects.get(user__pk=request.user.id)
 
 		project_obj = request.POST.get("project")
+		detail = request.POST.get("detail")
+		link = request.POST.get("link")
+
 		project.project = project_obj
+		project.detail = detail
+		project.link = link
 		project.save()
 
 		messages.warning(request, "Welldone! Resume Updated successfully!")
