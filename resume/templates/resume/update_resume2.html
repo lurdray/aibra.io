@@ -1,92 +1,297 @@
-{% extends 'app_user/base.html' %}
+{% extends 'app_user/auth_base.html' %}
 {% load static %}
 
-
 {% block content %}
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
 
-		<!-- Main content -->
-		<section class="content">
-			<div class="row">
-				<div class="col-12">
-					<div class="box">
-						<div class="box-header with-border">
-						  <h4 class="box-title">Let Recruiters Know About Your Work Experience.</h4>
-						</div>
-						<div class="box-body">
-						  <div class="row">
-						  	<div class="col-lg-2">
-						  		
-						  	</div>
-						  	<div class="col-lg-6">
-						  		<form method="post">
-						  			{% csrf_token %}
-						  			
-						  			Title
-						  			<input type="text" name="work_experience"><br /><br />
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
 
-						  			Detail
-						  			<textarea name="detail"></textarea><br /><br />
-
-						  			From
-						  			<input type="text" name="date_from"><br /><br />
-
-									To
-						  			<input type="text" name="date_to"><br /><br />
-						  			
-						  			<button type="submit">Add Experience ({{ app_user.resume.resume_cent }}%).</button>
-						  			<a class="btn btn-primary" href="{% url 'resume:update_resume3' %}">Proceed</a>
-						  			<a class="btn btn-primary" href="{% url 'app_user:app' %}">Do this later</a>
-						  			
-						  		</form>
-						  			
-						  		
-						  	</div>
-						  	<div class="col-lg-4">
-						  		<ul>My Work Experiences
-						  			{% if work_experiences %}
-							  			{% for item in work_experiences.all %}
-							  			<li>
-							  				Title: {{ item.word_experience }}<br />
-							  				Detail: {{ item.detail }}<br />
-							  				From: {{ item.date_from }}<br />
-							  				To: {{ item.date_to }}<br />
-							  			</li>
-							  			{% endfor %}
-						  			{% else %}
-						  				<p>Sorry, you dont have any yet! Add some!</p>
-						  			{% endif %}
-						  		</ul>
-						  	</div>
-
-						  	<div class="col-lg-2">
-						  		<a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
-						  		<a href="{% url 'resume:update_resume2' %}">Experience</a><br />
-						  		<a href="{% url 'resume:add_career' %}">Career</a><br />
-						  		<a href="{% url 'resume:add_education' %}">Education</a><br />
-						  		<a href="{% url 'resume:add_skill' %}">Skill</a><br />
-
-						  		<a href="{% url 'resume:add_project' %}">Project</a><br />
-						  		<a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
-						  		<a href="{% url 'resume:add_award' %}">Awards</a><br />
-						  		<a href="{% url 'resume:add_referee' %}">Referee</a><br />
-						  	</div>
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 
-						  </div>
-						</div>
-						<!-- /.box-body -->
-						<div class="box-footer">
-						  Footer
-						</div>
-						<!-- /.box-footer-->
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- /.content -->
-	  
+    {% include 'app_user/header.html' %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Experience</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Resume</li>
+                    <li class="breadcrumb-item active">Experience</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-8">
+
+                  <form class="card" method="post">
+                    {% csrf_token %}
+                    <div class="card-header pb-0">
+                    <div class="u-pearls-xs row mb-5">
+                      <div class="u-pearl done col-3"><span class="u-pearl-number">1</span><span class="u-pearl-title"><a href="{% url 'resume:update_resume1' %}">Intro</a></span></div>
+                      <div class="u-pearl current col-3"><span class="u-pearl-number">2</span><span class="u-pearl-title"><a href="{% url 'resume:update_resume2' %}">Experience</a></span></div>
+                      <div class="u-pearl col-3"><span class="u-pearl-number">3</span><span class="u-pearl-title"><a href="{% url 'resume:add_career' %}">Career</a></span></div>
+                      <div class="u-pearl col-3"><span class="u-pearl-number">4</span><span class="u-pearl-title"><a href="{% url 'resume:add_education' %}">Education</a></span></div>
+                    </div>
+                      <h4 class="card-title mb-0">Work Experience.</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="work_experience" class="form-control" placeholder="Position Held">
+                          </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Company</label>
+                            <input type="text" name="company" class="form-control" placeholder="Company">
+                          </div>
+                        </div> 
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Details</label>
+                            <textarea name="detail" class="form-control" rows="5" placeholder="Enter Job description"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                          <div>
+                            <label class="form-label">From</label>
+                            <input name="date_from" class="datepicker-here form-control digits" type="text" data-language="en" data-multiple-dates-separator=", " data-position="bottom left" placeholder="Date Joined">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">To</label>
+                            <input name="date_to" class="datepicker-here form-control digits" type="text" data-language="en" data-multiple-dates-separator=", " data-position="bottom left" placeholder="Date Left">
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-check mb-3 was-validated">
+                        <input name="current_date" class="form-check-input" id="validationFormCheck1" type="checkbox">
+                        <label class="form-check-label" required="" for="validationFormCheck1">I Currently Work Here.</label>
+                       
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                    <div class="card-footer card-body btn-showcase">
+                      <a class="btn btn-primary" href="{% url 'app_user:app' %}">Cancel</a>
+                      <button class="btn btn-primary" type="submit">Add</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                <div class="col-xl-4">
+                  <div class="card">
+                    <div class="card-header pb-0">
+                      <h4 class="card-title mb-0">My Experiences</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                       {% if app_user.resume.work_experiences.all %}
+
+                          {% for item in app_user.resume.work_experiences.all %}
+                            <div class="mb-3">
+                              <p>
+                                <a href="{% url 'resume:edit_resume2' item.id %}">{{ item.work_experience }}</a>
+                              </p>
+                              <hr>
+                            </div>
+                          {% endfor %}
+                        {% else %}
+                          <p>Sorry, nothing here to see!</p>
+                        {% endif %}
+                        
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <style>
+#myDIV {
+  
+  
+  display: none;
+}
+</style>
 
 
 
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
 
 {% endblock %}
+
+    <!-- 
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h4 class="box-title">Let Recruiters Know About Your Work Experience.</h4>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-lg-2">
+                  
+                </div>
+                <div class="col-lg-6">
+                  <form method="post">
+                    {% csrf_token %}
+                    
+                    Title
+                    <input type="text" name="work_experience"><br /><br />
+
+                    Detail
+                    <textarea name="detail"></textarea><br /><br />
+
+                    From
+                    <input type="text" name="date_from"><br /><br />
+
+                  To
+                    <input type="text" name="date_to"><br /><br />
+                    
+                    <button type="submit">Add Experience ({{ app_user.resume.resume_cent }}%).</button>
+                    <a class="btn btn-primary" href="{% url 'resume:update_resume3' %}">Proceed</a>
+                    <a class="btn btn-primary" href="{% url 'app_user:app' %}">Do this later</a>
+                    
+                  </form>
+                    
+                  
+                </div>
+                <div class="col-lg-4">
+                  <ul>My Work Experiences
+                    {% if work_experiences %}
+                      {% for item in work_experiences.all %}
+                      <li>
+                        Title: {{ item.word_experience }}<br />
+                        Detail: {{ item.detail }}<br />
+                        From: {{ item.date_from }}<br />
+                        To: {{ item.date_to }}<br />
+                      </li>
+                      {% endfor %}
+                    {% else %}
+                      <p>Sorry, you dont have any yet! Add some!</p>
+                    {% endif %}
+                  </ul>
+                </div>
+
+                <div class="col-lg-2">
+                  <a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
+                  <a href="{% url 'resume:update_resume2' %}">Experience</a><br />
+                  <a href="{% url 'resume:add_career' %}">Career</a><br />
+                  <a href="{% url 'resume:add_education' %}">Education</a><br />
+                  <a href="{% url 'resume:add_skill' %}">Skill</a><br />
+
+                  <a href="{% url 'resume:add_project' %}">Project</a><br />
+                  <a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
+                  <a href="{% url 'resume:add_award' %}">Awards</a><br />
+                  <a href="{% url 'resume:add_referee' %}">Referee</a><br />
+                </div>
+
+
+              </div>
+            </div>
+            
+            <div class="box-footer">
+              Footer
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+content -->
+    

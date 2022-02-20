@@ -1,10 +1,80 @@
-{% extends 'app_user/base.html' %}
+{% extends 'app_user/auth_base.html' %}
 {% load static %}
 
 
 {% block content %}
+{% include 'app_user/header.html' %}
 
-		<!-- Main content -->
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>See Who Applied</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Vacancies</li>
+                    <li class="breadcrumb-item active">Who Applied</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid user-card">
+            <div class="row">
+            	{% for item in applications %}
+              <div class="col-md-6 col-lg-6 col-xl-4 box-col-6">
+                <div class="card custom-card">
+                  <div class="card-profile"><img class="rounded-circle" src="{{ item.app_user.profile_photo.url }}" alt=""></div>
+                  <ul class="card-social">
+                    <li><a href="{{ item.app_user.facebook_link }}"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ item.app_user.whatsapp_link }}"><i class="fa fa-whatsapp"></i></a></li>
+                    <li><a href="{{ item.app_user.twitter_link }}"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ item.app_user.instagram_link }}"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="{{ item.app_user.github_link }}"><i class="fa fa-github"></i></a></li>
+                  </ul>
+                  <div class="text-center profile-details"><a href="{% url 'app_user:app_user_detail' item.app_user.id %}">
+                      <h4>{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</h4></a>
+                    <h6>{{ item.app_user.resume.titles.last }}</h6>
+                    <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light">View Resume</a>
+                  </div>
+                  
+                </div>
+              </div>
+              {% endfor %}
+              
+              
+              
+              
+              
+          <!-- Container-fluid Ends-->
+        </div>
+
+
+{% endblock %}
+
+		<!-- 
 		<section class="content">
 			<div class="row">
 				<div class="col-12">
@@ -30,19 +100,18 @@
 
 						  </div>
 						</div>
-						<!-- /.box-body -->
+						\
 						<div class="box-footer">
 						  Footer
 						</div>
-						<!-- /.box-footer-->
+						\
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- /.content -->
+.content -->
 	  
 
 
 
 
-{% endblock %}

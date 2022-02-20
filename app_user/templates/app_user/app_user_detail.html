@@ -1,10 +1,261 @@
-{% extends 'app_user/base.html' %}
+{% extends 'app_user/auth_base.html' %}
 {% load static %}
 
 
 {% block content %}
 
-		<!-- Main content -->
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    {% include 'app_user/header.html' %}
+
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Details</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Recruit</li>
+                    <li class="breadcrumb-item active">Detail</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Print Resume"><i data-feather="printer"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="user-profile">
+              <div class="row">
+                
+                <div class="col-xl-3 col-lg-12 col-md-5 xl-35">
+                  <div class="default-according style-1 faq-accordion job-accordion">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="card" data-intro="This is your Your detail">
+                          <div class="card-header">
+                            <h5 class="p-0">
+                              <button class="btn btn-link ps-0" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapseicon2">About {{ recruit.user.first_name }} {{ recruit.user.last_name }}</button>
+                            </h5>
+                          </div>
+                          <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-parent="#accordion">
+                            <div class="card-body post-about">
+                              <ul>
+                                <li>
+                                  <div class="icon"><i data-feather="user"></i></div>
+                                  <div>
+                                    <h5>Age</h5>
+                                    <p>{{ recruit.age }} years old</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="icon"><i data-feather="phone"></i></div>
+                                  <div>
+                                    <h5>Phone</h5>
+                                    <p>{{ recruit.phone_no }}</p>
+                                  </div>
+                                </li>
+                                {% if recruit.account_type == "candidate" %}
+                                <li>
+                                  <div class="icon"><i data-feather="briefcase"></i></div>
+                                  <div>
+                                    <h5>Work</h5>
+                                    <p>{{ recruit.resume.work_experiences.last }}</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="icon"><i data-feather="book"></i></div>
+                                  <div>
+                                    <h5>Education</h5>
+                                    <p>{{ recruit.resume.educations.last }}</p>
+                                  </div>
+                                </li>
+                                {% endif %}
+                                <li>
+                                  <div class="icon"><i data-feather="map-pin"></i></div>
+                                  <div>
+                                    <h5>lived in {{ recruit.address }}</h5>
+                                    <p>{{ recruit.country }}</p>
+                                  </div>
+                                </li>
+
+                              </ul>
+                              <div class="social-network theme-form"><span class="f-w-600">Social Networks</span>
+                                <button href="{{ recruit.facebook_link }}" class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button>
+                                <button href="{{ recruit.twitter_link }}" class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button>
+                                <button href="{{ recruit.whatsapp_link }}"class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5"></i>Whatsapp</button>
+                                <button href="{{ recruit.github_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button>
+                                <button href="{{ recruit.instagram_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-9 col-lg-12 col-md-7 xl-65">
+                  <div class="row">
+                    <!-- profile post start-->
+                    <div class="col-sm-12" data-intro="This is the your first Post">
+                      <div class="card">
+                        <div class="profile-post">
+                          <div class="post-header">
+                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{{ recruit.profile_photo.url }}" alt="Generic placeholder image">
+                              <div class="media-body align-self-center"><a href="">
+                                  <h5 class="user-name">{{ recruit.user.first_name }} {{ recruit.user.last_name }}</h5></a>
+                                <h6>{{ recruit.user.email }}</h6>
+                              </div>
+                            </div>
+                            <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
+                          </div>
+                          <div class="post-body">
+                            <div class="img-container">
+                              <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
+                                <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post1.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="../assets/images/user-profile/post1.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
+                                  <figcaption itemprop="caption description">Bio</figcaption>
+                                </figure>
+                              </div>
+                            </div>
+                            <div class="post-react">
+                              
+                              <h6>{{ recruit.resume.opening_statements.all.0 }}</h6>
+                            </div>
+                            <hr>
+                            <h5>Career Overview</h5>
+                            {% for item in recruit.resume.careers.all %}
+                             
+                            <p>{{ item.detail }}.</p>
+                            
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="calendar"></i>&nbsp;&nbsp;from<span class="counter">{{ item.date_from }} - {{ item.date_to }}</span></a></label>
+                              </li>
+                              
+                              
+
+                            </ul>
+                            {% endfor %}
+                            <hr>
+
+                            <h5>Work Experience</h5>
+                            {% for item in recruit.resume.work_experiences.all %}                             
+                            <p>{{ item.detail }}.</p>
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="calendar"></i>&nbsp;&nbsp;from<span class="counter">{{ item.date_from }} - {{ item.date_to }}</span></a></label>
+                              </li>
+                              
+                              
+
+                            </ul>
+                            {% endfor %}
+                            <hr>
+
+                            <h5>Projects</h5>
+                            {% for item in recruit.resume.projects.all %}
+                            <p><b>(1). {{ item.title }}</b></p>                             
+                            <p>{{ item.detail }}.</p>
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="link"></i>&nbsp;&nbsp;<span class="counter">{{ item.link }}</span></a></label>
+                              </li>
+                              
+                              
+
+                            </ul>
+                            {% endfor %}
+                            <hr>
+                            <h5><i class="fa fa-certificate"></i> Certifications</h5>
+                            {% for item in recruit.resume.certifications.all %}
+                             
+                            <p>{{ item.certification }}</p>
+                            <p>{{ item.detail }}</p>
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="calendar"></i>&nbsp;&nbsp;<span class="counter">{{ item.year }}</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="link"></i>&nbsp;&nbsp;<span class="counter">{{ item.link }}</span></a></label>
+                              </li>
+                              
+                              
+
+                            </ul>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- profile post end-->
+                    
+                    
+                  </div>
+                </div>
+                
+        </div>
+        <!-- footer start-->
+    {% endblock %}
+
+
+<!--
+        
 		<section class="content">
 			<div class="row">
 				<div class="col-12">
@@ -124,19 +375,17 @@
 
 						  </div>
 						</div>
-						<!-- /.box-body -->
+
 						<div class="box-footer">
 						  Footer
 						</div>
-						<!-- /.box-footer-->
+
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- /.content -->
-	  
+content -->
 
 
 
 
-{% endblock %}

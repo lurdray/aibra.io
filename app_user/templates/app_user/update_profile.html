@@ -1,0 +1,256 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+   {% include 'app_user/header.html' %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Update Resume</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Profile</li>
+                    <li class="breadcrumb-item active">Update</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+
+                <div class="col-xl-12">
+                  <div class="card">
+                    <div class="card-header pb-0">
+                      <h4 class="card-title mb-0">My Profile</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row mb-2">
+                          <div class="profile-title">
+                            <div class="media"><img class="img-70 rounded-circle" alt="" src="{{ app_user.profile_photo.url }}">
+                              <div class="media-body">
+                                <h3 class="mb-1 f-20 txt-primary">{{ app_user.first_name }} {{ app_user.last_name }}</h3>
+                                {% if app_user.account_type == "candidate" %}
+                                  <p class="f-12">{{ app_user.resume.titles.first }}</p>
+                                {% elif app_user.account_type == "recruiter" %}
+                                  <p class="f-12">{{ app_user.agency_name }}</p>
+                                {% else %}
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                         <div class="mb-3">
+                          <label class="form-label">Profile photo</label>
+                          <input name="profile_photo" type="file" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                          <label class="form-label">First name</label>
+                          <input name="first_name" value="{{ app_user.user.first_name }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Last name</label>
+                          <input name="last_name" value="{{ app_user.user.last_name }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Age</label>
+                          <input name="age" value="{{ app_user.age }}" class="form-control">
+                        </div>
+
+
+                        {% if app_user.account_type == "recruiter" %}
+                          <br />
+                          <img class="img-70 rounded-circle" alt="" src="{{ app_user.agency_logo.url }}">
+                          <div class="mb-3">
+                            <label class="form-label">Agency Logo</label>
+                            <input name="agency_logo" type="file" class="form-control">
+                          </div>
+                           <div class="mb-3">
+                            <h5>Agency Details:</h5>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Agency name</label>
+                            <input name="agency_name" value="{{ app_user.agency_name }}" class="form-control">
+                          </div>
+                          <br />
+                        {% endif %}
+
+                         <div class="mb-3">
+                          <label class="form-label">Phone Number</label>
+                          <input name="phone" value="{{ app_user.phone_no }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <h6 class="form-label">Address</h6>
+                          <textarea name="address" class="form-control" rows="5">{{ app_user.address }}"</textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Country</label>
+                          <input name="country" value="{{ app_user.country }}" class="form-control">
+                        </div>
+
+
+                        <div class="mb-3">
+                          <label class="form-label">Facebook</label>
+                          <input name="facebook_link" value="{{ app_user.facebook_link }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Instagram</label>
+                          <input name="instagram_link" value="{{ app_user.instagram_link }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">WhatsApp</label>
+                          <input name="whatsapp_link" value="{{ app_user.whatsapp_link }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Github</label>
+                          <input name="github_link" value="{{ app_user.github_link }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Twitter</label>
+                          <input name="twitter_link" value="{{ app_user.twitter_link }}" class="form-control">
+                        </div>
+
+                        <div class="form-footer">
+                          <button type="submit" class="btn btn-primary btn-block">Save</button>
+
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+
+<style>
+#myDIV {
+  
+  
+  display: none;
+}
+</style>
+
+
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+
+{% endblock %}
+
+
+<!--
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Your journey on Aibra Job begins here..</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-8">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			
+						  			Title
+						  			<input type="text" name="title" value="{{ title }}"><br /><br />
+
+						  			Opening Statement
+						  			<textarea name="opening_statement">{{ opening_statement }}</textarea><br /><br />
+						  			
+						  			<button type="submit">Keep Going({{ app_user.resume.resume_cent }}%).</button>
+						  			<a class="btn btn-primary" href="{% url 'app_user:app' %}">Do this later</a>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-2">
+						  		<a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
+						  		<a href="{% url 'resume:update_resume2' %}">Experience</a><br />
+						  		<a href="{% url 'resume:add_career' %}">Career</a><br />
+						  		<a href="{% url 'resume:add_education' %}">Education</a><br />
+						  		<a href="{% url 'resume:add_skill' %}">Skill</a><br />
+
+						  		<a href="{% url 'resume:add_project' %}">Project</a><br />
+						  		<a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
+						  		<a href="{% url 'resume:add_award' %}">Awards</a><br />
+						  		<a href="{% url 'resume:add_referee' %}">Referee</a><br />
+						  	</div>
+
+
+						  </div>
+						</div>
+						
+						<div class="box-footer">
+						  Footer
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+ -->

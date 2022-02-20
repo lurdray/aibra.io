@@ -1,10 +1,215 @@
-{% extends 'app_user/base.html' %}
+{% extends 'app_user/auth_base.html' %}
 {% load static %}
-
 
 {% block content %}
 
-		<!-- Main content -->
+
+    {% include 'app_user/header.html' %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Add Jobs</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Jobs</li>
+                    <li class="breadcrumb-item active">Add Jobs</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+              	<div class="col-md-8">
+
+                  <form class="card" method="post">
+                  	{% csrf_token %}
+                    <div class="card-header pb-0">
+                    
+                      <h4 class="card-title mb-0">Add Vacancy</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Position">
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 mb-2">
+                        <label class="col-form-label">Job Category</label>
+                        <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple" name="category">
+                          <option value="account">account</option>
+                          <option value="tech">tech</option>
+                          <option value="agric">agric</option>
+                          <option value="education">education</option>
+                          
+                        </select>
+                    </div>
+                   
+                        
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Description</label>
+                            <textarea name="description"  class="form-control" rows="6" placeholder="Job description"></textarea>
+                          </div>
+                        </div>
+                         <div class="col-md-12 mb-2">
+                          
+                   
+                        
+                        
+                        <label class="col-form-label">Job Type</label>
+                        <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple" name="job_type">
+                          <option value="full_time">Full Time</option>
+                          <option value="part_time">Part time</option>
+                          <option value="remote">Remote</option>
+                          <option value="hybrid">Hybrid</option>
+                          
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Responsibilities</label>
+                            <textarea name="responsibility"   class="form-control" rows="5"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Requirement</label>
+                            <textarea name="requirement"  class="form-control" rows="5" ></textarea>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                        	<div>
+                            <label class="form-label">Phone</label>
+                            <input name="contact_phone" class=" form-control" type="text" placeholder="Phone">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-2">
+                          <div>
+                            <label class="form-label">Address</label>
+                            <input name="address" class=" form-control" type="text" placeholder="address">
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 mb-2">
+                          <div>
+                            <label class="form-label">Country</label>
+                            <input name="country" class=" form-control" type="text" placeholder="Country">
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        	<div>
+                            <label class="form-label">Email</label>
+                            <input name="contact_email" class=" form-control" type="email" placeholder="email">
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div>
+                            <label class="form-label">Deadline</label>
+                            <input type="text" name="deadline", class="datepicker-here form-control digits"  data-language="en" data-multiple-dates-separator=", " data-position="bottom left" >
+                        </div>
+                    </div>
+                      </div>
+                       </div>
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      
+                      <button style="width: 100%;" class="btn btn-primary" type="submit">Submit</button>
+                    
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="card">
+                      <form>
+                        {% if jobs %}
+
+                          {% for item in jobs %}
+                            <div class="mb-3">
+                              <p>
+                                <a href="{% url 'job:job_applications' item.id %}">
+                                  {{ item.title }}
+                                  <br /><small>{{ item.pub_date }}</small>
+                                  <br />
+                                  <a class="btn-primary" href="{% url 'job:edit_job' item.id %}">
+                                    Edit Job
+                                  </a>
+                                  <br />
+                                  <a class="btn-primary" href="{% url 'job:job_applications' item.id %}">
+                                    View Applications
+                                  </a>
+                                </a>
+                              </p>
+                              <hr>
+                            </div>
+                          {% endfor %}
+                        {% else %}
+                          <p>Sorry, nothing here to see!</p>
+                        {% endif %}
+                      </form>
+                    </div>
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+{% endblock %}
+
+		<!-- 
 		<section class="content">
 			<div class="row">
 				<div class="col-12">
@@ -61,19 +266,14 @@
 
 						  </div>
 						</div>
-						<!-- /.box-body -->
+						
 						<div class="box-footer">
 						  Footer
 						</div>
-						<!-- /.box-footer-->
+						
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- /.content -->
+content -->
 	  
-
-
-
-
-{% endblock %}

@@ -26,6 +26,7 @@ class OpeningStatement(models.Model):
 
 class WorkExperience(models.Model):
 	work_experience = models.CharField(max_length=50, default="none")
+	company = models.CharField(max_length=50, default="none")
 	detail = models.TextField(default="none")
 	date_from = models.CharField(max_length=50, default="none")
 	date_to = models.CharField(max_length=50, default="none")
@@ -62,7 +63,7 @@ class Education(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.title
+		return self.education
 
 
 
@@ -152,6 +153,7 @@ class Hobby(models.Model):
 class Referee(models.Model):
 	referee = models.CharField(max_length=50, default="none")
 	phone_no = models.CharField(max_length=50, default="none")
+	email = models.CharField(max_length=50, default="none")
 	place_of_work = models.TextField(max_length=50, default="none")
 
 	status = models.BooleanField(default=False)

@@ -13,6 +13,9 @@ from datetime import datetime
 import datetime as dt
 import requests
 
+from job.models import *
+from app_user.models import AppUser
+
 #from .forms import UserForm
 
 
@@ -20,12 +23,15 @@ import requests
 
 
 def IndexView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
 		pass
 
 
 	else:
-		context = {}
+		jobs = Job.objects.all()
+
+		context = {"app_user": app_user, "jobs": jobs}
 		return render(request, "main/index.html", context )
 
 

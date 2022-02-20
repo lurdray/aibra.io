@@ -36,6 +36,7 @@ class Application(models.Model):
 
 class Job(models.Model):
 	title = models.CharField(max_length=20, default="none")
+	category = models.CharField(max_length=30, default="none")
 	description = models.TextField(default="none")
 	
 	job_type = models.CharField(max_length=10, default="none")
@@ -43,7 +44,12 @@ class Job(models.Model):
 	requirement = models.TextField(default="none")
 	contact_phone = models.CharField(max_length=20, default="none")
 	contact_email = models.CharField(max_length=30, default="none")
-	deadline = models.DateTimeField(default=timezone.now)
+
+	address = models.TextField(default="none")
+	country = models.CharField(max_length=30, default="none")
+
+	deadline = models.CharField(max_length=30, default="none")
+	#deadline = models.DateTimeField(default=timezone.now)
 
 	app_user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
 

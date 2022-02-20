@@ -1,33 +1,382 @@
-{% extends 'app_user/base.html' %}
+{% extends 'app_user/auth_base.html' %}
 {% load static %}
 
 
 {% block content %}
 
-		<!-- Main content -->
-		<section class="content">
-			<div class="row">
-				<div class="col-12">
-					<div class="box">
-						<div class="box-header with-border">
-						  <h4 class="box-title">Title</h4>
-						</div>
-						<div class="box-body">
-						  This is some text within a card block.
-						</div>
-						<!-- /.box-body -->
-						<div class="box-footer">
-						  Footer
-						</div>
-						<!-- /.box-footer-->
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- /.content -->
-	  
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
 
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    {% include 'app_user/header.html' %}
 
-
-{% endblock %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Welcome</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Aibra</li>
+                    <li class="breadcrumb-item active">Welcome</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="user-profile">
+              <div class="row">
+                <!-- user profile header start-->
+                <div class="col-sm-12">
+                  <div class="card profile-header"><img class="img-fluid bg-img-cover" src="{% static 'main/assets/images/user-profile/bg-profile.jpg' %}" alt="">
+                    <div class="profile-img-wrrap"><img class="img-fluid bg-img-cover" src="{% static 'main/assets/images/user-profile/bg-profile.jpg' %}" alt=""></div>
+                    <div class="userpro-box">
+                      <div class="img-wrraper">                              
+                        <div class="avatar"><img alt="" src="{{ app_user.profile_photo.url }}" data-intro="This is Profile image"></div>
+                        <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5" data-intro="Change Profile image here"></i></div>
+                      </div>
+                      <div class="user-designation">
+                        <div class="title"><a target="_blank" href=""> 
+                            <h4>{{ app_user.first_name }} {{ app_user.last_name }}</h4>
+                            {% if app_user.account_type == "candidate" %}
+                              <h6>{{ app_user.resume.titles.first }}</h6>
+                            {% elif app_user.account_type == "recruiter" %}
+                              <h6>{{ app_user.agency_name }}</h6>
+                            {% else %}
+                            {% endif %}
+                              </a></div>
+                        <div class="social-media" data-intro="This is your Social details">
+                          <ul class="user-list-social">
+                            <li><a href="{{ app_user.facebook_link }}"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="{{ app_user.twitter_link }}"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="{{ app_user.instagram_link }}"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="{{ app_user.whatsapp_link }}"><i class="fa fa-whatsapp"></i></a></li>
+                            <li><a href="{{ app_user.github_link }}"><i class="fa fa-github"></i></a></li>
+                          </ul>
+                        </div>
+                        <div class="follow">
+                          <a class="btn btn-primary" href="{% url 'job:index' %}">Discover Jobs</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- user profile header end-->
+                <div class="col-xl-3 col-lg-12 col-md-5 xl-35">
+                  <div class="default-according style-1 faq-accordion job-accordion">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="card" data-intro="This is your Your detail">
+                          <div class="card-header">
+                            <h5 class="p-0">
+                              <button class="btn btn-link ps-0" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapseicon2">About Me</button>
+                            </h5>
+                          </div>
+                          <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-parent="#accordion">
+                            <div class="card-body post-about">
+                              <ul>
+                                <li>
+                                  <div class="icon"><i data-feather="user"></i></div>
+                                  <div>
+                                    <h5>Age</h5>
+                                    <p>{{ app_user.age }} years old</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="icon"><i data-feather="phone"></i></div>
+                                  <div>
+                                    <h5>Phone</h5>
+                                    <p>{{ app_user.phone_no }}</p>
+                                  </div>
+                                </li>
+                                
+                                {% if app_user.account_type == "candidate" %}
+                                  <li>
+                                    <div class="icon"><i data-feather="briefcase"></i></div>
+                                    <div>
+                                      <h5>Work</h5>
+                                      <p>{{ app_user.resume.work_experiences.last }}</p>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="icon"><i data-feather="book"></i></div>
+                                    <div>
+                                      <h5>Education</h5>
+                                      <p>{{ app_user.resume.educations.last }}</p>
+                                    </div>
+                                  </li>
+                                {% endif %}
+                                <li>
+                                  <div class="icon"><i data-feather="map-pin"></i></div>
+                                  <div>
+                                    <h5>lived in {{ app_user.address }}</h5>
+                                    <p>{{ app_user.country }}</p>
+                                  </div>
+                                </li>
+                              </ul>
+                              <div class="social-network theme-form"><span class="f-w-600">Social Networks</span>
+                                <button href="{{ app_user.facebook_link }}" class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button>
+                                <button href="{{ app_user.twitter_link }}" class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button>
+                                <button href="{{ app_user.whatsapp_link }}"class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5"></i>Whatsapp</button>
+                                <button href="{{ app_user.github_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button>
+                                <button href="{{ app_user.instagram_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-12 col-lg-6 col-md-12 col-sm-6">
+                        
+                      </div>
+                      <div class="col-xl-12 col-lg-6 col-md-12 col-sm-6">
+                        
+                      </div>
+                      <div class="col-xl-12 col-lg-6 col-md-12 col-sm-6">
+                        
+                      </div>
+                      <div class="col-xl-12 col-lg-6 col-md-12 col-sm-6">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-9 col-lg-12 col-md-7 xl-65">
+                  <div class="row">
+                    <!-- profile post start-->
+                    <div class="col-sm-12" data-intro="This is the your first Post">
+                      <div class="card">
+                        <div class="profile-post">
+                          <div class="post-header">
+                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{% static 'main/assets/images/user/7.jpg' %}" alt="Generic placeholder image">
+                              <div class="media-body align-self-center"><a href="">
+                                  <h5 class="user-name">Emay Walter</h5></a>
+                                <h6>22 Hours ago</h6>
+                              </div>
+                            </div>
+                            <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
+                          </div>
+                          <div class="post-body">
+                            <div class="img-container">
+                              <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
+                                <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post1.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="../assets/images/user-profile/post1.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
+                                  <figcaption itemprop="caption description">Image caption  1</figcaption>
+                                </figure>
+                              </div>
+                            </div>
+                            <div class="post-react">
+                              <ul>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/3.jpg' %}" alt=""></li>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/5.jpg' %}" alt=""></li>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/1.jpg' %}" alt=""></li>
+                              </ul>
+                              <h6>+5 people react this post</h6>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                                     </p>
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span class="counter">50</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="message-square"></i>&nbsp;&nbsp;Comment<span class="counter">70</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="share"></i>&nbsp;&nbsp;share<span class="counter">20</span></a></label>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- profile post end-->
+                    <!-- profile post start-->
+                    <div class="col-sm-12" data-intro="This is the your Last Post">
+                      <div class="card">
+                        <div class="profile-post">
+                          <div class="post-header">
+                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{% static 'main/assets/images/user/7.jpg' %}" alt="Generic placeholder image">
+                              <div class="media-body align-self-center"><a href="#">
+                                  <h5 class="user-name">Emay Walter</h5></a>
+                                <h6>5 Hours ago</h6>
+                              </div>
+                            </div>
+                            <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
+                          </div>
+                          <div class="post-body">
+                            <div class="img-container">
+                              <div class="row mt-4 pictures my-gallery" id="aniimated-thumbnials-2" itemscope="">
+                                <figure class="col-sm-6" itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post2.jpg' %}" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="{% static 'main/assets/images/user-profile/post2.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
+                                  <figcaption itemprop="caption description">Image caption  1</figcaption>
+                                </figure>
+                                <figure class="col-sm-6" itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post3.jpg' %}" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="{% static 'main/assets/images/user-profile/post3.jpg ' %}" itemprop="thumbnail" alt="gallery"></a>
+                                  <figcaption itemprop="caption description">Image caption  2</figcaption>
+                                </figure>
+                              </div>
+                            </div>
+                            <div class="post-react">
+                              <ul>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/3.jpg' %}" alt=""></li>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/5.jpg' %}" alt=""></li>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/1.jpg' %}" alt=""></li>
+                              </ul>
+                              <h6>+25 people react this post</h6>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                                     </p>
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span class="counter">520</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="message-square"></i>&nbsp;&nbsp;Comment<span class="counter">85</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="share"></i>&nbsp;&nbsp;share<span class="counter">30</span></a></label>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- profile post end   -->
+                    <!-- profile post start-->
+                    <div class="col-sm-12">
+                      <div class="card">
+                        <div class="profile-post">
+                          <div class="post-header">
+                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{% static 'main/assets/images/user/7.jpg' %}" alt="Generic placeholder image">
+                              <div class="media-body align-self-center"><a href="#">
+                                  <h5 class="user-name">Emay Walter</h5></a>
+                                <h6>2 Hours ago</h6>
+                              </div>
+                            </div>
+                            <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
+                          </div>
+                          <div class="post-body">
+                            <div class="img-container">
+                              <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
+                                <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post4.jpg' %}" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="{% static 'main/assets/images/user-profile/post4.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
+                                  <figcaption itemprop="caption description">Image caption  1</figcaption>
+                                </figure>
+                              </div>
+                            </div>
+                            <div class="post-react">
+                              <ul>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/3.jpg' %}" alt=""></li>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/5.jpg' %}" alt=""></li>
+                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/1.jpg' %}" alt=""></li>
+                              </ul>
+                              <h6>+20 people react this post</h6>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                                     </p>
+                            <ul class="post-comment">
+                              <li>
+                                <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span class="counter">407</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="message-square"></i>&nbsp;&nbsp;Comment<span class="counter">302</span></a></label>
+                              </li>
+                              <li>
+                                <label><a href="#"><i data-feather="share"></i>&nbsp;&nbsp;share<span class="counter">180</span></a></label>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- profile post end                           -->
+                  </div>
+                </div>
+                <!-- user profile fifth-style end-->
+                <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="pswp__bg"></div>
+                  <div class="pswp__scroll-wrap">
+                    <div class="pswp__container">
+                      <div class="pswp__item"></div>
+                      <div class="pswp__item"></div>
+                      <div class="pswp__item"></div>
+                    </div>
+                    <div class="pswp__ui pswp__ui--hidden">
+                      <div class="pswp__top-bar">
+                        <div class="pswp__counter"></div>
+                        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                        <button class="pswp__button pswp__button--share" title="Share"></button>
+                        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                        <div class="pswp__preloader">
+                          <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                              <div class="pswp__preloader__donut"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                        <div class="pswp__share-tooltip"></div>
+                      </div>
+                      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                      <div class="pswp__caption">
+                        <div class="pswp__caption__center"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+    {% endblock %}

@@ -12,8 +12,9 @@ urlpatterns = [
 	path("sign-out/", views.SignOutView, name="sign_out"),
 
 	path("", views.AppView, name="app"),
+	path("app/update-profile/", views.UpdateAppuserView, name="update_appuser"),
 	path("recruits/", views.AllRecruitView, name="all_recruits"),
-	path("app_user-detail/<int:app_user_id>/", views.AppUserDetailView, name="app_user_detail"),
+	path("app-user-detail/<int:app_user_id>/", views.AppUserDetailView, name="app_user_detail"),
 
 	path("temp/", views.TempView, name="temp"),
 

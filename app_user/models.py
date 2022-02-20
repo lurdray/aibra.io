@@ -15,6 +15,19 @@ class AppUser(models.Model):
 	country = models.CharField(default=" ",max_length=20)
 	phone_no = models.CharField(default=" ",max_length=10)
 	age = models.IntegerField(null=True)
+
+	#socials
+	facebook_link = models.CharField(default="#",max_length=10)
+	twitter_link = models.CharField(default="#",max_length=10)
+	instagram_link = models.CharField(default="#",max_length=10)
+	whatsapp_link = models.CharField(default="#",max_length=10)
+	github_link = models.CharField(default="#",max_length=10)
+
+
+	#recruiters
+	agency_name = models.CharField(default="",max_length=30)
+	agency_logo = models.FileField(upload_to='account_files/profile_photos/', blank=True, default="default_files/default_face.png")
+
 	
 	resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True)
 

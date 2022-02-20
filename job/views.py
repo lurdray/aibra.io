@@ -27,15 +27,141 @@ from app_user.models import AppUser
 
 def IndexView(request):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
+	jobs = Job.objects.all()
+
 	if request.method == "POST":
-		pass
+		query = request.POST.get("query")
+
+		results = Job.objects.filter(title=query)
+
+		job_types = set()
+		countries = set()
+		titles = set()
+		categories = set()
+
+		for item in jobs:
+			job_types.add(item.job_type)
+			countries.add(item.country)
+			titles.add(item.title)
+			categories.add(item.category)
+
+
+
+		context = {"app_user": app_user, "results": results, 
+		"job_types": job_types, "countries": countries,
+		"titles": titles, "categories": categories}
+
+		return render(request, "job/search_job.html", context )
+
+
+
 
 
 	else:
 		jobs = Job.objects.all()
 
-		context = {"app_user": app_user, "jobs": jobs}
+		job_types = set()
+		countries = set()
+		titles = set()
+		categories = set()
+
+		for item in jobs:
+			job_types.add(item.job_type)
+			countries.add(item.country)
+			titles.add(item.title)
+			categories.add(item.category)
+
+
+
+		context = {"app_user": app_user, "jobs": jobs,
+		"job_types": job_types, "countries": countries,
+		"titles": titles, "categories": categories}
+
 		return render(request, "job/index.html", context )
+
+
+
+
+
+def SearchJobView(request, query_type, query):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		pass
+
+
+	else:
+
+		jobs = Job.objects.all()
+
+		job_types = set()
+		countries = set()
+		titles = set()
+		categories = set()
+
+		for item in jobs:
+			job_types.add(item.job_type)
+			countries.add(item.country)
+			titles.add(item.title)
+			categories.add(item.category)
+
+		
+
+		if query_type == "job_type":
+			search_results = Job.objects.filter(job_type=query)
+
+		elif query_type == "country":
+			search_results = Job.objects.filter(country=query)
+
+		elif query_type == "title":
+			search_results = Job.objects.filter(title=query)
+
+		elif query_type == "category":
+			search_results = Job.objects.filter(category=query)
+
+		else:
+			pass
+
+
+		context = {"app_user": app_user, "jobs": jobs, "search_results": search_results, 
+		"job_types": job_types, "countries": countries,
+		"titles": titles, "categories": categories}
+		return render(request, "job/search_job.html", context )
+
+
+
+
+
+def AllLocationView(request, query):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		pass
+
+
+	else:
+
+		jobs = Job.objects.all()
+
+		job_types = set()
+		countries = set()
+		titles = set()
+		categories = set()
+
+		for item in jobs:
+			job_types.add(item.job_type)
+			countries.add(item.country)
+			titles.add(item.title)
+			categories.add(item.category)
+
+
+		search_results = Job.objects.filter(country=query)
+
+
+		context = {"app_user": app_user, "jobs": jobs, "search_results": search_results, 
+		"job_types": job_types, "countries": countries,
+		"titles": titles, "categories": categories}
+		return render(request, "job/search_job.html", context )
+
+
 
 
 
@@ -54,8 +180,22 @@ def JobDetailView(request, job_id):
 			if item.app_user == app_user:
 				applied_status = True
 
+		job_types = set()
+		countries = set()
+		titles = set()
+		categories = set()
 
-		context = {"app_user": app_user, "job": job, "jobs": jobs, "applied_status": applied_status}
+		for item in jobs:
+			job_types.add(item.job_type)
+			countries.add(item.country)
+			titles.add(item.title)
+			categories.add(item.category)
+
+
+		context = {"app_user": app_user, "job": job, "jobs": jobs, "applied_status": applied_status,
+		"job_types": job_types, "countries": countries,
+		"titles": titles, "categories": categories}
+		
 		return render(request, "job/job_detail.html", context )
 
 
@@ -110,12 +250,18 @@ def MyApplicationsView(request):
 
 
 
-def AddJobView(request):
+
+
+def EditJobView(request, job_id):
+	job = Job.objects.get(id=job_id)
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
-		title = request.POST.get("title")
-		description = request.POST.get("description")
 
+		title = request.POST.get("title")
+		category = request.POST.get("category")
+		address = request.POST.get("address")
+		country = request.POST.get("country")
+		description = request.POST.get("description")
 		job_type = request.POST.get("job_type")
 		responsibility = request.POST.get("responsibility")
 		requirement = request.POST.get("requirement")
@@ -123,7 +269,47 @@ def AddJobView(request):
 		contact_phone = request.POST.get("contact_phone")
 		deadline = request.POST.get("deadline")
 
-		job = Job.objects.create(app_user=app_user, title=title, description=description, job_type=job_type,
+		job.title = title
+		job.category = category
+		job.address = address
+		job.country = country
+		job.description = description
+		job.job_type = job_type
+		job.responsibility = responsibility
+		job.requirement = requirement
+		job.contact_email = contact_email
+		job.contact_phone = contact_phone
+		job.deadline = deadline
+		job.save()
+
+		messages.warning(request, "Job Updated!")
+		return HttpResponseRedirect(reverse("job:add_job"))
+
+
+	else:
+		jobs = Job.objects.filter(app_user=app_user)
+		
+		context = {"app_user": app_user, "jobs": jobs, "job": job}
+		return render(request, "job/edit_job.html", context )
+
+
+
+def AddJobView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		title = request.POST.get("title")
+		category = request.POST.get("category")
+		address = request.POST.get("address")
+		country = request.POST.get("country")
+		description = request.POST.get("description")
+		job_type = request.POST.get("job_type")
+		responsibility = request.POST.get("responsibility")
+		requirement = request.POST.get("requirement")
+		contact_email = request.POST.get("contact_email")
+		contact_phone = request.POST.get("contact_phone")
+		deadline = request.POST.get("deadline")
+
+		job = Job.objects.create(app_user=app_user, title=title, category=category, address=address, country=country, description=description, job_type=job_type,
 			responsibility=responsibility, requirement=requirement, contact_email=contact_email, contact_phone=contact_phone,
 			deadline=deadline)
 		job.save()
@@ -158,27 +344,3 @@ def JobApplicationsView(request, job_id):
 
 
 
-
-
-def EditJobView(request, job_id):
-	app_user = AppUser.objects.get(user__pk=request.user.id)
-	if request.method == "POST":
-		job = Job.objects.get(id=job_id)
-
-		title = request.POST.get("title")
-		description = request.POST.get("description")
-
-		job.title = title
-		job.description = description
-		job.save()
-
-		messages.warning(request, "Job Edited!")
-		return HttpResponseRedirect(reverse("job:add_job"))
-
-
-
-	else:
-		job = Job.objects.get(id=job_id)
-
-		context = {"app_user": app_user, "job": job}
-		return render(request, "job/edit_job.html", context )

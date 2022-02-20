@@ -1,0 +1,229 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    {% include 'app_user/header.html' %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Add Referee</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Referee</li>
+                    <li class="breadcrumb-item active">Add Referee</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+              	<div class="col-xl-8">
+
+                  <form class="card" method="post">
+                  	{% csrf_token %}
+                    <div class="card-header pb-0">
+                    <div class="u-pearls-xs row mb-5">
+
+                      <div class="u-pearl done col-3"><span class="u-pearl-number">6</span><span class="u-pearl-title"><a href="{% url 'resume:add_project' %}">Project</a></span></div>
+                      <div class="u-pearl done col-3"><span class="u-pearl-number">7</span><span class="u-pearl-title"><a href="{% url 'resume:add_hobby' %}">Hobby</a></span></div>
+                      <div class="u-pearl done  col-3"><span class="u-pearl-number">8</span><span class="u-pearl-title"><a href="{% url 'resume:add_award' %}">Awards</a></span></div>
+                      <div class="u-pearl current col-3"><span class="u-pearl-number">9</span><span class="u-pearl-title"><a href="{% url 'resume:add_referee' %}">Referees</a></span></div>
+                      
+                    </div>
+                      <h4 class="card-title mb-0">Referee</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="referee" class="form-control" value="{{ referee.referee }}">
+                          </div>
+                        </div>
+                   
+                        
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Phone</label>
+                            <input type="number" name="phone" class="form-control" value="{{ referee.phone_no }}">
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ referee.email }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                        <div class="mb-6">
+                            <label class="form-label">Place of Work</label>
+                            <input class="form-control" name="place_of_work" type="text" name="place_of_work" value="{{ referee.place_of_work }}">
+                        </div>
+                    </div>
+
+                    
+                      </div>
+                       </div>
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-xl-4">
+                  <div class="card">
+                    <div class="card-header pb-0">
+                      <h4 class="card-title mb-0">My Referees</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        {% if app_user.resume.referees.all %}
+
+                          {% for item in app_user.resume.referees.all %}
+                            <div class="mb-3">
+                              <p>
+                                <a href="{% url 'resume:edit_referee' item.id %}">{{ item.referee }}</a>
+                              </p>
+                              <hr>
+                            </div>
+                          {% endfor %}
+                        {% else %}
+                          <p>Sorry, nothing here to see!</p>
+                        {% endif %}
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <style>
+#myDIV {
+  
+  
+  display: none;
+}
+</style>
+
+
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+{% endblock %}
+
+		<!-- 
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Add Referee.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-8">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			
+						  			Name
+						  			<input type="text" name="referee"><br /><br />
+						  			Phone no
+						  			<input type="text" name="phone"><br /><br />
+						  			Place of work
+						  			<input type="text" name="place_of_work"><br /><br />
+
+						  			<button type="submit">Submit.</button>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-2">
+						  		<a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
+						  		<a href="{% url 'resume:update_resume2' %}">Experience</a><br />
+						  		<a href="{% url 'resume:add_career' %}">Career</a><br />
+						  		<a href="{% url 'resume:add_education' %}">Education</a><br />
+						  		<a href="{% url 'resume:add_skill' %}">Skill</a><br />
+
+						  		<a href="{% url 'resume:add_project' %}">Project</a><br />
+						  		<a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
+						  		<a href="{% url 'resume:add_award' %}">Awards</a><br />
+						  		<a href="{% url 'resume:add_referee' %}">Referee</a><br />
+						  	</div>
+
+
+						  </div>
+						</div>
+						
+						<div class="box-footer">
+						  Footer
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+content -->

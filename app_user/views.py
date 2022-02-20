@@ -140,13 +140,9 @@ def CompleteSignUpView(request):
 
 
 def SignOutView(request):
-	if request.method == "POST":
-		pass
 
-
-	else:
-		context = {}
-		return render(request, "app_user/sign_out.html", context )
+	logout(request)
+	return HttpResponseRedirect(reverse("app_user:sign_in"))
 
 
 
@@ -162,6 +158,71 @@ def AppView(request):
 		return render(request, "app_user/app2.html", context )
 
 
+def UpdateAppuserView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		try:
+			profile_photo = request.FILES["profile_photo"]
+		except:
+			profile_photo = app_user.profile_photo	
+
+		try:
+			agency_name = request.POST.get("agency_name")
+		except:
+			agency_name = app_user.agency_name
+
+		try:
+			agency_logo = request.FILES["agency_logo"]
+		except:
+			agency_logo = app_user.agency_logo
+
+
+		first_name = request.POST.get("first_name")
+		last_name = request.POST.get("last_name")
+		age = request.POST.get("age")
+		phone = request.POST.get("phone")
+		address = request.POST.get("address")
+		country = request.POST.get("country")
+
+		facebook_link = request.POST.get("facebook_link")
+		whatsapp_link = request.POST.get("whatsapp_link")
+		twitter_link = request.POST.get("twitter_link")
+		github_link = request.POST.get("github_link")
+		instagram_link = request.POST.get("instagram_link")
+
+		app_user.agency_name = agency_name
+		app_user.agency_logo = agency_logo
+		app_user.profile_photo = profile_photo
+		app_user.first_name = first_name
+		app_user.last_name = last_name
+		app_user.age = age
+		app_user.phone_no = phone
+		app_user.address = address
+		app_user.country = country
+
+		app_user.facebook_link = facebook_link
+		app_user.whatsapp_link = whatsapp_link
+		app_user.twitter_link = twitter_link
+		app_user.github_link = github_link
+		app_user.instagram_link = instagram_link
+
+		app_user.save()
+
+		messages.warning(request, "Welldone! Profiile Data Updated")
+		return HttpResponseRedirect(reverse("resume:index"))
+
+
+
+
+
+	else:
+		recruits = AppUser.objects.filter(account_type="candidate").order_by('-pub_date')
+
+		context = {"recruits": recruits, "app_user": app_user,}
+		return render(request, "app_user/update_profile.html", context )
+
+
+
 
 def AllRecruitView(request):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
@@ -172,7 +233,7 @@ def AllRecruitView(request):
 	else:
 		recruits = AppUser.objects.filter(account_type="candidate").order_by('-pub_date')
 
-		context = {"recruits": recruits}
+		context = {"recruits": recruits, "app_user": app_user,}
 		return render(request, "app_user/all_recruits.html", context )
 
 
