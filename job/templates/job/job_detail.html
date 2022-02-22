@@ -59,22 +59,17 @@
                               <div class="card-body filter-cards-view animate-chk">
                                 <form method="post">
                                 {% csrf_token %}
-                                <div class="job-filter mb-3">
-                                  <div class="faq-form">
-                                    <input name="query" class="form-control" type="text" placeholder="Search.."><i class="search-icon" data-feather="search"></i>
-                                  </div>
-                                </div>
                                 <div class="checkbox-animated">
                                   {% if job_types %}
                                     {% for item in job_types %}
-                                      <a href="{% url 'job:search_job' 'job_type' item %}">{{ item }}</a><br />
+                                      <a href="{% url 'job:search_job' 'job_type' item %}"> <button type="submit" class="btn btn-outline-primary mb-2" type="button" style="text-transform: capitalize;"><i class="icofont icofont-star-shape" ></i> {{ item }}</button></a>
                                     {% endfor %}
                                   {% else %}
 
                                   {% endif %}
                                   
                                 </div>
-                                <button type="submit" class="btn btn-primary text-center" type="button">Find jobs</button>
+                                
                                 </form>
                               </div>
                             </div>
@@ -93,7 +88,7 @@
 
                                   {% if countries %}
                                     {% for item in countries %}
-                                      <a href="{% url 'job:search_job' 'country' item %}">{{ item }}</a><br />
+                                      <a href="{% url 'job:search_job' 'country' item %}"> <button type="submit" class="btn btn-outline-primary mb-2" type="button" style="text-transform: capitalize;"><i class="icofont icofont-star-shape" ></i> {{ item }}</button></a>
                                     {% endfor %}
                                   {% else %}
 
@@ -115,7 +110,7 @@
                               <div class="card-body animate-chk">
                                 {% if categories %}
                                     {% for item in categories %}
-                                      <a href="{% url 'job:search_job' 'category' item %}">{{ item }}</a><br />
+                                      <a href="{% url 'job:search_job' 'category' item %}"> <button type="submit" class="btn btn-outline-primary mb-2" type="button" style="text-transform: capitalize;"><i class="icofont icofont-star-shape" ></i> {{ item }}</button></a>
                                     {% endfor %}
                                   {% else %}
 
@@ -136,8 +131,8 @@
                     <div class="card-body">
                       <div class="media"><img class="img-40 img-fluid m-r-20" src="{% static 'main/assets/images/job-search/1.jpg' %}" alt="">
                         <div class="media-body">
-                          <h6 class="f-w-600"><a href="javascript:void(0)">{{ job.title }}                                   </a></h6>
-                          <p>{{ job.job_type }} - United States </p>
+                          <h6 class="f-w-600" style="text-transform:capitalize;"><a href="javascript:void(0)">{{ job.title }}                                   </a></h6>
+                          <p style="text-transform: capitalize;">{{ job.job_type }} - United States </p>
                           
                           <ul class="rating">
                             <li><i class="fa fa-star font-warning"></i></li>
@@ -155,32 +150,24 @@
                         <!-- <p>Front-end web designers combine design, programming, writing and organizational skills in their work. They help shape the vision for a company's online content.</p>-->
                       </div>
                       <div class="job-description">
-                        <h6>Qualifications </h6>
-                        <ul>
-                          <li>{{ job.requirement }}</li>
-                          <li>5+ years UI/UX experience</li>
-                          <li>Portfolio demonstrating mastery of native iOS, Android, and/or responsive web design principles</li>
-                          <li>Ability to autonomously pursue elegant solutions to open-ended problems</li>
-                          <li>Comfort with ambiguity</li>
-                          <li>Proven ability to create interactive prototypes</li>
-                          <li>Strong verbal communication skills with ability to clearly communicate complex ideas and champion a design vision across all levels of an organization</li>
-                          <li>Strong written communication skills with ability to make transparent design documentation and client-facing presentations</li>
-                          <li>Ability to create and maintain flow charts, wire frames, prototypes, and mockups.</li>
-                          <li>Ability to effectively work on more than one project at a time</li>
-                          <li>Experience conducting user research and stakeholder interviews</li>
-                          <li>Solid grasp of standard design tools, ex: Sketch, Omnigraffle, the Adobe Suite, Zeplin, etc.</li>
-                          <li>Bonus Considerations </li>
-                        </ul>
+                        <h6>Benefits/Salary</h6>
+                        <p class="text-start">{{ job.salary }}</p>
+                        <!-- <p>Front-end web designers combine design, programming, writing and organizational skills in their work. They help shape the vision for a company's online content.</p>-->
                       </div>
                       <div class="job-description">
-                        <h6>Agency experience</h6>
-                        <ul>
-                          <li>Experience working with Agile development teams</li>
-                          <li>Experience with RITE method usability testing</li>
-                          <li>Experience in visual and motion design; ability to translate UX design into high quality visuals</li>
-                          <li>Mastery of Sketch & InVision</li>
-                          <li>Knowledge of mobile or front-end web programming</li>
-                        </ul>
+                        <h6>Requirements </h6>
+                        <p class="text-start">{{ job.requirement }}</p>
+                        
+                      </div>
+                      <div class="job-description">
+                        <h6>Responsibilities </h6>
+                        <p class="text-start">{{ job.responsibility }}</p>
+                        
+                      </div>
+                      <div class="job-description">
+                        <h6>Industry </h6>
+                        <p class="text-start">{{ job.category }}</p>
+                        
                       </div>
                       <div class="job-description">
                         <h6 class="f-w-700">Deadline: {{ job.deadline }}</h6>
@@ -197,7 +184,7 @@
                   <h6 class="mb-0 f-w-600">Similar jobs</h6>
                 </div>
                 <div class="row">
-                	{% for item in jobs %}
+                	{% for item in similar_jobs %}
                   <div class="col-xl-6 xl-100 box-col-12">
                     <div class="card">
                       <div class="job-search">
@@ -205,7 +192,7 @@
                           <div class="media"><img class="img-40 img-fluid m-r-20" src="{% static 'main/assets/images/job-search/2.jpg' %}" alt="">
                             <div class="media-body">
                               <h6 class="f-w-700"><a href="{% url 'job:job_detail' item.id %}">{{ item.title }}<span class="badge badge-primary pull-right">View</span></a></h6>
-                              <p>San <span>Diego, CA</span></p>
+                              <p>{{ item.country }}</p>
                               <ul class="rating">
                                 <li><i class="fa fa-star font-warning"></i></li>
                                 <li><i class="fa fa-star font-warning"></i></li>
@@ -227,6 +214,23 @@
                   
           <!-- Container-fluid Ends-->
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
 {% endblock %}
 
 		<!-- 

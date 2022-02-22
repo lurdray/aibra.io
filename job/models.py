@@ -36,6 +36,7 @@ class Application(models.Model):
 
 class Job(models.Model):
 	title = models.CharField(max_length=20, default="none")
+	salary = models.CharField(max_length=20, default="none")
 	category = models.CharField(max_length=30, default="none")
 	description = models.TextField(default="none")
 	

@@ -33,7 +33,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
             {{ message }}
         </div>
     {% endfor %}
@@ -90,10 +90,10 @@
                       <div class="user-designation">
 
                         <div class="title">
-                          <a target="_blank" href=""> 
-                            <h4>{{ app_user.first_name }} {{ app_user.last_name }}</h4>
+                          <a href="#"> 
+                            <h4>{{ app_user.user.first_name }} {{ app_user.user.last_name }}</h4>
                             {% if app_user.account_type == "candidate" %}
-                              <h6>{{ app_user.resume.titles.first }}</h6>
+                              <h6>{{ app_user.resume.titles.last }}</h6>
                             {% elif app_user.account_type == "recruiter" %}
                               <h6>{{ app_user.agency_name }}</h6>
                             {% else %}
@@ -171,11 +171,11 @@
 
                               </ul>
                               <div class="social-network theme-form"><span class="f-w-600">Social Networks</span>
-                                <button href="{{ app_user.facebook_link }}" class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button>
-                                <button href="{{ app_user.twitter_link }}" class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button>
-                                <button href="{{ app_user.whatsapp_link }}"class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5"></i>Whatsapp</button>
-                                <button href="{{ app_user.github_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button>
-                                <button href="{{ app_user.instagram_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button>
+                                <a href="{{ app_user.facebook_link }}"><button  class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button></a>
+                                <a href="{{ app_user.twitter_link }}"><button  class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button></a>
+                                <a href="{{ app_user.whatsapp_link }}"><button style="background-color: #128c7e !important; border: none" class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5" style=""></i>Whatsapp</button></a>
+                                <a href="{{ app_user.github_link }}"><button class="btn social-btn mb-2 btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button></a>
+                                <a href="{{ app_user.instagram_link }}"><button style="background-color: #8a3ab9 !important; border: none;" class="btn social-btn mb-2 btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button></a>
                               </div>
                             </div>
                           </div>
@@ -227,7 +227,6 @@
                             <div class="img-container">
                               <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
                                 <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post1.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="../assets/images/user-profile/post1.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
-                                  <figcaption itemprop="caption description">Bio</figcaption>
                                 </figure>
                               </div>
                             </div>
@@ -253,7 +252,7 @@
 
                               <h5>Work Experience</h5>
                               {% for item in app_user.resume.work_experiences.all %}  
-                              <h6>{{ item.work_experience }}</h6>                           
+                              <p>{{ item.work_experience }}</p>                           
                               <p>{{ item.detail }}</p>
                               <ul class="post-comment">
                                 <li>
@@ -272,7 +271,7 @@
                               <p>{{ item.detail }}</p>
                               <ul class="post-comment">
                                 <li>
-                                  <label><a href="#"><i data-feather="link"></i>&nbsp;&nbsp;<span class="counter">{{ item.link }}</span></a></label>
+                                  <label><a href="{{ item.link }}" target="_blank"><i data-feather="link"></i>&nbsp;&nbsp;<span class="counter">{{ item.link }}</span></a></label>
                                 </li>
                                 
                                 
@@ -290,7 +289,7 @@
                                   <label><a href="#"><i data-feather="calendar"></i>&nbsp;&nbsp;<span class="counter">{{ item.year }}</span></a></label>
                                 </li>
                                 <li>
-                                  <label><a href="#"><i data-feather="link"></i>&nbsp;&nbsp;<span class="counter">{{ item.link }}</span></a></label>
+                                  <label><a href="{{ item.link }}" target="_blank"><i data-feather="link"></i>&nbsp;&nbsp;<span class="counter">{{ item.link }}</span></a></label>
                                 </li>
                                 
                                 
@@ -309,5 +308,23 @@
                 </div>
                 
         </div>
+      </div>
+    </div>
+  </div>
+  
         <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
     {% endblock %}

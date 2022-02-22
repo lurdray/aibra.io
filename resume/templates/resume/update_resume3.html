@@ -33,7 +33,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
             {{ message }}
         </div>
     {% endfor %}
@@ -151,7 +151,7 @@
                       </div>
                     </div>
                     <div class="card-body file-manager">
-                      <h6><b style="color:#000000">Update your career, educational qualifications and skills.</b></h6>
+                     
                       
                       <ul class="files">
                       	{% if careers %}
@@ -160,8 +160,9 @@
                           
                           <div class="file-bottom">
                             <h6>Career:{{ item.career }}</h6>
-                            <p class="mb-1">{{ item.detail }}</p>
+                            <p class="mb-1">{{ item.detail|truncatewords:6 }}</p>
                             <p> <b>Date : </b> {{ item.date_from }} -  {{ item.date_to }}</p>
+                            <a class="btn btn-outline-primary" href="{% url 'resume:edit_career' item.id %}">Edit Career</a>
                           </div>
                         </li>
                         {% endfor %}
@@ -184,6 +185,7 @@
                             <h6>Education:{{ item.education }} </h6>
                             <p class="mb-1">{{ item.detail }}</p>
                             <p> <b>last added : </b>{{ item.date_from }} -  {{ item.date_to }}</p>
+                            <a class="btn btn-outline-primary" href="{% url 'resume:edit_education' item.id %}">Edit Education</a>
                           </div>
                           {% endfor %}
 						  	{% else %}
@@ -203,9 +205,10 @@
                         <li class="file-box">
                           
                           <div class="file-bottom">
-                            <h6>{{ item.skills }} </h6>
-                            <p class="mb-1">{{ item.detail }}</p>
+                            <h6>Skill:{{ item.skill }} </h6>
+                            <p class="mb-1">{{ item.detail|truncatewords:6 }}</p>
                             <p> <b>last added : </b>{{ item.date_from }} -  {{ item.date_to }}</p>
+                            <a class="btn btn-outline-primary" href="{% url 'resume:edit_skill' item.id %}">Edit Skill</a>
                           </div>
                           {% endfor %}
 						  	{% else %}
@@ -224,7 +227,7 @@
                       </ul>
                       <br>
                       <div class="media-body text-end">
-                          <a href="{% url 'resume:update_resume5' %}">
+                          <a href="{% url 'resume:update_resume4' %}">
                             <div class="btn btn-primary" > <i data-feather="plan"></i>Proceed</div>
                            </a> 
                           
@@ -239,6 +242,20 @@
           </div>
           <!-- Container-fluid Ends-->
         </div>
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
     {% endblock %}
 
 		<!-- 

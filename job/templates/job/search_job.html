@@ -59,14 +59,14 @@
                                 <div class="checkbox-animated">
                                   {% if job_types %}
                                     {% for item in job_types %}
-                                      <a href="{% url 'job:search_job' 'job_type' item %}">{{ item }}</a><br />
+                                      <a href="{% url 'job:search_job' 'job_type' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
                                     {% endfor %}
                                   {% else %}
 
                                   {% endif %}
                                   
                                 </div>
-                                <button class="btn btn-primary text-center" type="button">Find jobs</button>
+                                
                               </div>
                             </div>
                           </div>
@@ -75,7 +75,7 @@
                           <div class="card">
                             <div class="card-header">
                               <h5 class="mb-0 p-0">
-                                <button class="btn btn-link ps-0" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapseicon1">Location</button>
+                                
                               </h5>
                             </div>
                             <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-parent="#accordion">
@@ -84,14 +84,14 @@
 
                                   {% if countries %}
                                     {% for item in countries %}
-                                      <a href="{% url 'job:search_job' 'country' item %}">{{ item }}</a><br />
+                                      <a href="{% url 'job:search_job' 'country' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
                                     {% endfor %}
                                   {% else %}
 
                                   {% endif %}
                                 </div>
                               </div>
-                              <button class="btn btn-block btn-primary text-center" type="button">All Locations</button>
+                              
                             </div>
                           </div>
                         </div>
@@ -107,13 +107,13 @@
                               <div class="card-body animate-chk">
                                 {% if categories %}
                                     {% for item in categories %}
-                                      <a href="{% url 'job:search_job' 'category' item %}">{{ item }}</a><br />
+                                      <a href="{% url 'job:search_job' 'category' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
                                     {% endfor %}
                                   {% else %}
 
                                   {% endif %}
                               </div>
-                              <button class="btn btn-block btn-primary text-center" type="button">All Industries</button>
+                             
                             </div>
                           </div>
                         </div>
@@ -168,6 +168,23 @@
           </div>
           <!-- Container-fluid Ends-->
         </div>
+        
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
 
 
 {% endblock %}

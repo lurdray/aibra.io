@@ -46,7 +46,7 @@ def UpdateResume1View(request):
 			title.title = title_obj
 
 		else:
-			title = Title.objects.create(title=title, status=True)
+			title = Title.objects.create(title=title_obj, status=True)
 
 		title.save()
 
@@ -56,7 +56,7 @@ def UpdateResume1View(request):
 			opening_statement.opening_statement = opening_statement_obj
 
 		else:
-			opening_statement = OpeningStatement.objects.create(opening_statement=opening_statement, status=True)
+			opening_statement = OpeningStatement.objects.create(opening_statement=opening_statement_obj, status=True)
 		
 		opening_statement.save()
 
@@ -566,7 +566,10 @@ def UpdateResume4View(request):
 
 
 	else:
-		context = {}
+		app_user = AppUser.objects.get(user__pk=request.user.id)
+
+		context = {"app_user": app_user, "careers": app_user.resume.careers,
+		"educations": app_user.resume.educations,  "hobbies":app_user.resume.hobbies, "referees":app_user.resume.referees, "skills": app_user.resume.skills, "projects": app_user.resume.projects, "awards": app_user.resume.awards}
 		return render(request, "resume/update_resume4.html", context )
 
 
@@ -577,6 +580,9 @@ def UpdateResume5View(request):
 
 
 	else:
-		context = {}
+		app_user = AppUser.objects.get(user__pk=request.user.id)
+
+		context = {"app_user": app_user, "careers": app_user.resume.careers,
+		"educations": app_user.resume.educations, "skills": app_user.resume.skills, "projects": app_user.resume.projects, "awards": app_user.resume.awards}
 		return render(request, "resume/update_resume5.html", context )
 

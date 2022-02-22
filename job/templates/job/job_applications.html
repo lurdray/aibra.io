@@ -4,6 +4,40 @@
 
 {% block content %}
 {% include 'app_user/header.html' %}
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
         <!-- Page Sidebar Ends-->
         <div class="page-body">
@@ -57,7 +91,8 @@
                   <div class="text-center profile-details"><a href="{% url 'app_user:app_user_detail' item.app_user.id %}">
                       <h4>{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</h4></a>
                     <h6>{{ item.app_user.resume.titles.last }}</h6>
-                    <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light">View Resume</a> <a href="{{ item.app_user.cv.url }}" class="btn btn-primary-light" download>Download Resume</a>
+                    <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
+                    <a href="{{ item.app_user.cv.url }}" download="CV" class="btn btn-primary-light" download><i class="icofont icofont-download"></i> Download Resume</a>
                   </div>
                   
                 </div>
@@ -70,6 +105,25 @@
               
           <!-- Container-fluid Ends-->
         </div>
+      </div>
+    </div>
+    
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
 
 
 {% endblock %}

@@ -191,10 +191,11 @@ def JobDetailView(request, job_id):
 			titles.add(item.title)
 			categories.add(item.category)
 
+		similar_jobs = Job.objects.filter(category=job.category)
 
 		context = {"app_user": app_user, "job": job, "jobs": jobs, "applied_status": applied_status,
 		"job_types": job_types, "countries": countries,
-		"titles": titles, "categories": categories}
+		"titles": titles, "categories": categories, "similar_jobs": similar_jobs}
 		
 		return render(request, "job/job_detail.html", context )
 
@@ -258,6 +259,7 @@ def EditJobView(request, job_id):
 	if request.method == "POST":
 
 		title = request.POST.get("title")
+		salary = request.POST.get("salary")
 		category = request.POST.get("category")
 		address = request.POST.get("address")
 		country = request.POST.get("country")
@@ -270,6 +272,7 @@ def EditJobView(request, job_id):
 		deadline = request.POST.get("deadline")
 
 		job.title = title
+		job.salary = salary
 		job.category = category
 		job.address = address
 		job.country = country
@@ -298,6 +301,7 @@ def AddJobView(request):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
 		title = request.POST.get("title")
+		salary = request.POST.get("salary")
 		category = request.POST.get("category")
 		address = request.POST.get("address")
 		country = request.POST.get("country")
@@ -309,7 +313,7 @@ def AddJobView(request):
 		contact_phone = request.POST.get("contact_phone")
 		deadline = request.POST.get("deadline")
 
-		job = Job.objects.create(app_user=app_user, title=title, category=category, address=address, country=country, description=description, job_type=job_type,
+		job = Job.objects.create(app_user=app_user, title=title, salary=salary, category=category, address=address, country=country, description=description, job_type=job_type,
 			responsibility=responsibility, requirement=requirement, contact_email=contact_email, contact_phone=contact_phone,
 			deadline=deadline)
 		job.save()

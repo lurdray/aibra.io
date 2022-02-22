@@ -33,7 +33,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
             {{ message }}
         </div>
     {% endfor %}
@@ -148,13 +148,12 @@
                        {% if app_user.resume.careers.all %}
 
                           {% for item in app_user.resume.careers.all %}
-                            <div class="mb-3">
-                              <p>
-                                <a href="{% url 'resume:edit_career' item.id %}">{{ item.career }}</a>
-                              </p>
-                              <hr>
-                            </div>
+
+                            
+                                <a href="{% url 'resume:edit_career' item.id %}"> <button class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i>{{ item.career }}</button></a>
+                              
                           {% endfor %}
+                          <p>Click on desired fields to Update</p>
                         {% else %}
                           <p>Sorry, nothing here to see!</p>
                         {% endif %}
@@ -170,12 +169,13 @@
           </div>
           <!-- Container-fluid Ends-->
         </div>
+        
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-6 footer-copyright">
-                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
               </div>
               <div class="col-md-6">
                 <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>

@@ -48,13 +48,14 @@
                 <div class="col-xl-12">
                   <div class="card">
                     <div class="card-header pb-0">
-                      <h4 class="card-title mb-0">My Profile</h4>
+                      <h4 class="card-title mb-0">Update Profile</h4>
                       <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
                     </div>
                     <div class="card-body">
                       <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="row mb-2">
+                        <div class="row">
+
                           <div class="profile-title">
                             <div class="media"><img class="img-70 rounded-circle" alt="" src="{{ app_user.profile_photo.url }}">
                               <div class="media-body">
@@ -68,32 +69,57 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                         <div class="mb-3">
-                          <label class="form-label">Profile photo</label>
+                      
+                             <div class="col-md-6 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Profile photo</label>
                           <input name="profile_photo" type="file" class="form-control">
+                          </div>
                         </div>
-
-                        {% if app_user.account_type == "candidate" %}
-                          <div class="mb-3">
-                            <label class="form-label">Resume File</label>
+                         {% if app_user.account_type == "candidate" %}
+                        <div class="col-sm-6 col-md-6 mb-2">
+                          <div class="mb-6">
+                           <label class="form-label">Resume File</label>
                             <input name="cv" type="file" class="form-control">
                           </div>
-                        {% endif %}
+                        </div>
+                        {% endif %} 
 
-                        <div class="mb-3">
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">First name</label>
                           <input name="first_name" value="{{ app_user.user.first_name }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Last name</label>
                           <input name="last_name" value="{{ app_user.user.last_name }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Age</label>
                           <input name="age" value="{{ app_user.age }}" class="form-control">
                         </div>
-
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="mb-6">
+                          <label class="form-label">Gender</label>
+                          <select class="form-control form-control-success btn-square" name="gender" id="account_type">
+                            {% if app_user.gender == "male" %}
+                              <option selected value="male">male</option>
+                              <option value="female">female</option>
+                            {% elif app_user == "female" %}
+                              <option value="male">male</option>
+                              <option selected value="female">female</option>
+                            {% else %}
+                              <option value="male">male</option>
+                              <option value="female">female</option>
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
 
                         {% if app_user.account_type == "recruiter" %}
                           <br />
@@ -112,40 +138,57 @@
                           <br />
                         {% endif %}
 
-                         <div class="mb-3">
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Phone Number</label>
                           <input name="phone" value="{{ app_user.phone_no }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
                           <h6 class="form-label">Address</h6>
                           <textarea name="address" class="form-control" rows="5">{{ app_user.address }}"</textarea>
                         </div>
-                        <div class="mb-3">
+                      </div>
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Country</label>
                           <input name="country" value="{{ app_user.country }}" class="form-control">
                         </div>
+                      </div>
 
 
-                        <div class="mb-3">
+                         <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Facebook</label>
                           <input name="facebook_link" value="{{ app_user.facebook_link }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Instagram</label>
                           <input name="instagram_link" value="{{ app_user.instagram_link }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">WhatsApp</label>
                           <input name="whatsapp_link" value="{{ app_user.whatsapp_link }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Github</label>
                           <input name="github_link" value="{{ app_user.github_link }}" class="form-control">
                         </div>
-                        <div class="mb-3">
+                      </div>
+                        <div class="col-md-6 mb-2">
+                          <div class="mb-6">
                           <label class="form-label">Twitter</label>
                           <input name="twitter_link" value="{{ app_user.twitter_link }}" class="form-control">
                         </div>
+                      </div>
+
 
                         <div class="form-footer">
                           <button type="submit" class="btn btn-primary btn-block">Save</button>
@@ -161,12 +204,14 @@
           </div>
           <!-- Container-fluid Ends-->
         </div>
+
+    </div>
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-6 footer-copyright">
-                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
               </div>
               <div class="col-md-6">
                 <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>

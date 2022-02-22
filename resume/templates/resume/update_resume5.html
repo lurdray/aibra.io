@@ -33,7 +33,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
             {{ message }}
         </div>
     {% endfor %}
@@ -148,7 +148,7 @@
                       </div>
                     </div>
                     <div class="card-body file-manager">
-                      <h6 style="color: #000000"><b>Add Projects, Certifications/Awards</b></h6>
+                     
                       
                       <ul class="files">
                       	{% if projects %}
@@ -156,9 +156,10 @@
                         <li class="file-box">
                           
                           <div class="file-bottom">
-                            <h6>{{ item.project }}</h6>
-                            <p class="mb-1">{{ item.detail }}</p>
+                            <h6>Project:{{ item.project }}</h6>
+                            <p class="mb-1">{{ item.detail| truncatewords:6}}</p>
                             <p> <b>Url : </b>{{ item.link }}</p>
+                            <a class="btn btn-outline-primary" href="{% url 'resume:edit_project' item.id %}">Edit Project</a>
                           </div>
                         </li>
                         {% endfor %}
@@ -178,9 +179,10 @@
                         <li class="file-box">
                           
                           <div class="file-bottom">
-                            <h6>{{ item.award }} </h6>
-                            <p class="mb-1">{{ item.detail }}</p>
+                            <h6>Awards:{{ item.award }} </h6>
+                            <p class="mb-1">{{ item.detail|truncatewords:6 }}</p>
                             <p> <b>{{ item.link }} : </b>{{ item.year }}</p>
+                            <a class="btn btn-outline-primary" href="{% url 'resume:edit_award' item.id %}">Edit Project</a>
                           </div>
                           {% endfor %}
 						  	{% else %}
@@ -199,8 +201,8 @@
                       </ul>
                       <br>
                       <div class="media-body text-end">
-                          <a href="{% url 'resume:update_resume5' %}">
-                            <div class="btn btn-primary" > <i data-feather="plan"></i>Proceed</div>
+                          <a href="{% url 'resume:update_resume4' %}">
+                            <div class="btn btn-primary" > <i data-feather="plan"></i>Back</div>
                            </a> 
                           
                           
@@ -214,6 +216,20 @@
           </div>
           <!-- Container-fluid Ends-->
         </div>
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
     {% endblock %}
 
 		<!-- 

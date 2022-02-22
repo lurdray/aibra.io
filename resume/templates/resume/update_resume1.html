@@ -3,6 +3,41 @@
 
 {% block content %}
 
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
 
    {% include 'app_user/header.html' %}
         <!-- Page Sidebar Ends-->
@@ -96,16 +131,14 @@
                     <div class="card-body">
                       <form>
                         <div class="mb-3">
-                          <h6 class="form-label">Title</h6>
-                          <p>{{ title }}</p>
-                          <hr>
+                          <h6 class="form-label">Bio</h6>
+                          <textarea class="form-control" rows="5" readonly>{{ title }}</textarea>
                         </div>
                         <div class="mb-3">
-                          <h6 class="form-label">Summary</h6>
-                          <p>{{ opening_statement }}</p>
-                          <hr>
+                          <label class="form-label">Summary</label>
+                          <input class="form-control" placeholder="{{ opening_statement }}" readonly>
                         </div>
-                        
+ 
                       </form>
                     </div>
                   </div>
@@ -121,7 +154,7 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-6 footer-copyright">
-                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
               </div>
               <div class="col-md-6">
                 <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>

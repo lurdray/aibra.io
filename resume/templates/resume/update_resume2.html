@@ -153,13 +153,16 @@
                        {% if app_user.resume.work_experiences.all %}
 
                           {% for item in app_user.resume.work_experiences.all %}
-                            <div class="mb-3">
-                              <p>
-                                <a href="{% url 'resume:edit_resume2' item.id %}">{{ item.work_experience }}</a>
-                              </p>
-                              <hr>
-                            </div>
+                           
+                              
+                           <a href="{% url 'resume:edit_resume2' item.id %}">
+
+                           <button class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i>{{ item.work_experience }}</button></a>
+                             
+                             
+                           
                           {% endfor %}
+                          <p>Click on desired fields to Update</p>
                         {% else %}
                           <p>Sorry, nothing here to see!</p>
                         {% endif %}

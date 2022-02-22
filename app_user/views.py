@@ -186,6 +186,7 @@ def UpdateAppuserView(request):
 		first_name = request.POST.get("first_name")
 		last_name = request.POST.get("last_name")
 		age = request.POST.get("age")
+		gender = request.POST.get("gender")
 		phone = request.POST.get("phone")
 		address = request.POST.get("address")
 		country = request.POST.get("country")
@@ -202,6 +203,7 @@ def UpdateAppuserView(request):
 		app_user.first_name = first_name
 		app_user.last_name = last_name
 		app_user.age = age
+		app_user.gender = gender
 		app_user.phone_no = phone
 		app_user.address = address
 		app_user.country = country
@@ -276,4 +278,14 @@ def ProfileView(request):
 	else:
 		context = {}
 		return render(request, "app_user/profile.html", context )
+
+
+def MaintainView(request):
+	if request.method == "POST":
+		pass
+
+
+	else:
+		context = {}
+		return render(request, "app_user/maintainance.html", context )
 

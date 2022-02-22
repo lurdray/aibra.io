@@ -33,7 +33,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
             {{ message }}
         </div>
     {% endfor %}
@@ -101,6 +101,13 @@
                                   </div>
                                 </li>
                                 <li>
+                                  <div class="icon"><i data-feather="user"></i></div>
+                                  <div>
+                                    <h5>Gender</h5>
+                                    <p>{{ recruit.gender }}</p>
+                                  </div>
+                                </li>
+                                <li>
                                   <div class="icon"><i data-feather="phone"></i></div>
                                   <div>
                                     <h5>Phone</h5>
@@ -133,11 +140,11 @@
 
                               </ul>
                               <div class="social-network theme-form"><span class="f-w-600">Social Networks</span>
-                                <button href="{{ recruit.facebook_link }}" class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button>
-                                <button href="{{ recruit.twitter_link }}" class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button>
-                                <button href="{{ recruit.whatsapp_link }}"class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5"></i>Whatsapp</button>
-                                <button href="{{ recruit.github_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button>
-                                <button href="{{ recruit.instagram_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button>
+                                <a href="{{ app_user.facebook_link }}"><button  class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button></a>
+                                <a href="{{ app_user.twitter_link }}"><button  class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button></a>
+                                <a href="{{ app_user.whatsapp_link }}"><button style="background-color: #128c7e !important; border: none" class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5" style=""></i>Whatsapp</button></a>
+                                <a href="{{ app_user.github_link }}"><button class="btn social-btn mb-2 btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button></a>
+                                <a href="{{ app_user.instagram_link }}"><button style="background-color: #8a3ab9 !important; border: none;" class="btn social-btn mb-2 btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button></a>
                               </div>
                             </div>
                           </div>
@@ -251,7 +258,24 @@
                 </div>
                 
         </div>
+      </div></div>
+    </div>
+    
         <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid"> 
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
     {% endblock %}
 
 

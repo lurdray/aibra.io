@@ -5,6 +5,40 @@
 
 
     {% include 'app_user/header.html' %}
+    <style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <div class="container-fluid">
@@ -44,6 +78,51 @@
           <div class="container-fluid">
             <div class="edit-profile">
               <div class="row">
+                <div class="col-xl-4 box-col-6 pe-0">
+            {% if jobs %}
+                {% for item in jobs %}
+                <div class="job-sidebar"><a class="btn btn-primary job-toggle" href="javascript:void(0)">Update Resume</a>
+                  <div class="job-left-aside custom-scrollbar">
+                    <div class="file-sidebar">
+                      <div class="card">
+                        <div class="card-body">
+                         
+                           <ul>
+                            <li>
+                              
+                              <div class="btn btn-outline-primary"><i data-feather="grid">   </i>{{ item.title }}
+                                  <small>: {{ item.pub_date }}</small></div>
+                            
+                            </li>
+                            <li> 
+                              <div class="pricing-plan">
+                                <h6>Edit Job</h6>
+                               
+                                 <a  href="{% url 'job:edit_job' item.id %}">
+                                <div class="btn btn-outline-primary btn-xs">Edit Job</div><img class="bg-img" src="{% static 'main/assets/images/dashboard/folder.png' %}" alt="">
+                              </div>
+                            </a>
+                            </li>
+                            <li> 
+                              <div class="pricing-plan">
+                                <h6>See Who Applied</h6>
+                               
+                                <a  href="{% url 'job:job_applications' item.id %}">
+                                <div class="btn btn-outline-primary btn-xs">View Application</div>
+                              </a><img class="bg-img" src="{% static 'main/assets/images/dashboard/folder1.png' %}" alt="">
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                  {% else %}
+                      <p>Sorry, nothing here to see!</p>
+                  {% endif %}
+              </div>
               	<div class="col-md-8">
 
                   <form class="card" method="post">
@@ -63,12 +142,29 @@
                         </div>
 
                         <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Salary</label>
+                            <input type="text" name="salary" class="form-control" placeholder="Salary/benefits">
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 mb-2">
                         <label class="col-form-label">Job Category</label>
                         <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple" name="category">
-                          <option value="account">account</option>
-                          <option value="tech">tech</option>
-                          <option value="agric">agric</option>
-                          <option value="education">education</option>
+                          <option value="account">Account</option>
+                          <option value="tech">Tech</option>
+                          <option value="agric">Agric</option>
+                          <option value="education">Education</option>
+                          <option value="admistration">Administration</option>
+                          <option value="ict">ICT</option>
+                          <option value="construction and building">Construction and Building</option>
+                          <option value="design, arts and crafts">Design, Arts and Crafts</option>
+                          <option value="engineering">Engineering</option>
+                          <option value="financial services">Financial services</option>
+                          <option value="healthcare">Healthcare</option>
+                          <option value="languages">Languages</option>
+                          <option value="legal services">Legal Services</option>
+                          <option value="manufaturing and production">Manufacturing and Production</option>
                           
                         </select>
                     </div>
@@ -153,50 +249,23 @@
                     </div>
                   </form>
                 </div>
-
-                <div class="col-md-4">
-                  <div class="card">
-                      <form>
-                        {% if jobs %}
-
-                          {% for item in jobs %}
-                            <div class="mb-3">
-                              <p>
-                                <a href="{% url 'job:job_applications' item.id %}">
-                                  {{ item.title }}
-                                  <br /><small>{{ item.pub_date }}</small>
-                                  <br />
-                                  <a class="btn-primary" href="{% url 'job:edit_job' item.id %}">
-                                    Edit Job
-                                  </a>
-                                  <br />
-                                  <a class="btn-primary" href="{% url 'job:job_applications' item.id %}">
-                                    View Applications
-                                  </a>
-                                </a>
-                              </p>
-                              <hr>
-                            </div>
-                          {% endfor %}
-                        {% else %}
-                          <p>Sorry, nothing here to see!</p>
-                        {% endif %}
-                      </form>
-                    </div>
+                  </div>
                 </div>
                 
-                
               </div>
-            </div>
-          </div>
+           
+          
           <!-- Container-fluid Ends-->
+          
         </div>
+
+
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-6 footer-copyright">
-                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
               </div>
               <div class="col-md-6">
                 <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>

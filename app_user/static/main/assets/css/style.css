@@ -7662,7 +7662,7 @@ table tbody .border-bottom-warning td {
   min-height: 100vh;
   text-align: center; }
   .error-wrapper.maintenance-bg {
-    background-image: url(../images/other-images/maintenance-bg.jpg);
+    background-image: url();
     background-blend-mode: overlay; }
   .error-wrapper .maintenance-icons li i {
     color: rgba(36, 105, 92, 0.5);
@@ -26159,7 +26159,7 @@ body.dark-sidebar .main-navbar ul.nav-pills {
   margin: 35px auto; }
 
 .profile-greeting {
-  background-image: url(../images/dashboard/bg.jpg);
+  background-image: url();
   background-size: cover !important;
   background-repeat: no-repeat;
   background-position: center center;

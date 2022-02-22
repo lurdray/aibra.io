@@ -33,7 +33,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
             {{ message }}
         </div>
     {% endfor %}
@@ -86,11 +86,11 @@
                     <div class="userpro-box">
                       <div class="img-wrraper">                              
                         <div class="avatar"><img alt="" src="{{ app_user.profile_photo.url }}" data-intro="This is Profile image"></div>
-                        <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5" data-intro="Change Profile image here"></i></div>
+                        <div class="icon-wrapper"><a href="{% url 'wallet:update_profile' %}"><i class="icofont icofont-pencil-alt-5" data-intro="Change Profile image here"></i></a></div>
                       </div>
                       <div class="user-designation">
                         <div class="title"><a target="_blank" href=""> 
-                            <h4>{{ app_user.first_name }} {{ app_user.last_name }}</h4>
+                            <h4>{{ app_user.user.first_name }} {{ app_user.user.last_name }}</h4>
                             {% if app_user.account_type == "candidate" %}
                               <h6>{{ app_user.resume.titles.first }}</h6>
                             {% elif app_user.account_type == "recruiter" %}
@@ -168,11 +168,11 @@
                                 </li>
                               </ul>
                               <div class="social-network theme-form"><span class="f-w-600">Social Networks</span>
-                                <button href="{{ app_user.facebook_link }}" class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button>
-                                <button href="{{ app_user.twitter_link }}" class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button>
-                                <button href="{{ app_user.whatsapp_link }}"class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5"></i>Whatsapp</button>
-                                <button href="{{ app_user.github_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button>
-                                <button href="{{ app_user.instagram_link }}"class="btn social-btn btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button>
+                                <a href="{{ app_user.facebook_link }}"><button  class="btn social-btn btn-fb mb-2 text-center"><i class="fa fa-facebook m-r-5"></i>Facebook</button></a>
+                                <a href="{{ app_user.twitter_link }}"><button  class="btn social-btn btn-twitter mb-2 text-center"><i class="fa fa-twitter m-r-5"></i>Twitter</button></a>
+                                <a href="{{ app_user.whatsapp_link }}"><button style="background-color: #128c7e !important; border: none" class="btn social-btn btn-dark mb-2 text-center"><i class="fa fa-whatsapp m-r-5" style=""></i>Whatsapp</button></a>
+                                <a href="{{ app_user.github_link }}"><button class="btn social-btn mb-2 btn-dark text-center"><i class="fa fa-github m-r-5"></i>Github</button></a>
+                                <a href="{{ app_user.instagram_link }}"><button style="background-color: #8a3ab9 !important; border: none;" class="btn social-btn mb-2 btn-dark text-center"><i class="fa fa-instagram m-r-5"></i>Instagram</button></a>
                               </div>
                             </div>
                           </div>
@@ -200,10 +200,15 @@
                       <div class="card">
                         <div class="profile-post">
                           <div class="post-header">
-                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{% static 'main/assets/images/user/7.jpg' %}" alt="Generic placeholder image">
+                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{{ app_user.profile_photo.url }}" alt="Generic placeholder image">
                               <div class="media-body align-self-center"><a href="">
-                                  <h5 class="user-name">Emay Walter</h5></a>
-                                <h6>22 Hours ago</h6>
+                                  <h5 class="user-name">{{ app_user.user.first_name }} {{ app_user.user.last_name }}</h5></a>
+                                {% if app_user.account_type == "candidate" %}
+                                  <p class="f-12">{{ app_user.resume.titles.first }}</p>
+                                {% elif app_user.account_type == "recruiter" %}
+                                  <p class="f-12">{{ app_user.agency_name }}</p>
+                                {% else %}
+                                {% endif %}
                               </div>
                             </div>
                             <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
@@ -211,20 +216,21 @@
                           <div class="post-body">
                             <div class="img-container">
                               <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
-                                <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post1.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="../assets/images/user-profile/post1.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
-                                  <figcaption itemprop="caption description">Image caption  1</figcaption>
+                                <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post1.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="https://media.istockphoto.com/photos/on-colourful-speech-bubbles-picture-id180819641?b=1&k=20&m=180819641&s=170667a&w=0&h=CX51cRVofQl95e_cu9Bfy5PLZQ1WdsqmJ-NCFzU96UI=" itemprop="thumbnail" alt="gallery"></a>
+                                  
                                 </figure>
                               </div>
                             </div>
+
                             <div class="post-react">
-                              <ul>
+                               <!--<ul>
                                 <li><img class="rounded-circle" src="{% static 'main/assets/images/user/3.jpg' %}" alt=""></li>
                                 <li><img class="rounded-circle" src="{% static 'main/assets/images/user/5.jpg' %}" alt=""></li>
                                 <li><img class="rounded-circle" src="{% static 'main/assets/images/user/1.jpg' %}" alt=""></li>
-                              </ul>
-                              <h6>+5 people react this post</h6>
+                              </ul>-->
+                              <h6>Welcome message</h6>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                                     </p>
+                            <p>Welcome to Aibra- the revolution of recruitment, Aibra (Artificial Intelligence and Blockchain Based Recruitment App) presents to you the first stage of its MVP release, due to the hugeness of what we are building we have decided to release our MVP in stages to our esteemed community so as to carry them along on every stage of the work and also to get their feedbacks and ideas as well.</p>
                             <ul class="post-comment">
                               <li>
                                 <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span class="counter">50</span></a></label>
@@ -241,142 +247,28 @@
                       </div>
                     </div>
                     <!-- profile post end-->
-                    <!-- profile post start-->
-                    <div class="col-sm-12" data-intro="This is the your Last Post">
-                      <div class="card">
-                        <div class="profile-post">
-                          <div class="post-header">
-                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{% static 'main/assets/images/user/7.jpg' %}" alt="Generic placeholder image">
-                              <div class="media-body align-self-center"><a href="#">
-                                  <h5 class="user-name">Emay Walter</h5></a>
-                                <h6>5 Hours ago</h6>
-                              </div>
-                            </div>
-                            <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
-                          </div>
-                          <div class="post-body">
-                            <div class="img-container">
-                              <div class="row mt-4 pictures my-gallery" id="aniimated-thumbnials-2" itemscope="">
-                                <figure class="col-sm-6" itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post2.jpg' %}" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="{% static 'main/assets/images/user-profile/post2.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
-                                  <figcaption itemprop="caption description">Image caption  1</figcaption>
-                                </figure>
-                                <figure class="col-sm-6" itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post3.jpg' %}" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="{% static 'main/assets/images/user-profile/post3.jpg ' %}" itemprop="thumbnail" alt="gallery"></a>
-                                  <figcaption itemprop="caption description">Image caption  2</figcaption>
-                                </figure>
-                              </div>
-                            </div>
-                            <div class="post-react">
-                              <ul>
-                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/3.jpg' %}" alt=""></li>
-                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/5.jpg' %}" alt=""></li>
-                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/1.jpg' %}" alt=""></li>
-                              </ul>
-                              <h6>+25 people react this post</h6>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                                     </p>
-                            <ul class="post-comment">
-                              <li>
-                                <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span class="counter">520</span></a></label>
-                              </li>
-                              <li>
-                                <label><a href="#"><i data-feather="message-square"></i>&nbsp;&nbsp;Comment<span class="counter">85</span></a></label>
-                              </li>
-                              <li>
-                                <label><a href="#"><i data-feather="share"></i>&nbsp;&nbsp;share<span class="counter">30</span></a></label>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- profile post end   -->
-                    <!-- profile post start-->
-                    <div class="col-sm-12">
-                      <div class="card">
-                        <div class="profile-post">
-                          <div class="post-header">
-                            <div class="media"><img class="img-thumbnail rounded-circle me-3" src="{% static 'main/assets/images/user/7.jpg' %}" alt="Generic placeholder image">
-                              <div class="media-body align-self-center"><a href="#">
-                                  <h5 class="user-name">Emay Walter</h5></a>
-                                <h6>2 Hours ago</h6>
-                              </div>
-                            </div>
-                            <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
-                          </div>
-                          <div class="post-body">
-                            <div class="img-container">
-                              <div class="my-gallery" id="aniimated-thumbnials" itemscope="">
-                                <figure itemprop="associatedMedia" itemscope=""><a href="{% static 'main/assets/images/user-profile/post4.jpg' %}" itemprop="contentUrl" data-size="1600x950"><img class="img-fluid rounded" src="{% static 'main/assets/images/user-profile/post4.jpg' %}" itemprop="thumbnail" alt="gallery"></a>
-                                  <figcaption itemprop="caption description">Image caption  1</figcaption>
-                                </figure>
-                              </div>
-                            </div>
-                            <div class="post-react">
-                              <ul>
-                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/3.jpg' %}" alt=""></li>
-                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/5.jpg' %}" alt=""></li>
-                                <li><img class="rounded-circle" src="{% static 'main/assets/images/user/1.jpg' %}" alt=""></li>
-                              </ul>
-                              <h6>+20 people react this post</h6>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                                     </p>
-                            <ul class="post-comment">
-                              <li>
-                                <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span class="counter">407</span></a></label>
-                              </li>
-                              <li>
-                                <label><a href="#"><i data-feather="message-square"></i>&nbsp;&nbsp;Comment<span class="counter">302</span></a></label>
-                              </li>
-                              <li>
-                                <label><a href="#"><i data-feather="share"></i>&nbsp;&nbsp;share<span class="counter">180</span></a></label>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- profile post end                           -->
-                  </div>
-                </div>
-                <!-- user profile fifth-style end-->
-                <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-                  <div class="pswp__bg"></div>
-                  <div class="pswp__scroll-wrap">
-                    <div class="pswp__container">
-                      <div class="pswp__item"></div>
-                      <div class="pswp__item"></div>
-                      <div class="pswp__item"></div>
-                    </div>
-                    <div class="pswp__ui pswp__ui--hidden">
-                      <div class="pswp__top-bar">
-                        <div class="pswp__counter"></div>
-                        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                        <button class="pswp__button pswp__button--share" title="Share"></button>
-                        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                        <div class="pswp__preloader">
-                          <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                              <div class="pswp__preloader__donut"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                        <div class="pswp__share-tooltip"></div>
-                      </div>
-                      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-                      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-                      <div class="pswp__caption">
-                        <div class="pswp__caption__center"></div>
-                      </div>
-                    </div>
-                  </div>
+                   
+                
                 </div>
               </div>
             </div>
           </div>
+        </div>
           <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid"> 
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
     {% endblock %}
