@@ -260,11 +260,8 @@ def EditJobView(request, job_id):
 
 		title = request.POST.get("title")
 		salary = request.POST.get("salary")
-		category = request.POST.get("category")
 		address = request.POST.get("address")
-		country = request.POST.get("country")
 		description = request.POST.get("description")
-		job_type = request.POST.get("job_type")
 		responsibility = request.POST.get("responsibility")
 		requirement = request.POST.get("requirement")
 		contact_email = request.POST.get("contact_email")
@@ -273,11 +270,8 @@ def EditJobView(request, job_id):
 
 		job.title = title
 		job.salary = salary
-		job.category = category
 		job.address = address
-		job.country = country
 		job.description = description
-		job.job_type = job_type
 		job.responsibility = responsibility
 		job.requirement = requirement
 		job.contact_email = contact_email

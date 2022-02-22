@@ -105,30 +105,15 @@
 
                         <div class="col-md-12 mb-2">
                         <label class="col-form-label">Job Category</label>
-                        <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple" name="category">
-                          <option value="account">Account</option>
-                          <option value="tech">Tech</option>
-                          <option value="agric">Agric</option>
-                          <option value="education">Education</option>
-                          <option value="admistration">Administration</option>
-                          <option value="ict">ICT</option>
-                          <option value="construction and building">Construction and Building</option>
-                          <option value="design, arts and crafts">Design, Arts and Crafts</option>
-                          <option value="engineering">Engineering</option>
-                          <option value="financial services">Financial services</option>
-                          <option value="healthcare">Healthcare</option>
-                          <option value="languages">Languages</option>
-                          <option value="legal services">Legal Services</option>
-                          <option value="manufaturing and production">Manufacturing and Production</option>
-                          
-                        </select>
+                        <input type="text" name="category" class="form-control" placeholder="Category">
+
                     </div>
                    
                         
                         <div class="col-md-12 mb-3">
                           <div>
                             <label class="form-label">Description</label>
-                            <textarea name="description"  class="form-control" rows="6">{{ job.description }}"</textarea>
+                            <textarea name="description"  class="form-control ckeditor" rows="6">{{ job.description|safe }}"</textarea>
                           </div>
                         </div>
                          <div class="col-md-12 mb-2">
@@ -139,13 +124,13 @@
                     <div class="col-md-12 mb-3">
                           <div>
                             <label class="form-label">Responsibilities</label>
-                            <textarea name="responsibility"   class="form-control" rows="5">{{ job.responsibility }}</textarea>
+                            <textarea name="responsibility"   class="form-control ckeditor" rows="5">{{ job.responsibility|safe }}</textarea>
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div>
                             <label class="form-label">Requirement</label>
-                            <textarea name="requirement"  class="form-control" rows="5" >{{ job.requirement }}</textarea>
+                            <textarea name="requirement"  class="form-control ckeditor" rows="5" >{{ job.requirement|safe }}</textarea>
                           </div>
                         </div>
 

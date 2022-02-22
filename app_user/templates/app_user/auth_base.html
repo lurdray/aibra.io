@@ -125,5 +125,16 @@
     <script src="{% static 'main/assets/js/datepicker/date-picker/datepicker.js' %}"></script>
     <script src="{% static 'main/assets/js/datepicker/date-picker/datepicker.en.js' %}"></script>
     <script src="{% static 'main/assets/js/datepicker/date-picker/datepicker.custom.js' %}"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.0.1/ckeditor.js"></script>
+    <script type="text/javascript">
+      (function ($) {
+        $(document).ready(function () {
+          CKEDITOR.replace($('.ckeditor').get(0), {
+          });
+        });
+      })(jQuery);
+
+    </script>
   </body>
 </html>

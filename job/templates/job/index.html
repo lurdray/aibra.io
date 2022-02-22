@@ -190,7 +190,7 @@
                         </div>
                       </div>
                       <p>
-                        {{ item.description|truncatewords:40 }}
+                        {{ item.description|safe|truncatewords:40 }}
                       </p>
                       <a href="{% url 'job:apply_job' item.id app_user.id %}" class="btn btn-primary-light">Easily Apply</a>  <a href="{% url 'job:job_detail' item.id %}" class="btn btn-primary-light">View Details</a>
                     </div>

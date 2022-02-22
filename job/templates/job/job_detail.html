@@ -146,7 +146,7 @@
                       </div>
                       <div class="job-description">
                         <h6>Job Description</h6>
-                        <p class="text-start">{{ job.description }}</p>
+                        <p class="text-start">{{ job.description|safe }}</p>
                         <!-- <p>Front-end web designers combine design, programming, writing and organizational skills in their work. They help shape the vision for a company's online content.</p>-->
                       </div>
                       <div class="job-description">
@@ -156,12 +156,12 @@
                       </div>
                       <div class="job-description">
                         <h6>Requirements </h6>
-                        <p class="text-start">{{ job.requirement }}</p>
+                        <p class="text-start">{{ job.requirement|safe }}</p>
                         
                       </div>
                       <div class="job-description">
                         <h6>Responsibilities </h6>
-                        <p class="text-start">{{ job.responsibility }}</p>
+                        <p class="text-start">{{ job.responsibility|safe }}</p>
                         
                       </div>
                       <div class="job-description">
