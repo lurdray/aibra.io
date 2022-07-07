@@ -77,6 +77,38 @@
           <!-- Container-fluid starts-->
           <div class="container-fluid user-card">
             <div class="row">
+              Qualified({{ job.quiz.barrier }}% and more)
+              <br />
+              <a href="{% url 'interview:setup_interview' job.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> Setup video interview for qualified candidates</a> 
+              {% for item in job.results.all %}
+              {% if item.percentage >= job.quiz.barrier %}
+                <div class="col-md-6 col-lg-6 col-xl-4 box-col-6">
+                  <div class="card custom-card">
+                    <div class="card-profile"><img class="rounded-circle" src="{{ item.app_user.profile_photo.url }}" alt=""></div>
+                    <ul class="card-social">
+                      <li><a href="{{ item.app_user.facebook_link }}"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="{{ item.app_user.whatsapp_link }}"><i class="fa fa-whatsapp"></i></a></li>
+                      <li><a href="{{ item.app_user.twitter_link }}"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="{{ item.app_user.instagram_link }}"><i class="fa fa-instagram"></i></a></li>
+                      <li><a href="{{ item.app_user.github_link }}"><i class="fa fa-github"></i></a></li>
+                    </ul>
+                    <div class="text-center profile-details"><a href="{% url 'app_user:app_user_detail' item.app_user.id %}">
+                        <h4>{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</h4></a>
+                      <h6>{{ item.app_user.resume.titles.last }}</h6>
+                      <a href="{% url 'quiz:see_result' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Quiz Score</a> 
+                      <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
+                      <a href="{{ item.app_user.cv.url }}" download="CV" class="btn btn-primary-light" download><i class="icofont icofont-download"></i> Download Resume</a>
+                    </div>
+                    
+                  </div>
+                </div>
+              {% endif %}
+              {% endfor %}
+        </div>
+
+            <br /><br />
+            <div class="row">
+              All
             	{% for item in applications %}
               <div class="col-md-6 col-lg-6 col-xl-4 box-col-6">
                 <div class="card custom-card">
@@ -91,6 +123,7 @@
                   <div class="text-center profile-details"><a href="{% url 'app_user:app_user_detail' item.app_user.id %}">
                       <h4>{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</h4></a>
                     <h6>{{ item.app_user.resume.titles.last }}</h6>
+                    <a href="{% url 'quiz:see_result' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Quiz Score</a> 
                     <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
                     <a href="{{ item.app_user.cv.url }}" download="CV" class="btn btn-primary-light" download><i class="icofont icofont-download"></i> Download Resume</a>
                   </div>
@@ -98,13 +131,9 @@
                 </div>
               </div>
               {% endfor %}
-              
-              
-              
-              
-              
-          <!-- Container-fluid Ends-->
         </div>
+
+
       </div>
     </div>
     

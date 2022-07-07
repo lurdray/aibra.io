@@ -124,7 +124,7 @@
                 </div>
               </div>
               <div class="col-xl-9 xl-60 box-col-8">
-              	{% for item in search_results %}
+                {% for item in search_results %}
                 <div class="card ribbon-vertical-left-wrapper">
                   <div class="ribbon ribbon-bookmark ribbon-vertical-left ribbon-primary"><i class="icofont icofont-globe-alt"></i></div>
                   <div class="job-search">
@@ -145,7 +145,19 @@
                       <p>
                         {{ item.description|truncatewords:40|safe }}
                       </p>
-                      <a href="{% url 'job:apply_job' item.id app_user.id %}" class="btn btn-primary-light">Easily Apply</a>  <a href="{% url 'job:job_detail' item.id %}" class="btn btn-primary-light">View Details</a>
+                      <div class="media-body text-end">
+                          <a href="{% url 'job:apply_job' item.id app_user.id %}">
+                            <div class="btn btn-primary" > <i data-feather="plan"></i>Apply</div>
+
+                           </a> 
+
+                            <a href="{% url 'job:job_detail' item.id %}">
+                            <div class="btn btn-primary" > <i data-feather="plan"></i>View Detail</div>
+                            
+                           </a> 
+                          
+                          
+                        </div>
                     </div>
 
                   </div>
@@ -189,36 +201,36 @@
 
 {% endblock %}
 
-		<!-- 
-		<section class="content">
-			<div class="row">
-				<div class="col-12">
-					<div class="box">
-						<div class="box-header with-border">
-						  <h4 class="box-title">Available Jobs.</h4>
-						</div>
-						<div class="box-body">
-						  <div class="row">
-						  	
-						  	<div class="col-lg-4">
-						  		{% for item in jobs %}
-						  			<a href="{% url 'job:job_detail' item.id %}">{{ item.title }}</a><br />
-						  		{% endfor %}
-						  	</div>
+    <!-- 
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h4 class="box-title">Available Jobs.</h4>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                
+                <div class="col-lg-4">
+                  {% for item in jobs %}
+                    <a href="{% url 'job:job_detail' item.id %}">{{ item.title }}</a><br />
+                  {% endfor %}
+                </div>
 
-						  </div>
-						</div>
-						
-						<div class="box-footer">
-						  Footer
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</section>
+              </div>
+            </div>
+            
+            <div class="box-footer">
+              Footer
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
 -->
-	  
+    
 
 
 

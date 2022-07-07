@@ -6,5 +6,6 @@ app_name = "interview"
 urlpatterns = [
 
 	path("", views.IndexView, name="index"),
+	path("setup-interview/<int:job_id>/", views.SetupInterviewView, name="setup_interview"),
 	
 ]

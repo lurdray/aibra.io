@@ -11,7 +11,7 @@ urlpatterns = [
 	path("my-applications/", views.MyApplicationsView, name="my_applications"),
 
 	path("add-job/", views.AddJobView, name="add_job"),
-	path("job-applications<int:job_id>/", views.JobApplicationsView, name="job_applications"),
+	path("job-applications/<int:job_id>/", views.JobApplicationsView, name="job_applications"),
 	path("edit-job/<int:job_id>/", views.EditJobView, name="edit_job"),
 
 	path("search-job/<str:query_type>/<str:query>/", views.SearchJobView, name="search_job"),

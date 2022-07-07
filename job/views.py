@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from django.core.mail import send_mail
 
@@ -164,9 +165,14 @@ def AllLocationView(request, query):
 
 
 
-
+#@login_required(login_url='/app/sign-in/')
 def JobDetailView(request, job_id):
-	app_user = AppUser.objects.get(user__pk=request.user.id)
+	try:
+		app_user = AppUser.objects.get(user__pk=request.user.id)
+
+	except:
+		app_user = None
+
 	if request.method == "POST":
 		pass
 
@@ -212,7 +218,7 @@ def ApplyJobView(request, job_id, app_user_id):
 	ja.save()
 
 	messages.warning(request, "Job Applied!")
-	return HttpResponseRedirect(reverse("job:index"))
+	return HttpResponseRedirect(reverse("quiz:take_quiz", args=[job.id,]))
 
 
 
@@ -313,7 +319,7 @@ def AddJobView(request):
 		job.save()
 
 		messages.warning(request, "Job Added!")
-		return HttpResponseRedirect(reverse("job:add_job"))
+		return HttpResponseRedirect(reverse("quiz:setup_quiz"))
 
 
 	else:

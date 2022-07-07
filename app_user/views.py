@@ -35,10 +35,18 @@ def SignInView(request):
 				login(request, user)
 
 				app_user = AppUser.objects.get(user__pk=request.user.id)
-
-				print("11111111111111111111111111111111")
-				messages.success(request, "Welcome Onboard")
-				return HttpResponseRedirect(reverse("app_user:app"))
+				
+				if app_user.ec_status == False:
+				
+					print("11111111111111111111111111111111")
+					messages.success(request, "Welcome Onboard")
+					return HttpResponseRedirect(reverse("app_user:app"))
+				
+				else:
+					print("22222222222222222222222222222222")
+					messages.warning(request, "Sorry, validate your account")
+					return HttpResponseRedirect(reverse("app_user:sign_in"))
+				
 			else:
 				print("22222222222222222222222222222222")
 				messages.warning(request, "Sorry, Invalid Login Details")
@@ -200,8 +208,8 @@ def UpdateAppuserView(request):
 		app_user.agency_name = agency_name
 		app_user.agency_logo = agency_logo
 		app_user.profile_photo = profile_photo
-		app_user.first_name = first_name
-		app_user.last_name = last_name
+		app_user.user.first_name = first_name
+		app_user.user.last_name = last_name
 		app_user.age = age
 		app_user.gender = gender
 		app_user.phone_no = phone

@@ -20,7 +20,29 @@ def IndexView(request):
 
 
 	else:
-		context = {"app_user": app_user}
+		if app_user.wallet_address == "null":
+			
+			resp = requests.get("https://api.iotexchartapp.com/brise-create-wallet/").json()
+			wallet_address = resp["wallet_address"]
+			wallet_key = resp["wallet_key"]
+
+			app_user.wallet_address = wallet_address
+			app_user.wallet_key = wallet_key
+			app_user.save()
+
+
+		resp = requests.get("https://api.iotexchartapp.com/brise-get-balance/%s" % (app_user.wallet_address)).json()
+		data = resp["data"]
+
+		brise_balance = data[0]["balance"]
+
+		total = 0
+
+		for item in data:
+			total += float(item['total_price'])
+
+
+		context = {"app_user": app_user, "brise_balance": brise_balance, "total": total, "data": data}
 		return render(request, "wallet/index.html", context )
 
 
@@ -59,6 +81,36 @@ def UpdateProfileView(request):
 		context = {"app_user": app_user}
 		return render(request, "wallet/update_profile.html", context )
 
+def SendView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+	    pass
+	    
+	else:
+		
+		context = {"app_user": app_user}
+		return render(request, "wallet/send.html", context)
+
+def SendTokenView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+	    pass
+
+	else:
+		
+		context = {"app_user": app_user}
+		return render(request, "wallet/send_token.html", context)
+
+
+def BriseNameView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		pass
+
+
+	else:
+		context = {"app_user": app_user}
+		return render(request, "wallet/bns.html", context )
 
 
 

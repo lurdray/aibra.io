@@ -1,0 +1,327 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+{% include 'app_user/header.html' %}
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Quiz</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Quiz</li>
+                    <li class="breadcrumb-item active">Add Question</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="jobs" data-original-title="Tables"><i data-feather="briefcase"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Chat" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Connects" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+
+
+              <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <div class="row">
+                        
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card" style="border-radius: 30px;">
+            <div class="card-header" style="background-color: #28a745; border-radius:30px 30px 0 0; color: #fff">Add Questions and Answers</div>
+            <div class="card-body">
+          <div class="form-group">
+
+
+              <label for="cc-payment" class="control-label mb-1">Question 1</label>
+              <textarea name="q1" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
+              <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q1_a" placeholder="A" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q1_b" placeholder="B" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q1_c" placeholder="C" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q1_d" placeholder="D" type="text" class="form-control cc-name valid">
+                  </div>
+              </div>
+              <br  />
+              <div class="row form-group" style="background-color: #28a745; color: #fff;">
+                  <div class="col col-md-3" >
+                      <label for="select" class=" form-control-label">Select Answer</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                      <select name="answer_1" id="select" class="form-control">
+                          <option value="a">A</option>
+                          <option value="b">B</option>
+                          <option value="c">C</option>
+                          <option value="d">D</option>
+                      </select>
+                  </div>
+              </div>
+
+              <hr>
+              <br />
+
+              {% if quiz.question_no > 1 %}
+
+              <label for="cc-payment" class="control-label mb-1">Question 2</label>
+              <textarea name="q2" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
+              <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q2_a" placeholder="A" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q2_b" placeholder="B" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q2_c" placeholder="C" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q2_d" placeholder="D" type="text" class="form-control cc-name valid">
+                  </div>
+              </div>
+              <br  />
+              <div class="row form-group" style="background-color: #28a745; color: #fff;">
+                  <div class="col col-md-3">
+                      <label for="select" class=" form-control-label">Select Answer</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                      <select name="answer_2" id="select" class="form-control">
+                          <option value="a">A</option>
+                          <option value="b">B</option>
+                          <option value="c">C</option>
+                          <option value="d">D</option>
+                      </select>
+                  </div>
+              </div>
+
+              <hr>
+              <br />
+
+              {% endif %}
+
+
+              {% if quiz.question_no > 2 %}
+              <label for="cc-payment" class="control-label mb-1">Question 3</label>
+              <textarea name="q3" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
+              <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q3_a" placeholder="A" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q3_b" placeholder="B" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q3_c" placeholder="C" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q3_d" placeholder="D" type="text" class="form-control cc-name valid">
+                  </div>
+              </div>
+              <br  />
+              <div class="row form-group" style="background-color: #28a745; color: #fff;">
+                  <div class="col col-md-3">
+                      <label for="select" class=" form-control-label">Select Answer</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                      <select name="answer_3" id="select" class="form-control">
+                          <option value="a">A</option>
+                          <option value="b">B</option>
+                          <option value="c">C</option>
+                          <option value="d">D</option>
+                      </select>
+                  </div>
+              </div>
+              <hr>
+              <br />
+
+              {% endif %}
+
+              {% if quiz.question_no > 3 %}
+
+              <label for="cc-payment" class="control-label mb-1">Question 4</label>
+              <textarea name="q4" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
+              <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q4_a" placeholder="A" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q4_b" placeholder="B" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q4_c" placeholder="C" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q4_d" placeholder="D" type="text" class="form-control cc-name valid">
+                  </div>
+              </div>
+              <br  />
+              <div class="row form-group" style="background-color: #28a745; color: #fff;"s>
+                  <div class="col col-md-3">
+                      <label for="select" class=" form-control-label">Select Answer</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                      <select name="answer_4" id="select" class="form-control">
+                          <option value="a">A</option>
+                          <option value="b">B</option>
+                          <option value="c">C</option>
+                          <option value="d">D</option>
+                      </select>
+                  </div>
+              </div>
+              <hr>
+              <br />
+
+              {% endif %}
+
+              {% if quiz.question_no > 4 %}
+
+              <label for="cc-payment" class="control-label mb-1">Question 5</label>
+              <textarea name="q5" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
+              <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q5_a" placeholder="A" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q5_b" placeholder="B" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q5_c" placeholder="C" type="text" class="form-control cc-name valid">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                      <input id="cc-name" name="q5_d" placeholder="D" type="text" class="form-control cc-name valid">
+                  </div>
+              </div>
+              <br  />
+              <div class="row form-group" style="background-color: #28a745; color: #fff;">
+                  <div class="col col-md-3">
+                      <label for="select" class=" form-control-label">Select Answer</label>
+                  </div>
+                  <div class="col-12 col-md-9">
+                      <select name="answer_5" id="select" class="form-control">
+                          <option value="a">A</option>
+                          <option value="b">B</option>
+                          <option value="c">C</option>
+                          <option value="d">D</option>
+                      </select>
+                  </div>
+              </div>
+              <hr>
+              <br />
+
+              {% endif %}
+              
+          </div>
+            </div>
+        </div>
+    </div>
+                                
+                                
+                                                                
+                                
+            </div>  
+            
+    <div class="row">
+      <div class="col-lg-12 col-md-8 col-sm-6 col-xs-4">
+        <button id="payment-button" type="submit" class="btn btn-lg btn-block btn btn-success">
+           <span id="payment-button-amount" class="btn btn-success">Next</span>
+           <span id="payment-button-sending" style="display:none;">Processing..</span>
+        </button>
+    </div>
+    </div>
+ </form>
+
+            	
+
+              
+
+
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+
+
+                       
+        
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+{% endblock %}
+
+  

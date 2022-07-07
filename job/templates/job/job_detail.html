@@ -86,13 +86,6 @@
                               <div class="card-body animate-chk">
                                 <div class="location-checkbox">
 
-                                  {% if countries %}
-                                    {% for item in countries %}
-                                      <a href="{% url 'job:search_job' 'country' item %}"> <button type="submit" class="btn btn-outline-primary mb-2" type="button" style="text-transform: capitalize;"><i class="icofont icofont-star-shape" ></i> {{ item }}</button></a>
-                                    {% endfor %}
-                                  {% else %}
-
-                                  {% endif %}
                                 </div>
                               </div>
                             </div>
@@ -132,7 +125,7 @@
                       <div class="media"><img class="img-40 img-fluid m-r-20" src="{% static 'main/assets/images/job-search/1.jpg' %}" alt="">
                         <div class="media-body">
                           <h6 class="f-w-600" style="text-transform:capitalize;"><a href="javascript:void(0)">{{ job.title }}                                   </a></h6>
-                          <p style="text-transform: capitalize;">{{ job.job_type }} - United States </p>
+                          <p style="text-transform: capitalize;">{{ job.job_type }} - {{ item.country }} </p>
                           
                           <ul class="rating">
                             <li><i class="fa fa-star font-warning"></i></li>
@@ -156,7 +149,7 @@
                       </div>
                       <div class="job-description">
                         <h6>Requirements </h6>
-                        <p class="text-start">{{ job.requirement|safe }}</p>
+                        <div>{{ job.requirement|safe }}</div>
                         
                       </div>
                       <div class="job-description">
@@ -184,7 +177,7 @@
                   <h6 class="mb-0 f-w-600">Similar jobs</h6>
                 </div>
                 <div class="row">
-                	{% for item in similar_jobs %}
+                  {% for item in similar_jobs %}
                   <div class="col-xl-6 xl-100 box-col-12">
                     <div class="card">
                       <div class="job-search">
@@ -233,57 +226,57 @@
     </div>
 {% endblock %}
 
-		<!-- 
-		<section class="content">
-			<div class="row">
-				<div class="col-12">
-					<div class="box">
-						<div class="box-header with-border">
-						  <h4 class="box-title">Job Detail.</h4>
-						</div>
-						<div class="box-body">
-						  <div class="row">
-						  	
-						  	<div class="col-lg-4">
-						  		<p>Job Title: {{ job.title }}</p>
-						  		<p>Description: {{ job.description }}</p>
+    <!-- 
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h4 class="box-title">Job Detail.</h4>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                
+                <div class="col-lg-4">
+                  <p>Job Title: {{ job.title }}</p>
+                  <p>Description: {{ job.description }}</p>
 
-						  		<p>Type: {{ job.job_type }}</p>
-						  		<p>Responsibility{{ job.responsibility }}</p>
-						  		<p>{{ job.requirement }}</p><br /><br />
+                  <p>Type: {{ job.job_type }}</p>
+                  <p>Responsibility{{ job.responsibility }}</p>
+                  <p>{{ job.requirement }}</p><br /><br />
 
-						  		<h3>Method of Application:</h3>
-						  		<p>To Apply for this job, kindly send ur cv to <b>{{ job.contact_email }}</b> with the subject as the title or call <b>{{ job.contact_phone }}</b>.</p><br />
-						  		<p>Deadline: {{ job.deadline }}</p>
+                  <h3>Method of Application:</h3>
+                  <p>To Apply for this job, kindly send ur cv to <b>{{ job.contact_email }}</b> with the subject as the title or call <b>{{ job.contact_phone }}</b>.</p><br />
+                  <p>Deadline: {{ job.deadline }}</p>
 
-						  		<p>Alternative application: Easy Apply!</p>
-						  		{% if applied_status %}
-						  			<a href="{% url 'job:index' %}"><h3>Applied!<small>(Find Other Job)</small></h3></a>
-						  		{% else %}
-						  			<a href="{% url 'job:apply_job' job.id app_user.id %}"><h3>Apply Now!</h3></a>
-						  		{% endif %}
-						  	</div>
+                  <p>Alternative application: Easy Apply!</p>
+                  {% if applied_status %}
+                    <a href="{% url 'job:index' %}"><h3>Applied!<small>(Find Other Job)</small></h3></a>
+                  {% else %}
+                    <a href="{% url 'job:apply_job' job.id app_user.id %}"><h3>Apply Now!</h3></a>
+                  {% endif %}
+                </div>
 
-						  	<div class="col-lg-6">
-						  		Other jobs you should check out.<br />
-						  		{% for item in jobs %}
-						  			<a href="{% url 'job:job_detail' item.id %}">{{ item.title }}</a><br />
-						  		{% endfor %}
-						  	</div>
+                <div class="col-lg-6">
+                  Other jobs you should check out.<br />
+                  {% for item in jobs %}
+                    <a href="{% url 'job:job_detail' item.id %}">{{ item.title }}</a><br />
+                  {% endfor %}
+                </div>
 
-						  </div>
-						</div>
-						
-						<div class="box-footer">
-						  Footer
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</section>
+              </div>
+            </div>
+            
+            <div class="box-footer">
+              Footer
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
 content -->
-	  
+    
 
 
 

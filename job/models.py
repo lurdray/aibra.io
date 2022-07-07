@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 from interview.models import Interview
-from quiz.models import Quiz
+from quiz.models import Quiz, Result
 from app_user.models import AppUser
 
 
@@ -57,6 +57,8 @@ class Job(models.Model):
 	applications = models.ManyToManyField(Application, through="JobApplicationConnector")
 	interviews = models.ManyToManyField(Interview, through="JobInterviewConnector")
 	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True)
+	results = models.ManyToManyField(Result, through="JobResultConnector")
+
 
 
 	status = models.BooleanField(default=False)
@@ -71,6 +73,16 @@ class ApplicationAnswerConnector(models.Model):
 	application = models.ForeignKey(Application, on_delete=models.CASCADE)
 	answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 	pub_date = models.DateTimeField(default=timezone.now)
+
+
+
+
+class JobResultConnector(models.Model):
+	job = models.ForeignKey(Job, on_delete=models.CASCADE)
+	result = models.ForeignKey(Result, on_delete=models.CASCADE)
+	pub_date = models.DateTimeField(default=timezone.now)
+
+
 
 
 class JobApplicationConnector(models.Model):

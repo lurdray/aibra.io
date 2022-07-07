@@ -28,3 +28,16 @@ def IndexView(request):
 		context = {}
 		return render(request, "interview/index.html", context )
 
+
+
+
+
+def SetupInterviewView(request, job_id):
+	if request.method == "POST":
+		pass
+
+
+	else:
+		context = {}
+		return render(request, "interview/setup_interview.html", context )
+
