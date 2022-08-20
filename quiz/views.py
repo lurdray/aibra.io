@@ -194,7 +194,7 @@ def SeeResultView(request, app_user_id):
 
 	else:
 
-		context = {"result": result, "app_user": app_user}
+		context = {"result": result, "app_user": app_user,"app_user_id": app_user_id}
 		return render(request, "quiz/see_result.html", context )
 
 

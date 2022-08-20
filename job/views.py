@@ -297,6 +297,39 @@ def EditJobView(request, job_id):
 
 
 
+def AddJobFRView(request, request_id):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	job_request = JobRequest.objects.get(id=request_id)
+	if request.method == "POST":
+		title = request.POST.get("title")
+		salary = request.POST.get("salary")
+		category = request.POST.get("category")
+		address = request.POST.get("address")
+		country = request.POST.get("country")
+		description = request.POST.get("description")
+		job_type = request.POST.get("job_type")
+		responsibility = request.POST.get("responsibility")
+		requirement = request.POST.get("requirement")
+		contact_email = request.POST.get("contact_email")
+		contact_phone = request.POST.get("contact_phone")
+		deadline = request.POST.get("deadline")
+
+		job = Job.objects.create(app_user=app_user, title=title, salary=salary, category=category, address=address, country=country, description=description, job_type=job_type,
+			responsibility=responsibility, requirement=requirement, contact_email=contact_email, contact_phone=contact_phone,
+			deadline=deadline)
+		job.save()
+
+		messages.warning(request, "Job Added!")
+		return HttpResponseRedirect(reverse("quiz:setup_quiz"))
+
+
+	else:
+		jobs = Job.objects.filter(app_user=app_user)
+
+		context = {"app_user": app_user, "jobs": jobs, "job_request": job_request}
+		return render(request, "job/add_job_fr.html", context )
+
+
 def AddJobView(request):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
@@ -348,3 +381,85 @@ def JobApplicationsView(request, job_id):
 
 
 
+
+
+def RequestView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		title = request.POST.get("title")
+		salary = request.POST.get("salary")
+		description = request.POST.get("description")
+		job_type = request.POST.get("job_type")
+		slots = request.POST.get("slots")
+		deadline = request.POST.get("deadline")
+
+		job_request = JobRequest.objects.create(app_user=app_user, title=title, salary=salary,
+		description=description, job_type=job_type, slots=slots,
+			deadline=deadline)
+		job_request.save()
+
+		messages.warning(request, "Request Created!")
+		return HttpResponseRedirect(reverse("job:request"))
+
+
+	else:
+		all_requests = JobRequest.objects.filter(app_user=app_user)
+		context = {"app_user": app_user, "all_requests": all_requests}
+		return render(request, "job/request.html", context )
+
+
+def EditRequestView(request, request_id):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	job_request = JobRequest.objects.get(id=request_id)
+	if request.method == "POST":
+		title = request.POST.get("title")
+		salary = request.POST.get("salary")
+		description = request.POST.get("description")
+		job_type = request.POST.get("job_type")
+		slots = request.POST.get("slots")
+		deadline = request.POST.get("deadline")
+
+		job_request.title = title
+		job_request.salary = salary
+		job_request.description = description
+		job_request.job_type = job_type
+		job_request.slots = slots
+		job_request.deadline = deadline
+
+		job_request.save()
+
+		messages.warning(request, "Request Updated!")
+		return HttpResponseRedirect(reverse("job:edit_request", args=[request_id,]))
+
+	else:
+		
+
+		context = {"app_user": app_user, "job_request": job_request}
+		return render(request, "job/edit_request.html", context )
+
+
+def RequestDetailView(request, request_id):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		pass
+
+
+	else:
+		job_request = JobRequest.objects.get(id=request_id)
+
+		context = {"app_user": app_user, "job_request": job_request}
+		return render(request, "job/request_detail.html", context )
+
+
+
+def AllRequestsView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+		pass
+
+
+	else:
+		all_requests = JobRequest.objects.all().order_by("-pub_date")
+
+		context = {"app_user": app_user, "all_requests": all_requests}
+		return render(request, "job/all_requests.html", context )

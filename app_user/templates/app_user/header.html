@@ -116,13 +116,17 @@
                   <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="briefcase"></i><span>Jobs</span></a> 
                   <ul class="nav-submenu menu-content">
                     {% if app_user.account_type == "recruiter" %}
+                      <li><a href="{% url 'job:all_requests' %}">View requests</a></li>
                       <li><a href="{% url 'job:add_job' %}">Add Jobs</a></li>
                       <li><a href="{% url 'quiz:setup_quiz' %}">Add Quiz</a></li>
                     {% endif %}
                     {% if app_user.account_type == "candidate" %}
                       <li><a href="/job/">Available Jobs</a></li>
                       <li><a href="{% url 'job:my_applications' %}">My Applications</a></li>
-                    {% endif %}      
+                    {% endif %} 
+                    {% if app_user.account_type == "company" %}
+                      <li><a href="{% url 'job:request' %}">Request Candidate</a></li>
+                    {% endif %}    
                     </ul>  
                   </li>
                   {% if app_user.account_type == "candidate" %}

@@ -10,7 +10,15 @@ urlpatterns = [
 	path("apply-job/<int:job_id>/<int:app_user_id>/", views.ApplyJobView, name="apply_job"),
 	path("my-applications/", views.MyApplicationsView, name="my_applications"),
 
+	path("request-candiates/", views.RequestView, name="request"),
+	path("all-requests/", views.AllRequestsView, name="all_requests"),
+	path("edit_request/<int:request_id>/", views.EditRequestView, name="edit_request"),
+	path("request-detail/<int:request_id>/", views.RequestDetailView, name="request_detail"),
+
+
 	path("add-job/", views.AddJobView, name="add_job"),
+	path("add-job-from-request/<int:request_id>/", views.AddJobFRView, name="add_job_fr"),
+
 	path("job-applications/<int:job_id>/", views.JobApplicationsView, name="job_applications"),
 	path("edit-job/<int:job_id>/", views.EditJobView, name="edit_job"),
 

@@ -82,7 +82,7 @@
               name: {{ result.app_user.user.first_name }} {{ result.app_user.user.last_name }}<br />
               email: {{ result.app_user.user.username }}
               
-              <a href="{% url 'app_user:app_user_detail' result.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
+              <a href="{% url 'app_user:app_user_detail' app_user_id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
 
 
             </div>

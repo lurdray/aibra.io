@@ -8,6 +8,7 @@ from app_user.models import AppUser
 
 
 
+
 class Answer(models.Model):
 	app_user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
 
@@ -68,6 +69,21 @@ class Job(models.Model):
 		return self.title
 
 
+class JobRequest(models.Model):
+	app_user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+	title = models.CharField(max_length=20, default="none")
+	description = models.TextField(default="none")
+	salary = models.CharField(max_length=20, default="none")
+	job_type = models.CharField(max_length=20, default="none")
+	slots = models.CharField(max_length=20, default="none")
+	deadline = models.CharField(max_length=30, default="none")
+
+	fulfills = models.ManyToManyField(Job, through="JobRequestJobConnector")
+	
+	pub_date = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return self.title
 
 class ApplicationAnswerConnector(models.Model):
 	application = models.ForeignKey(Application, on_delete=models.CASCADE)
@@ -95,4 +111,11 @@ class JobApplicationConnector(models.Model):
 class JobInterviewConnector(models.Model):
 	job = models.ForeignKey(Job, on_delete=models.CASCADE)
 	interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+	pub_date = models.DateTimeField(default=timezone.now)
+
+
+
+class JobRequestJobConnector(models.Model):
+	job_request = models.ForeignKey(JobRequest, on_delete=models.CASCADE)
+	job = models.ForeignKey(Job, on_delete=models.CASCADE)
 	pub_date = models.DateTimeField(default=timezone.now)
