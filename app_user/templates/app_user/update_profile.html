@@ -62,7 +62,7 @@
                                 <h3 class="mb-1 f-20 txt-primary">{{ app_user.first_name }} {{ app_user.last_name }}</h3>
                                 {% if app_user.account_type == "candidate" %}
                                   <p class="f-12">{{ app_user.resume.titles.first }}</p>
-                                {% elif app_user.account_type == "recruiter" %}
+                                {% elif app_user.account_type == "recruiter" or app_user.account_type == "company" %}
                                   <p class="f-12">{{ app_user.agency_name }}</p>
                                 {% else %}
                                 {% endif %}
@@ -121,7 +121,7 @@
                         </div>
                       </div>
 
-                        {% if app_user.account_type == "recruiter" %}
+                        {% if app_user.account_type == "recruiter" or app_user.account_type == "company" %}
                           <br />
                           <img class="img-70 rounded-circle" alt="" src="{{ app_user.agency_logo.url }}">
                           <div class="mb-3">
@@ -136,6 +136,18 @@
                             <input name="agency_name" value="{{ app_user.agency_name }}" class="form-control">
                           </div>
                           <br />
+                          <div class="col-md-12 mb-2">
+                            <div class="mb-6">
+                            <h6 class="form-label">Bio</h6>
+                            <textarea name="bio" class="form-control" rows="5">{{ app_user.bio }}"</textarea>
+                          </div>
+                          <br />
+                          <div class="mb-3">
+                            <label class="form-label">Charge(ABR)</label>
+                            <input name="charge" value="{{ app_user.charge }}" class="form-control">
+                          </div>
+                          
+                        </div>
                         {% endif %}
 
                         <div class="col-md-6 mb-2">

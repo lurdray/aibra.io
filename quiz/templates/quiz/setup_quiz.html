@@ -6,6 +6,8 @@
 
 
 {% include 'app_user/header.html' %}
+
+
 <style type="text/css">
     
     .alert{
@@ -33,6 +35,7 @@
   }
 </style>
 
+
 {% if messages %}
     {% for message in messages %}
         <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
@@ -40,29 +43,48 @@
         </div>
     {% endfor %}
 {% endif %}
+
+
+        
+          
+          
+
+
+
+
+                       
+        
+
+        
+
+    {% include 'app_user/header.html' %}
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <div class="container-fluid">
             <div class="page-header">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3>Quiz</h3>
+                  <h3>Add Career</h3>
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item">Quiz</li>
-                    <li class="breadcrumb-item active">Setup</li>
+                    <li class="breadcrumb-item active">Setup Quiz</li>
                   </ol>
                 </div>
                 <div class="col-sm-6">
                   <!-- Bookmark Start-->
                   <div class="bookmark">
                     <ul>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="jobs" data-original-title="Tables"><i data-feather="briefcase"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Chat" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Connects" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
                       <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
                       <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
-                        
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
                       </li>
                     </ul>
                   </div>
@@ -73,48 +95,108 @@
           </div>
           <!-- Container-fluid starts-->
           <div class="container-fluid">
-            <div class="row">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-12">
 
-            	<form method="post">
-            		{% csrf_token %}
-            		select job:<br />
-            		<select name="job_id">
-            			{% for item in my_jobs %}
-	            			<option value="{{ item.id }}">{{ item.title }}</option>
-            			{% endfor %}
-            		</select><br />
+                  
 
-            		<input type="text" name="title" placeholder="title"><br />
-            		<textarea name="detail" placeholder="detail"></textarea><br />
-                duration
-            		<input type="number" name="duration"><br />
+                  <form class="card" method="post">
+                    {% csrf_token %}
+                    <div class="card-header pb-0">
+                    <div class="u-pearls-xs row mb-5">
+                      
+                      <div class="u-pearl done col-6"><span class="u-pearl-number"><i class="fa fa-cogs"></i></span><span class="u-pearl-title"><a href="{% url 'resume:update_resume2' %}">Setup Quiz</a></span></div>
+                      <div class="u-pearl current col-6"><span class="u-pearl-number"><i class="fa fa-question-circle"></i></span><span class="u-pearl-title"><a href="{% url 'resume:add_career' %}">Add Questions/Answers</a></span></div>
 
-            		<select name="question_no">
-            			<option value="1">1</option>
-            			<option value="2">2</option>
-            			<option value="3">3</option>
-            			<option value="4">4</option>
-            		</select><br />
+                    </div>
+                      <h4 class="card-title mb-0">Setup Quiz</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Job</label>
+                          <select name="job_id" class="form-select" id="validationCustom04" required="">
+                            {% for item in my_jobs %}
+                            <option  value="{{ item.id }}">{{ item.title }}</option>
+                            {% endfor %}
+                          </select>
+                          </div>
+                        </div>
 
-                barrier(%)
-                <input type="number" name="barrier"><br />
+                        <div class="col-md-12 mb-2">
+                          <div>
+                            <label class="form-label">Title</label>
+                            <input name="title" class="form-control" type="text"  placeholder="Enter Quiz Title....">
+                        </div>
+                      </div>
+                   
+                        
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Details</label>
+                            <textarea name="detail" class="form-control" rows="5" placeholder="Details and Instructions..."></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-6 mb-2">
+                          <div>
+                            <label class="form-label">Duration</label>
+                            <input name="duration" class="form-control" type="number"  placeholder="Enter Quiz Title....">
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div>
+                            <label class="form-label">Barrier(%)</label>
+                            <input name="barrier" class="form-control" type="number"  placeholder="Minimum Score to qualify for next stage....">
+                        </div>
+                      </div>
+                    </div>
 
-            		<button type="submit">Submit</button>
-            		
-            	</form>
 
-              
-
-
+                        
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Number of Questions</label>
+                          <select name="question_no" class="form-select" id="validationCustom04" required="">
+                            
+                            <option  value="1">1</option>
+                            <option  value="2">2</option>
+                            <option  value="3">3</option>
+                            <option  value="4">4</option>
+                            <option  value="5">5</option>
+                            <option  value="6">6</option>
+                            <option  value="7">7</option>
+                            <option  value="8">8</option>
+                            <option  value="9">9</option>
+                            <option  value="10">10</option>
+                            
+                          </select>
+                          </div>
+                        </div>
+                    
+                      
+                      </div>
+                       </div>
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      
+                      <button style="width: 100%;" class="btn btn-primary" type="submit">Submit</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
             </div>
           </div>
           <!-- Container-fluid Ends-->
         </div>
-
-
-                       
         
-
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
@@ -128,8 +210,7 @@
             </div>
           </div>
         </footer>
-      </div>
-    </div>
+
 
 
 {% endblock %}

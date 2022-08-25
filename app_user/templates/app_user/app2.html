@@ -93,7 +93,7 @@
                             <h4>{{ app_user.user.first_name }} {{ app_user.user.last_name }}</h4>
                             {% if app_user.account_type == "candidate" %}
                               <h6>{{ app_user.resume.titles.first }}</h6>
-                            {% elif app_user.account_type == "recruiter" %}
+                            {% elif app_user.account_type == "recruiter" or app_user.account_type == "company" %}
                               <h6>{{ app_user.agency_name }}</h6>
                             {% else %}
                             {% endif %}
@@ -108,7 +108,15 @@
                           </ul>
                         </div>
                         <div class="follow">
+                          {% if app_user.account_type == "candidate" %}
                           <a class="btn btn-primary" href="{% url 'job:index' %}">Discover Jobs</a>
+                          
+                          {% elif app_user.account_type == "recruiter" %}
+                          <a class="btn btn-primary" href="{% url 'app_user:all_recruits' %}">Discover Candidates</a>
+                          {% elif app_user.account_type == "company" %}
+                          <a class="btn btn-primary" href="{% url 'job:request' %}">Request Candidates</a>
+                          {% else %}
+                          {% endif %}
                         </div>
                       </div>
                     </div>

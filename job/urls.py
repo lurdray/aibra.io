@@ -14,6 +14,9 @@ urlpatterns = [
 	path("all-requests/", views.AllRequestsView, name="all_requests"),
 	path("edit_request/<int:request_id>/", views.EditRequestView, name="edit_request"),
 	path("request-detail/<int:request_id>/", views.RequestDetailView, name="request_detail"),
+	path("assign/<int:request_id>/", views.AssignView, name="assign"),
+	path("assign/<int:request_id>/<str:recruiter>/", views.Assign2View, name="assign2"),
+
 
 
 	path("add-job/", views.AddJobView, name="add_job"),

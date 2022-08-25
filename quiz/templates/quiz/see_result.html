@@ -46,11 +46,11 @@
             <div class="page-header">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3>Quiz</h3>
+                  <h3>Results</h3>
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/app/">Home</a></li>
                     <li class="breadcrumb-item">Quiz</li>
-                    <li class="breadcrumb-item active">Setup</li>
+                    <li class="breadcrumb-item active">See Results</li>
                   </ol>
                 </div>
                 <div class="col-sm-6">
@@ -71,24 +71,63 @@
               </div>
             </div>
           </div>
+          <br><br><br><br>
+          {% if result.percentage != null %}
           <!-- Container-fluid starts-->
           <div class="container-fluid">
             <div class="row">
-
-              score: {{ result.score }}<br />
-              total: {{ result.total }}<br />
-            	percentage: {{ result.percentage }}%<br />
-
-              name: {{ result.app_user.user.first_name }} {{ result.app_user.user.last_name }}<br />
-              email: {{ result.app_user.user.username }}
+              <div class="mt-25">
+              <form class="theme-form login-form">
+                <h4 style="text-align: center;">name: {{ result.app_user.user.first_name }} {{ result.app_user.user.last_name }}</h4>
+                <h6 style="text-align: center;">email: {{ result.app_user.user.username }}</h6>
+                <div class="form-group">
+                  
+                 <p>score: {{ result.score }}</p>
+                 <p>total: {{ result.total }}</p>
+                 <p>percentage: {{ result.percentage }}%</p>
+                                 </div>
+                <div class="form-group">
+                  <a href="{% url 'app_user:app_user_detail' app_user_id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
+                  
+                </div>
+                
+                
+               
+              </form>
+            </div>
               
-              <a href="{% url 'app_user:app_user_detail' app_user_id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
 
 
             </div>
           </div>
+          {% else %}
+          <div class="container-fluid">
+            <div class="row">
+              <div class="mt-25">
+              <form class="theme-form login-form">
+                
+                <div class="form-group">
+                  
+                 <p>Has not taken Quiz</p>
+                 
+                                 </div>
+                <div class="form-group">
+                  <a href="{% url 'app_user:app_user_detail' app_user_id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
+                  
+                </div>
+                
+                
+               
+              </form>
+            </div>
+              
+
+
+            </div>
+          </div>
+          {% endif %}
           <!-- Container-fluid Ends-->
-        </div>
+        </div> 
 
 
                        

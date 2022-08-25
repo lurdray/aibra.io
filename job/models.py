@@ -71,6 +71,7 @@ class Job(models.Model):
 
 class JobRequest(models.Model):
 	app_user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+	recruiter = models.CharField(max_length=20, default="none")
 	title = models.CharField(max_length=20, default="none")
 	description = models.TextField(default="none")
 	salary = models.CharField(max_length=20, default="none")
@@ -78,7 +79,7 @@ class JobRequest(models.Model):
 	slots = models.CharField(max_length=20, default="none")
 	deadline = models.CharField(max_length=30, default="none")
 
-	fulfills = models.ManyToManyField(Job, through="JobRequestJobConnector")
+	job_id = models.CharField(max_length=30, default="none")
 	
 	pub_date = models.DateTimeField(default=timezone.now)
 
@@ -114,8 +115,3 @@ class JobInterviewConnector(models.Model):
 	pub_date = models.DateTimeField(default=timezone.now)
 
 
-
-class JobRequestJobConnector(models.Model):
-	job_request = models.ForeignKey(JobRequest, on_delete=models.CASCADE)
-	job = models.ForeignKey(Job, on_delete=models.CASCADE)
-	pub_date = models.DateTimeField(default=timezone.now)

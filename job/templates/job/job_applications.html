@@ -77,9 +77,10 @@
           <!-- Container-fluid starts-->
           <div class="container-fluid user-card">
             <div class="row">
-              Qualified({{ job.quiz.barrier }}% and more)
-              <br />
-              <a href="{% url 'interview:setup_interview' job.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> Setup video interview for qualified candidates</a> 
+              <b>Qualified({{ job.quiz.barrier }}% and more)</b>
+            </div>
+            <div class="row">
+              
               {% for item in job.results.all %}
               {% if item.percentage >= job.quiz.barrier %}
                 <div class="col-md-6 col-lg-6 col-xl-4 box-col-6">
@@ -108,7 +109,11 @@
 
             <br /><br />
             <div class="row">
-              All
+              <b>All</b>
+            </div>
+            
+            <div class="row">
+             
             	{% for item in applications %}
               <div class="col-md-6 col-lg-6 col-xl-4 box-col-6">
                 <div class="card custom-card">

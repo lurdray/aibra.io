@@ -81,6 +81,9 @@
                 <div class="col-xl-4 box-col-6 pe-0">
             {% if all_requests %}
                 {% for item in all_requests %}
+
+                {% if item.recruiter == "none" %}
+                {% else %}
                 <div class="job-sidebar"><a class="btn btn-primary job-toggle" href="javascript:void(0)">Update Resume</a>
                   <div class="job-left-aside custom-scrollbar">
                     <div class="file-sidebar">
@@ -91,17 +94,9 @@
                             <li>
                               
                               <div class="btn btn-outline-primary"><i data-feather="grid">   </i>{{ item.title }}
-                                  <small>: {{ item.pub_date }}</small></div>
-                            
-                            </li>
-                            <li> 
-                              <div class="pricing-plan">
-                                <h6>Edit request</h6>
-                               
-                                 <a  href="{% url 'job:edit_request' item.id %}">
-                                <div class="btn btn-outline-primary btn-xs">Edit Job</div><img class="bg-img" src="{% static 'main/assets/images/dashboard/folder.png' %}" alt="">
                               </div>
-                            </a>
+                              <small>{{ item.pub_date }}</small>
+                            
                             </li>
                             <li> 
                               <div class="pricing-plan">
@@ -118,6 +113,7 @@
                     </div>
                   </div>
                 </div>
+                {% endif %}
                 {% endfor %}
                   {% else %}
                       <p>Sorry, nothing here to see!</p>

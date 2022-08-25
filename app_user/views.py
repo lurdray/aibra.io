@@ -185,6 +185,16 @@ def UpdateAppuserView(request):
 			agency_name = app_user.agency_name
 
 		try:
+			bio = request.POST.get("bio")
+		except:
+			bio = app_user.bio
+
+		try:
+			charge = request.POST.get("charge")
+		except:
+			charge = app_user.charge
+
+		try:
 			agency_logo = request.FILES["agency_logo"]
 		except:
 			agency_logo = app_user.agency_logo
@@ -207,6 +217,8 @@ def UpdateAppuserView(request):
 
 		app_user.agency_name = agency_name
 		app_user.agency_logo = agency_logo
+		app_user.bio = bio
+		app_user.charge = charge
 		app_user.profile_photo = profile_photo
 		app_user.user.first_name = first_name
 		app_user.user.last_name = last_name

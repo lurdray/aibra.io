@@ -1,3 +1,4 @@
+from email.mime import application
 from django.shortcuts import render
 
 # Create your views here.
@@ -319,12 +320,17 @@ def AddJobFRView(request, request_id):
 			deadline=deadline)
 		job.save()
 
+		job_request.job_id = job.id
+		job_request.save()
+		#jr = JobRequestJobConnector(job_request=job_request, job=job)
+		#jr.save()
+
 		messages.warning(request, "Job Added!")
 		return HttpResponseRedirect(reverse("quiz:setup_quiz"))
 
 
 	else:
-		jobs = Job.objects.filter(app_user=app_user)
+		jobs = Job.objects.filter(app_user=app_user).order_by("-pub_date")
 
 		context = {"app_user": app_user, "jobs": jobs, "job_request": job_request}
 		return render(request, "job/add_job_fr.html", context )
@@ -399,13 +405,52 @@ def RequestView(request):
 		job_request.save()
 
 		messages.warning(request, "Request Created!")
-		return HttpResponseRedirect(reverse("job:request"))
+		return HttpResponseRedirect(reverse("job:assign", args=[job_request.id,]))
 
 
 	else:
 		all_requests = JobRequest.objects.filter(app_user=app_user)
 		context = {"app_user": app_user, "all_requests": all_requests}
 		return render(request, "job/request.html", context )
+
+
+
+def AssignView(request, request_id):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	job_request = JobRequest.objects.get(id=request_id)
+	if request.method == "POST":
+		pass
+		#recruiter = request.POST.get("recruiter")
+
+		#messages.warning(request, "Request Created!")
+		#return HttpResponseRedirect(reverse("job:assign2", args=[request_id, recruiter]))
+
+
+	else:
+		all_recruiters = AppUser.objects.filter(account_type="recruiter")
+		context = {"app_user": app_user, "all_recruiters": all_recruiters, "request_id": request_id}
+		return render(request, "job/assign.html", context )
+
+
+
+def Assign2View(request, request_id, recruiter):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	recruiter = AppUser.objects.get(user__username=recruiter)
+
+	job_request = JobRequest.objects.get(id=request_id)
+	if request.method == "POST":
+		
+		job_request.recruiter = recruiter.user.username
+		job_request.save()
+
+		messages.warning(request, "Request Created!")
+		return HttpResponseRedirect(reverse("job:request"))
+
+	else:
+		all_recruiters = AppUser.objects.filter(account_type="recruiter")
+		context = {"app_user": app_user, "recruiter": recruiter}
+		return render(request, "job/assign2.html", context )
+
 
 
 def EditRequestView(request, request_id):
@@ -446,8 +491,9 @@ def RequestDetailView(request, request_id):
 
 	else:
 		job_request = JobRequest.objects.get(id=request_id)
+		job = Job.objects.get(id=job_request.job_id)
 
-		context = {"app_user": app_user, "job_request": job_request}
+		context = {"app_user": app_user, "job_request": job_request, "job": job}
 		return render(request, "job/request_detail.html", context )
 
 
@@ -459,7 +505,7 @@ def AllRequestsView(request):
 
 
 	else:
-		all_requests = JobRequest.objects.all().order_by("-pub_date")
+		all_requests = JobRequest.objects.filter(recruiter=app_user.user.username).order_by("-pub_date")
 
 		context = {"app_user": app_user, "all_requests": all_requests}
 		return render(request, "job/all_requests.html", context )

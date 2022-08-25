@@ -6,6 +6,8 @@
 
 
 {% include 'app_user/header.html' %}
+
+
 <style type="text/css">
     
     .alert{
@@ -33,6 +35,7 @@
   }
 </style>
 
+
 {% if messages %}
     {% for message in messages %}
         <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
@@ -40,29 +43,35 @@
         </div>
     {% endfor %}
 {% endif %}
+
+    {% include 'app_user/header.html' %}
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <div class="container-fluid">
             <div class="page-header">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3>Quiz</h3>
+                  <h3>Add Q|A</h3>
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
-                    <li class="breadcrumb-item">Quiz</li>
-                    <li class="breadcrumb-item active">Add Question</li>
+                    <li class="breadcrumb-item"><a href="\">Home</a></li>
+                    <li class="breadcrumb-item">Q|A</li>
+                    <li class="breadcrumb-item active">Q|A</li>
                   </ol>
                 </div>
                 <div class="col-sm-6">
                   <!-- Bookmark Start-->
                   <div class="bookmark">
                     <ul>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="jobs" data-original-title="Tables"><i data-feather="briefcase"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Chat" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Connects" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
                       <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
                       <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
-                        
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
                       </li>
                     </ul>
                   </div>
@@ -73,238 +82,622 @@
           </div>
           <!-- Container-fluid starts-->
           <div class="container-fluid">
-            <div class="row">
-
-
-              <form method="post" enctype="multipart/form-data">
-                      {% csrf_token %}
-                        <div class="row">
-                        
-
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card" style="border-radius: 30px;">
-            <div class="card-header" style="background-color: #28a745; border-radius:30px 30px 0 0; color: #fff">Add Questions and Answers</div>
-            <div class="card-body">
-          <div class="form-group">
-
-
-              <label for="cc-payment" class="control-label mb-1">Question 1</label>
-              <textarea name="q1" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
+            <div class="edit-profile">
               <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q1_a" placeholder="A" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q1_b" placeholder="B" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q1_c" placeholder="C" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q1_d" placeholder="D" type="text" class="form-control cc-name valid">
-                  </div>
+                <div class="col-xl-12">
+
+                  
+
+                  <form class="card" method="post">
+                    {% csrf_token %}
+                    <div class="card-header pb-0">
+                    <div class="u-pearls-xs row mb-5">
+                      
+                      <div class="u-pearl  col-6"><span class="u-pearl-number"><i class="fa fa-cogs"></i></span><span class="u-pearl-title"><a href="{% url 'resume:update_resume2' %}">Setup Quiz</a></span></div>
+                      <div class="u-pearl done current col-6"><span class="u-pearl-number"><i class="fa fa-question-circle"></i></span><span class="u-pearl-title"><a href="{% url 'resume:add_career' %}">Add Questions/Answers</a></span></div>
+                    </div>
+                      <h4 class="card-title mb-0">Add Questions & Answers</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 1</label>
+                            <textarea name="q1" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q1_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q1_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q1_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q1_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_1" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+
+                       {% if quiz.question_no > 1 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 2</label>
+                            <textarea name="q2" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q2_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q2_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q2_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q2_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_2" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 2 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 3</label>
+                            <textarea name="q3" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q3_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q3_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q3_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q3_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_3" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 3 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 4</label>
+                            <textarea name="q4" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q4_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q4_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q4_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q4_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_4" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 4 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 5</label>
+                            <textarea name="q5" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q5_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q5_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q5_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q5_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_5" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 5 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 6</label>
+                            <textarea name="q6" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q6_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q6_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q6_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q6_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_6" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+
+                       {% if quiz.question_no > 6 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 7</label>
+                            <textarea name="q7" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q7_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q7_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q7_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q7_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_7" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 7 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 8</label>
+                            <textarea name="q8" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q8_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q8_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q8_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q8_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_8" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 8 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 9</label>
+                            <textarea name="q9" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q9_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q9_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q9_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q9_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_9" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 9 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 10</label>
+                            <textarea name="q10" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q10_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q10_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q10_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q10_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_10" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+
+                       {% if quiz.question_no > 10 %}
+                       <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Question 11</label>
+                            <textarea name="q11" class="form-control" rows="5" placeholder="Question one.." required></textarea>
+                          </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option A</label>
+                            <input name="q11_a" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option B</label>
+                            <input name="q11_b" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option C</label>
+                            <input name="q11_c" class="form-control" type="text"  placeholder="...">
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-2">
+                          <div>
+                            <label class="form-label">Option D</label>
+                            <input name="q11_d" class="form-control" type="text"  placeholder="....">
+                        </div>
+                      </div>
+                    </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label" for="validationCustom04">Select Answer</label>
+                          <select name="answer_11" class="form-select" id="validationCustom04" required="">
+                            <option  value="a">A</option>
+                            <option  value="b">B</option>
+                            <option  value="c">C</option>
+                            <option  value="d">D</option>
+                          </select>
+                          </div>
+                        </div>
+
+
+                      </div>
+                       </div>
+                       {% endif %}
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      
+                      <button style="width: 100%;" class="btn btn-primary" type="submit">Submit</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                
+                
               </div>
-              <br  />
-              <div class="row form-group" style="background-color: #28a745; color: #fff;">
-                  <div class="col col-md-3" >
-                      <label for="select" class=" form-control-label">Select Answer</label>
-                  </div>
-                  <div class="col-12 col-md-9">
-                      <select name="answer_1" id="select" class="form-control">
-                          <option value="a">A</option>
-                          <option value="b">B</option>
-                          <option value="c">C</option>
-                          <option value="d">D</option>
-                      </select>
-                  </div>
-              </div>
-
-              <hr>
-              <br />
-
-              {% if quiz.question_no > 1 %}
-
-              <label for="cc-payment" class="control-label mb-1">Question 2</label>
-              <textarea name="q2" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
-              <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q2_a" placeholder="A" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q2_b" placeholder="B" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q2_c" placeholder="C" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q2_d" placeholder="D" type="text" class="form-control cc-name valid">
-                  </div>
-              </div>
-              <br  />
-              <div class="row form-group" style="background-color: #28a745; color: #fff;">
-                  <div class="col col-md-3">
-                      <label for="select" class=" form-control-label">Select Answer</label>
-                  </div>
-                  <div class="col-12 col-md-9">
-                      <select name="answer_2" id="select" class="form-control">
-                          <option value="a">A</option>
-                          <option value="b">B</option>
-                          <option value="c">C</option>
-                          <option value="d">D</option>
-                      </select>
-                  </div>
-              </div>
-
-              <hr>
-              <br />
-
-              {% endif %}
-
-
-              {% if quiz.question_no > 2 %}
-              <label for="cc-payment" class="control-label mb-1">Question 3</label>
-              <textarea name="q3" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
-              <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q3_a" placeholder="A" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q3_b" placeholder="B" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q3_c" placeholder="C" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q3_d" placeholder="D" type="text" class="form-control cc-name valid">
-                  </div>
-              </div>
-              <br  />
-              <div class="row form-group" style="background-color: #28a745; color: #fff;">
-                  <div class="col col-md-3">
-                      <label for="select" class=" form-control-label">Select Answer</label>
-                  </div>
-                  <div class="col-12 col-md-9">
-                      <select name="answer_3" id="select" class="form-control">
-                          <option value="a">A</option>
-                          <option value="b">B</option>
-                          <option value="c">C</option>
-                          <option value="d">D</option>
-                      </select>
-                  </div>
-              </div>
-              <hr>
-              <br />
-
-              {% endif %}
-
-              {% if quiz.question_no > 3 %}
-
-              <label for="cc-payment" class="control-label mb-1">Question 4</label>
-              <textarea name="q4" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
-              <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q4_a" placeholder="A" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q4_b" placeholder="B" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q4_c" placeholder="C" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q4_d" placeholder="D" type="text" class="form-control cc-name valid">
-                  </div>
-              </div>
-              <br  />
-              <div class="row form-group" style="background-color: #28a745; color: #fff;"s>
-                  <div class="col col-md-3">
-                      <label for="select" class=" form-control-label">Select Answer</label>
-                  </div>
-                  <div class="col-12 col-md-9">
-                      <select name="answer_4" id="select" class="form-control">
-                          <option value="a">A</option>
-                          <option value="b">B</option>
-                          <option value="c">C</option>
-                          <option value="d">D</option>
-                      </select>
-                  </div>
-              </div>
-              <hr>
-              <br />
-
-              {% endif %}
-
-              {% if quiz.question_no > 4 %}
-
-              <label for="cc-payment" class="control-label mb-1">Question 5</label>
-              <textarea name="q5" id="textarea-input" placeholder="Enter your questions...." rows="4" class="form-control"></textarea>
-              <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q5_a" placeholder="A" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q5_b" placeholder="B" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q5_c" placeholder="C" type="text" class="form-control cc-name valid">
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
-                      <input id="cc-name" name="q5_d" placeholder="D" type="text" class="form-control cc-name valid">
-                  </div>
-              </div>
-              <br  />
-              <div class="row form-group" style="background-color: #28a745; color: #fff;">
-                  <div class="col col-md-3">
-                      <label for="select" class=" form-control-label">Select Answer</label>
-                  </div>
-                  <div class="col-12 col-md-9">
-                      <select name="answer_5" id="select" class="form-control">
-                          <option value="a">A</option>
-                          <option value="b">B</option>
-                          <option value="c">C</option>
-                          <option value="d">D</option>
-                      </select>
-                  </div>
-              </div>
-              <hr>
-              <br />
-
-              {% endif %}
-              
-          </div>
-            </div>
-        </div>
-    </div>
-                                
-                                
-                                                                
-                                
-            </div>  
-            
-    <div class="row">
-      <div class="col-lg-12 col-md-8 col-sm-6 col-xs-4">
-        <button id="payment-button" type="submit" class="btn btn-lg btn-block btn btn-success">
-           <span id="payment-button-amount" class="btn btn-success">Next</span>
-           <span id="payment-button-sending" style="display:none;">Processing..</span>
-        </button>
-    </div>
-    </div>
- </form>
-
-            	
-
-              
-
-
             </div>
           </div>
           <!-- Container-fluid Ends-->
         </div>
-
-
-                       
         
-
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
@@ -323,5 +716,3 @@
 
 
 {% endblock %}
-
-  

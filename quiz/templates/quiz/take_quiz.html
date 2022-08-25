@@ -6,6 +6,8 @@
 
 
 {% include 'app_user/header.html' %}
+
+
 <style type="text/css">
     
     .alert{
@@ -33,6 +35,7 @@
   }
 </style>
 
+
 {% if messages %}
     {% for message in messages %}
         <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
@@ -40,132 +43,93 @@
         </div>
     {% endfor %}
 {% endif %}
+
+    {% include 'app_user/header.html' %}
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <div class="container-fluid">
-            <div class="page-header">
-              <div class="row">
-                <div class="col-sm-6">
-                  <h3>Quiz</h3>
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
-                    <li class="breadcrumb-item">Quiz</li>
-                    <li class="breadcrumb-item active">Setup</li>
-                  </ol>
-                </div>
-                <div class="col-sm-6">
-                  <!-- Bookmark Start-->
-                  <div class="bookmark">
-                    <ul>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="jobs" data-original-title="Tables"><i data-feather="briefcase"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Chat" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Connects" data-original-title="Icons"><i data-feather="command"></i></a></li>
-                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
-                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
-                        
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- Bookmark Ends-->
-                </div>
-              </div>
-            </div>
+            
+              
           </div>
           <!-- Container-fluid starts-->
           <div class="container-fluid">
-            <div class="row">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-12">
 
-            	
-
-
-
-
-
-
-              <form id="autoForm" class="container" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-        {% if counts > 0 %}
-            {% for item, count in quiz_questions %}
-            <div class="col-lg-12" style="background-color: #f5f5f5; margin-bottom:">
-                <br><br>
-                
-                    <div class="col-lg-10" style="align-items: center; margin: auto;">
-                        <div class="section-title" style="align-items: center;"> 
-
-                            <blockquote class="generic-blockquote" style="background: #fff">
-                                <h1>Q{{ count }}:</h1>{{ item.title}}
-
-                            </blockquote>
-                            <br>
-                            <div class="row  d-flex align-items-center">
-
-                                <div class="col-lg-6 col-md-6 col-sm-12 single-faculty">
-                                    <div class="thumb d-flex"  style="background: #fff; padding-left: 10px;">
-                                        <label class="custom-checkbox">
-                                            <input type="radio" name="selected_answer_{{ count }}" value="{{ count }}_a" style="margin-bottom: -10px; margin-left: 5px;">
-                                            <span class="checkmark" style="text-align: center; text-transform: capitalize; font-size: 18px; padding-bottom: 10px">A</span>
-                                        </label>
-                                        <p style="margin-top: 15px; margin-left: 10px">
-                                             {{ item.answer_a }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-sm-12 single-faculty">
-                                    <div class="thumb d-flex"  style="background: #fff; padding-left: 10px;">
-                                        <label class="custom-checkbox">
-                                            <input type="radio" name="selected_answer_{{ count }}" value="{{ count }}_b">
-                                            <span class="checkmark" style="text-align: center; text-transform: capitalize; font-size: 18px; padding-bottom: 10px">B</span>
-                                        </label>
-                                        <p style="margin-top: 15px; margin-left: 10px">
-                                             {{ item.answer_b }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <br><br><br>
-                                <div class="col-lg-6 col-md-6 col-sm-12 single-faculty">
-                                    <div class="thumb d-flex"  style="background: #fff; padding-left: 10px;">
-                                        <label class="custom-checkbox">
-                                            <input type="radio" name="selected_answer_{{ count }}" value="{{ count }}_c">
-                                            <span class="checkmark" style="text-align: center; text-transform: capitalize; font-size: 18px; padding-bottom: 10px;">C</span>
-                                        </label>
-                                        <p style="margin-top: 15px; margin-left: 10px">
-                                             {{ item.answer_c }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <br><br><br>
-
-                                <div class="col-lg-6 col-md-6 col-sm-12 single-faculty">
-                                    <div class="thumb d-flex"  style="background: #fff; padding-left: 10px;">
-                                        <label class="custom-checkbox">
-                                            <input type="radio" name="selected_answer_{{ count }}" value="{{ count }}_d">
-                                            <span class="checkmark" style="text-align: center; text-transform: capitalize; font-size: 18px; padding-bottom: 10px">D</span>
-                                        </label>
-                                        <p style="margin-top: 15px; margin-left: 10px">
-                                             {{ item.answer_d }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
+                  
+                    <h4 class="card-title mb-0" style="text-align:center">Take Quiz</h4>
+                    <br><br>
+                  <form class="card" method="post">
+                     
+                    {% csrf_token %}
+                    {% if counts > 0 %}
+                      {% for item, count in quiz_questions %}
+                    <div class="card-header pb-0">
+                    
+                     
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div class="card bg-primary">
+                  <div class="card-body">
+                    <div class="media faq-widgets">
+                      <div class="media-body">
+                        <h5>Q{{ count }}</h5>
+                        <p>{{ item.title}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                          </div>
+                        
+                        <div class="row g-3">
+                        <div class="col-md-6 mb-2">
+                         <div class="radio radio-primary">
+                            <input id="{{ item.answer_a }}" type="radio"  name="selected_answer_{{ count }}" value="{{ count }}_a">
+                            <label class="mb-0" for="{{ item.answer_a }}">{{ item.answer_a }}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="radio radio-primary">
+                            <input id="{{ item.answer_b }}" type="radio" name="selected_answer_{{ count }}" value="{{ count }}_b">
+                            <label class="mb-0" for="{{ item.answer_b }}">{{ item.answer_b }}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="radio radio-primary">
+                            <input id="{{ item.answer_c }}" type="radio"name="selected_answer_{{ count }}" value="{{ count }}_c">
+                            <label class="mb-0" for="{{ item.answer_c }}">{{ item.answer_c }}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="radio radio-primary">
+                            <input id="{{ item.answer_d }}" type="radio" name="selected_answer_{{ count }}" value="{{ count }}_d">
+                            <label class="mb-0" for="{{ item.answer_d }}">{{ item.answer_d }}</label>
+                          </div>
+                      </div>
                     </div>
 
-                    <hr>
-                    <br />
-
-                    {% endfor %}
-                    <div class="container"><a href="/">
-         
-         <button class="btn btn-success autoSubmit" id="autoSubmit" type="submit" style="justify-content: left; float: left;">Proceed to Section B</button>
-         <br><br>
-     </div>
+                       
 
 
-            
-        {% else %}
+                      </div>
+                       </div>
+
+                       {% endfor %}
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      
+                      <button style="width: 100%;" class="btn btn-primary" type="submit">Submit</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                {% else %}
              <div class="col-lg-12" style="background-color: #f5f5f5; margin-bottom:">
                 <br><br>
                 
@@ -177,26 +141,13 @@
             </div>
 
         {% endif %}
-
-    </form>
-
-
-
-
-
-
-              
-
-
+                
+              </div>
             </div>
           </div>
           <!-- Container-fluid Ends-->
         </div>
-
-
-                       
         
-
         <!-- footer start-->
         <footer class="footer">
           <div class="container-fluid">
