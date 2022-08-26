@@ -1,3 +1,4 @@
+from curses.ascii import HT
 from email.mime import application
 from django.shortcuts import render
 
@@ -419,7 +420,61 @@ def AssignView(request, request_id):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	job_request = JobRequest.objects.get(id=request_id)
 	if request.method == "POST":
-		pass
+		query_price = request.POST.get("query_price")
+
+		query_star5 = request.POST.get("query_star5")
+		query_star4 = request.POST.get("query_star4")
+		query_star3 = request.POST.get("query_star3")
+		query_star2 = request.POST.get("query_star2")
+		query_star1 = request.POST.get("query_star1")
+		query_star0 = request.POST.get("query_star0")
+
+		query_star = []
+		if query_star0:
+			query_star.append(0)
+		if query_star1:
+			query_star.append(1)
+		if query_star2:
+			query_star.append(2)
+		if query_star3:
+			query_star.append(3)
+		if query_star4:
+			query_star.append(4)
+		if query_star5:
+			query_star.append(4)
+
+		if len(query_star) == 0:
+			query_star.append(0)
+
+		query_location = request.POST.get("query_location")
+
+	
+		#result = {"query_price": query_price, "query_star5": query_star5,
+		#"query_star4": query_star4, "query_star3": query_star3, "query_star2": query_star2,
+		#"query_star1": query_star1, "query_location": query_location,
+		#}
+
+		all_recruiters = []
+		
+		for item in query_star:
+			if query_location == "global":
+				all_recruiters_j = AppUser.objects.filter(account_type="recruiter", rank=str(item))
+				for jtem in all_recruiters_j:
+					if int(jtem.charge) > int(query_price) or int(jtem.charge) == int(query_price):
+						all_recruiters.append(jtem)
+			else:
+				all_recruiters_j = AppUser.objects.filter(account_type="recruiter", rank=str(item), country=query_location)
+				for jtem in all_recruiters_j:
+					if int(jtem.charge) > int(query_price) or int(jtem.charge) == int(query_price):
+						all_recruiters.append(jtem)
+		all_recruiters = set(all_recruiters)
+
+		locations = set([item.country for item in AppUser.objects.all()])
+		
+		context = {"app_user": app_user, "all_recruiters": all_recruiters,
+		"request_id": request_id, "locations": locations}
+		return render(request, "job/assign.html", context)
+
 		#recruiter = request.POST.get("recruiter")
 
 		#messages.warning(request, "Request Created!")
@@ -427,9 +482,12 @@ def AssignView(request, request_id):
 
 
 	else:
+		locations = set([item.country for item in AppUser.objects.all()])
+		
 		all_recruiters = AppUser.objects.filter(account_type="recruiter")
-		context = {"app_user": app_user, "all_recruiters": all_recruiters, "request_id": request_id}
-		return render(request, "job/assign.html", context )
+		context = {"app_user": app_user, "all_recruiters": all_recruiters,
+		"request_id": request_id, "locations": locations}
+		return render(request, "job/assign.html", context)
 
 
 
@@ -447,8 +505,9 @@ def Assign2View(request, request_id, recruiter):
 		return HttpResponseRedirect(reverse("job:request"))
 
 	else:
+		locations = set([item.country for item in AppUser.objects.all()])
 		all_recruiters = AppUser.objects.filter(account_type="recruiter")
-		context = {"app_user": app_user, "recruiter": recruiter}
+		context = {"app_user": app_user, "recruiter": recruiter, "locations": locations}
 		return render(request, "job/assign2.html", context )
 
 
@@ -485,13 +544,33 @@ def EditRequestView(request, request_id):
 
 def RequestDetailView(request, request_id):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
-	if request.method == "POST":
-		pass
+	job_request = JobRequest.objects.get(id=request_id)
+	job = Job.objects.get(id=job_request.job_id)
 
+	if request.method == "POST":
+		rank = int(request.POST.get("rank"))
+		recruiter = job.app_user
+
+		print(recruiter.rank)
+		print(recruiter.ranks)
+		print(recruiter.rankers)
+		print("kkkkkkkkkkkkkkkkkkkkk")
+		#return HttpResponse(str(recruiter.rankers))
+		#recruiter.rank = 1
+		#recruiter.ranks = 1
+		#recruiter.rankers = 1
+		recruiter.ranks = float((float(recruiter.ranks)+ float(rank)))
+		recruiter.rankers = float(float(recruiter.rankers) + float(1))
+		recruiter.rank = int(float(float(recruiter.ranks)/float(recruiter.rankers)))
+		recruiter.save()
+
+		#return HttpResponse(str(recruiter.rankers))
+
+		messages.warning(request, "Ranking successful...")
+		return HttpResponseRedirect(reverse("job:request_detail", args=[request_id,]))
 
 	else:
-		job_request = JobRequest.objects.get(id=request_id)
-		job = Job.objects.get(id=job_request.job_id)
+		
 
 		context = {"app_user": app_user, "job_request": job_request, "job": job}
 		return render(request, "job/request_detail.html", context )

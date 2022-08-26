@@ -28,6 +28,9 @@ class AppUser(models.Model):
 
 	#recruiters
 	agency_name = models.CharField(default="",max_length=30, null=True)
+	rank = models.CharField(default="1",max_length=30, null=True)
+	ranks = models.CharField(default="1",max_length=30, null=True)
+	rankers = models.CharField(default="1",max_length=30, null=True)
 	charge = models.CharField(default="0",max_length=30, null=True)
 	bio = models.TextField(default="This agency have not updated their bio..")
 	agency_logo = models.FileField(upload_to='account_files/profile_photos/', blank=True, default="default_files/default_face.jpg")

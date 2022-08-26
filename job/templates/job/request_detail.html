@@ -105,6 +105,97 @@
               {% endfor %}
         </div>
 
+        <div class="card ribbon-vertical-left-wrapper">
+          <div class="ribbon ribbon-bookmark ribbon-vertical-left ribbon-secondary"><i class="icofont icofont-award"></i></div>
+          <div class="job-search">
+            <div class="card-body">
+              <div class="media"><img class="img-40 img-fluid m-r-20" src="{{ job.app_user.agency_logo.url }}" alt="">
+                <div class="media-body">
+                  <h6 class="f-w-600">{{ job.app_user.agency_name }}</h6>
+                  <p>{{ job.app_user.address }},<span> {{ job.app_user.country }} </span></p>
+                  {% if job.app_user.rank == "0" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "1" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "2" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "3" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "4" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "5" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                  </ul>
+                  {% else %}
+                  {% endif %}
+                  <b>({{ job.app_user.charge }} ABR)</b>
+                </div>
+              </div>
+              <p>{{ job.app_user.bio }}</p>
+              <br />
+
+              <form method="post">
+                {% csrf_token %}
+                <br />
+                <small>How pleased are you with the results? <b>You can always come back to rank them!</b></small>
+                <hr>
+                <div class="row form-group">
+                  <div class="col-lg-6">
+                    <select class="form-control" name="rank" id="account_type">
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select> 
+                  </div>
+                  <div class="col-lg-6">
+                    <button class="btn btn-primary text-center" type="submit">Rank Performance</button>
+                  </div>
+                  <br />
+                  
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </div>
