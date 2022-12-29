@@ -1,0 +1,237 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+{% include 'app_user/header.html' %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Available Jobs</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Job Search</li>
+                    <li class="breadcrumb-item active">Available Jobs</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="jobs" data-original-title="Tables"><i data-feather="briefcase"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Chat" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="Connects" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xl-3 xl-40 box-col-4">
+                <div class="job-sidebar"><a class="btn btn-primary job-toggle" href="javascript:void(0)">job filter</a>
+                  <div class="job-left-aside custom-scrollbar">
+                    <div class="default-according style-1 faq-accordion job-accordion" id="accordionoc">
+                      <div class="row">
+                        <div class="col-xl-12">
+                          <div class="card">
+                            <div class="card-header">
+                              <h5 class="mb-0 p-0">
+                                <button class="btn btn-link ps-0" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapseicon">Filter</button>
+                              </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-parent="#accordion">
+                              <div class="card-body filter-cards-view animate-chk">
+                                <div class="job-filter mb-3">
+                                </div>
+                                <div class="checkbox-animated">
+                                  {% if job_types %}
+                                    {% for item in job_types %}
+                                      <a href="{% url 'job:search_job' 'job_type' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
+                                    {% endfor %}
+                                  {% else %}
+
+                                  {% endif %}
+                                  
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-12">
+                          <div class="card">
+                            <div class="card-header">
+                              <h5 class="mb-0 p-0">
+                                
+                              </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-parent="#accordion">
+                              <div class="card-body animate-chk">
+                                <div class="location-checkbox">
+
+                                  {% if countries %}
+                                    {% for item in countries %}
+                                      <a href="{% url 'job:search_job' 'country' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
+                                    {% endfor %}
+                                  {% else %}
+
+                                  {% endif %}
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="col-xl-12">
+                          <div class="card">
+                            <div class="card-header">
+                              <h5 class="mb-0 p-0">
+                                <button class="btn btn-link ps-0" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapseicon3">Industry</button>
+                              </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon3" data-parent="#accordion" aria-labelledby="collapseicon3">
+                              <div class="card-body animate-chk">
+                                {% if categories %}
+                                    {% for item in categories %}
+                                      <a href="{% url 'job:search_job' 'category' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
+                                    {% endfor %}
+                                  {% else %}
+
+                                  {% endif %}
+                              </div>
+                             
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-9 xl-60 box-col-8">
+                {% for item in search_results %}
+                <div class="card ribbon-vertical-left-wrapper">
+                  <div class="ribbon ribbon-bookmark ribbon-vertical-left ribbon-primary"><i class="icofont icofont-globe-alt"></i></div>
+                  <div class="job-search">
+                    <div class="card-body">
+                      <div class="media"><img class="img-40 img-fluid m-r-20" src="{% static 'main/assets/images/job-search/1.jpg' %}" alt="">
+                        <div class="media-body">
+                          <h6 class="f-w-600"><a href="{% url 'job:job_detail' item.id %}">{{ item.title }}<span class="badge badge-primary pull-right">Actively Recruiting</span></a></h6>
+                          <p>{{ item.app_user.agency_name }}</p>
+                          <ul class="rating">
+                            <li><i class="fa fa-star font-warning"></i></li>
+                            <li><i class="fa fa-star font-warning"></i></li>
+                            <li><i class="fa fa-star font-warning"></i></li>
+                            <li><i class="fa fa-star font-warning"></i></li>
+                            <li><i class="fa fa-star font-warning"></i></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <p>
+                        {{ item.description|truncatewords:40|safe }}
+                      </p>
+                      <div class="media-body text-end">
+                          <a href="{% url 'job:apply_job' item.id app_user.id %}">
+                            <div class="btn btn-primary" > <i data-feather="plan"></i>Apply</div>
+
+                           </a> 
+
+                            <a href="{% url 'job:job_detail' item.id %}">
+                            <div class="btn btn-primary" > <i data-feather="plan"></i>View Detail</div>
+                            
+                           </a> 
+                          
+                          
+                        </div>
+                    </div>
+
+                  </div>
+                </div>
+                {% endfor %}
+
+                <div class="job-pagination">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination pagination-primary">
+                      <li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Previous</a></li>
+                      <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:void(0)">Next</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+{% endblock %}
+
+    <!-- 
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h4 class="box-title">Available Jobs.</h4>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                
+                <div class="col-lg-4">
+                  {% for item in jobs %}
+                    <a href="{% url 'job:job_detail' item.id %}">{{ item.title }}</a><br />
+                  {% endfor %}
+                </div>
+
+              </div>
+            </div>
+            
+            <div class="box-footer">
+              Footer
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+-->
+    
+
+
+
+

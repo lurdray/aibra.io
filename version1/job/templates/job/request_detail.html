@@ -1,0 +1,263 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% include 'app_user/header.html' %}
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>See Who Applied</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Vacancies</li>
+                    <li class="breadcrumb-item active">Who Applied</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid user-card">
+
+            <br /><br />
+            <div class="row">
+              {% for item in job.results.all %}
+              {% if item.percentage >= job.quiz.barrier %}
+              <div class="col-md-6 col-lg-6 col-xl-4 box-col-6">
+                <div class="card custom-card">
+                  <div class="card-profile"><img class="rounded-circle" src="{{ item.app_user.profile_photo.url }}" alt=""></div>
+                  <ul class="card-social">
+                    <li><a href="{{ item.app_user.facebook_link }}"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ item.app_user.whatsapp_link }}"><i class="fa fa-whatsapp"></i></a></li>
+                    <li><a href="{{ item.app_user.twitter_link }}"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ item.app_user.instagram_link }}"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="{{ item.app_user.github_link }}"><i class="fa fa-github"></i></a></li>
+                  </ul>
+                  <div class="text-center profile-details"><a href="{% url 'app_user:app_user_detail' item.app_user.id %}">
+                      <h4>{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</h4></a>
+                    <h6>{{ item.app_user.resume.titles.last }}</h6>
+                    <a href="{% url 'quiz:see_result' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Quiz Score</a> 
+                    <a href="{% url 'app_user:app_user_detail' item.app_user.id %}" class="btn btn-primary-light mb-2"><i class="icofont icofont-eye-alt"></i> View Resume</a> 
+                    <a href="{{ item.app_user.cv.url }}" download="CV" class="btn btn-primary-light" download><i class="icofont icofont-download"></i> Download Resume</a>
+                  </div>
+                  
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+        </div>
+
+        <div class="card ribbon-vertical-left-wrapper">
+          <div class="ribbon ribbon-bookmark ribbon-vertical-left ribbon-secondary"><i class="icofont icofont-award"></i></div>
+          <div class="job-search">
+            <div class="card-body">
+              <div class="media"><img class="img-40 img-fluid m-r-20" src="{{ job.app_user.agency_logo.url }}" alt="">
+                <div class="media-body">
+                  <h6 class="f-w-600">{{ job.app_user.agency_name }}</h6>
+                  <p>{{ job.app_user.address }},<span> {{ job.app_user.country }} </span></p>
+                  {% if job.app_user.rank == "0" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "1" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "2" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "3" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "4" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning-o"></i></li>
+                  </ul>
+                  {% elif job.app_user.rank == "5" %}
+                  <ul class="rating">
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                    <li><i class="fa fa-star font-warning"></i></li>
+                  </ul>
+                  {% else %}
+                  {% endif %}
+                  <b>({{ job.app_user.charge }} ABR)</b>
+                </div>
+              </div>
+              <p>{{ job.app_user.bio }}</p>
+              <br />
+
+              <form method="post">
+                {% csrf_token %}
+                <br />
+                <small>How pleased are you with the results? <b>You can always come back to rank them!</b></small>
+                <hr>
+                <div class="row form-group">
+                  <div class="col-lg-6">
+                    <select class="form-control" name="rank" id="account_type">
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select> 
+                  </div>
+                  <div class="col-lg-6">
+                    <button class="btn btn-primary text-center" type="submit">Rank Performance</button>
+                  </div>
+                  <br />
+                  
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+{% endblock %}
+
+		<!-- 
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Job Applications.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-4">
+						  		<h2>{{ job.title }}</h2>
+						  		<p>{{ job.description }}</p>
+						  		
+						  	</div>
+						  	
+						  	<div class="col-lg-4">
+						  		<h3>See who applied:</h3>
+						  		{% for item in applications %}
+						  			<a href="{% url 'app_user:app_user_detail' item.app_user.id %}">{{ item.app_user.user.first_name }} {{ item.app_user.user.last_name }}</a><br />
+						  		{% endfor %}
+						  	</div>
+
+
+						  </div>
+						</div>
+						\
+						<div class="box-footer">
+						  Footer
+						</div>
+						\
+					</div>
+				</div>
+			</div>
+		</section>
+.content -->
+	  
+
+
+
+

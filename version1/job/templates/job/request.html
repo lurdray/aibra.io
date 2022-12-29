@@ -1,0 +1,288 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    {% include 'app_user/header.html' %}
+    <style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Add Jobs</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Jobs</li>
+                    <li class="breadcrumb-item active">Request Candidates</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-4 box-col-6 pe-0">
+            {% if all_requests %}
+                {% for item in all_requests %}
+
+                {% if item.recruiter == "none" %}
+                {% else %}
+                <div class="job-sidebar"><a class="btn btn-primary job-toggle" href="javascript:void(0)">Update Resume</a>
+                  <div class="job-left-aside custom-scrollbar">
+                    <div class="file-sidebar">
+                      <div class="card">
+                        <div class="card-body">
+                         
+                           <ul>
+                            <li>
+                              
+                              <div class="btn btn-outline-primary"><i data-feather="grid">   </i>{{ item.title }}
+                              </div>
+                              <small>{{ item.pub_date }}</small>
+                            
+                            </li>
+                            <li> 
+                              <div class="pricing-plan">
+                                <h6>See Who Applied</h6>
+                               
+                                <a  href="{% url 'job:request_detail' item.id %}">
+                                <div class="btn btn-outline-primary btn-xs">View Applications</div>
+                              </a><img class="bg-img" src="{% static 'main/assets/images/dashboard/folder1.png' %}" alt="">
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                  {% else %}
+                      <p>Sorry, nothing here to see!</p>
+                  {% endif %}
+              </div>
+              	<div class="col-md-8">
+
+                  <form class="card" method="post">
+                  	{% csrf_token %}
+                    <div class="card-header pb-0">
+                    
+                      <h4 class="card-title mb-0">Add Vacancy</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Position">
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 mb-2">
+                            <div class="mb-6">
+                              <label class="form-label">Number of slots</label>
+                              <input type="number" name="slots" class="form-control" placeholder="Slots">
+                            </div>
+                          </div>
+
+                        <div class="col-md-12 mb-2">
+                          <div class="mb-6">
+                            <label class="form-label">Salary</label>
+                            <input type="text" name="salary" class="form-control" placeholder="Salary/benefits">
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-12 mb-3">
+                          <div>
+                            <label class="form-label">Description</label>
+                            <textarea name="description"  class="form-control ckeditor" rows="6" placeholder="Job description"></textarea>
+                          </div>
+                        </div>
+                         <div class="col-md-12 mb-2">
+                          
+                   
+                        
+                        
+                        <label class="col-form-label">Job Type</label>
+                        <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple" name="job_type">
+                          <option value="full_time">Full Time</option>
+                          <option value="part_time">Part time</option>
+                          <option value="remote">Remote</option>
+                          <option value="hybrid">Hybrid</option>
+                          
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div>
+                            <label class="form-label">Deadline</label>
+                            <input type="text" name="deadline", class="datepicker-here form-control digits"  data-language="en" data-multiple-dates-separator=", " data-position="bottom left" >
+                        </div>
+                    </div>
+                      </div>
+                       </div>
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      
+                      <button style="width: 100%;" class="btn btn-primary" type="submit">Submit</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                  </div>
+                </div>
+                
+              </div>
+           
+          
+          <!-- Container-fluid Ends-->
+          
+        </div>
+
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+{% endblock %}
+
+		<!-- 
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Jobs.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-6">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			<h3>Add New Job:</h3>
+						  			
+						  			Title
+						  			<input type="text" name="title"><br /><br />
+						  			Description
+						  			<input type="text" name="description"><br /><br />
+
+						  			<div class="form-group">
+									    <label for="job_type">Job Type:</label>
+										<select name="job_type" id="job_type">
+										  <option value="full_time">Full time</option>
+										  <option value="part_time">Part time</option>
+										  <option value="remote">Remote</option>
+										  <option value="hybrid">Hybrid</option>
+										</select> 
+									</div>
+
+						  			Responsibility
+						  			<input type="text" name="responsibility"><br /><br />
+						  			Requirement
+						  			<input type="text" name="requirement"><br /><br />
+						  			Phone to contact
+						  			<input type="text" name="contact_phone"><br /><br />
+						  			Email to send CV/contact
+						  			<input type="text" name="contact_email"><br /><br />
+						  			Deadline
+						  			<input type="date" name="deadline"><br /><br />
+
+						  			<button type="submit">Submit.</button>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-6">
+						  		<h3>Your Jobs:</h3>
+						  		{% for item in jobs %}
+						  			{{ item.title }} <a href="{% url 'job:edit_job' item.id %}">Edit Job</a><a href="{% url 'job:job_applications' item.id %}"> | View <b>({{ item.applications.count }}</b> Application(s))</a><br />
+						  		{% endfor %}
+						  	</div>
+
+
+						  </div>
+						</div>
+						
+						<div class="box-footer">
+						  Footer
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+content -->
+	  

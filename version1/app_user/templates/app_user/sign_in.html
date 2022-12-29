@@ -1,0 +1,89 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-5"><img class="bg-img-cover bg-center" src="https://i.pinimg.com/originals/8d/30/03/8d3003aaa8e72ba150e16a8ffb567398.png" alt="looginpage"></div>
+          <div class="col-xl-7 p-0">    
+            <div class="login-card">
+              <form class="theme-form login-form" method="post">
+              	{% csrf_token %}
+                <h4>Login</h4>
+                <h6>Welcome back! Log in to your account.</h6>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
+                    <input class="form-control" type="email" name="username" type="email" required placeholder="Test@gmail.com">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
+                    <input class="form-control" type="password" name="password" required="" placeholder="*********">
+                    <div class="show-hide"><span class="show">                         </span></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                    <input id="checkbox1" type="checkbox">
+                    <label class="text-muted" for="checkbox1">Remember password</label>
+                  </div><a class="link" href="#">Forgot password?</a>
+                </div>
+                <div class="form-group"><button style="width: 100%"  class="btn btn-primary btn-block float-right" type="submit">Sign in</button></div>
+               <!-- <div class="login-social-title">                
+                  <h5>Join Us On</h5>
+                </div>
+                <div class="form-group">
+                  <ul class="login-social">
+                    <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="linkedin"></i></a></li>
+                    <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="twitter"></i></a></li>
+                    <li><a href="https://www.linkedin.com/login" target="_blank"><i data-feather="discord"></i></a></li>
+                    <li><a href="https://www.instagram.com/login" target="_blank"><i data-feather="github">                  </i></a></li>
+                  </ul>
+                </div>-->
+                <p>Don't have account?<a class="ms-2" href="{% url 'app_user:sign_up' %}">Create Account</a></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

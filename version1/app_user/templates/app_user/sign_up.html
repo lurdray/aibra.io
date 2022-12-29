@@ -1,0 +1,113 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: red; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    <section>
+
+    <section>         
+      <div class="container-fluid p-0"> 
+        <div class="row m-0">
+          <div class="col-xl-5"><img class="bg-img-cover bg-center" src="https://i.pinimg.com/originals/8d/30/03/8d3003aaa8e72ba150e16a8ffb567398.png" alt="looginpage"></div>
+          <div class="col-xl-7 p-0"> 
+            <div class="login-card">
+              <form class="theme-form login-form" method="post">
+
+				{% csrf_token %}
+                <h4>Create your account</h4>
+                
+                <div class="form-group">
+                  <label>Your Name</label>
+                  <div class="small-group">
+                    <div class="input-group"><span class="input-group-text"><i class="icon-user"></i></span>
+                      <input class="form-control" name="first_name" type="text" required="" placeholder="First Name">
+                    </div>
+                    <div class="input-group"><span class="input-group-text"><i class="icon-user"></i></span>
+                      <input class="form-control" name="last_name" type="text" required="" placeholder="Last Name">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
+                    <input class="form-control" name="username" type="email" required="" placeholder="Test@gmail.com">
+                  </div>
+                </div>
+                
+
+                <div class="form-group">
+                  <label>Password</label>
+                  <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
+                    <input class="form-control" name="password1" type="password" required="" placeholder="*********">
+                    <div class="show-hide"><span class="show">                         </span></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Confirm Password</label>
+                  <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
+                    <input class="form-control" name="password2" type="password" required="" placeholder="*********">
+                    <div class="show-hide"><span class="show">                         </span></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                <label class="col-form-label">Account Type</label>
+                        <select class="form-control form-control-success btn-square" name="account_type" id="account_type">
+                          <option value="candidate">Candidate</option>
+							             <option value="recruiter">Recruiter</option>
+                           <option value="company">Company</option>
+                        </select>
+                    </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                    <input id="checkbox1" type="checkbox">
+                    <label class="text-muted" for="checkbox1">Agree with <span>Privacy Policy                   </span></label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button style="width: 100%;" class="btn btn-primary btn-block" type="submit">Create Account</button>
+                </div>
+                
+               
+                <p>Already have an account?<a class="ms-2" href="{% url 'app_user:sign_in' %}">Sign in</a></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

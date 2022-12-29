@@ -1,0 +1,168 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+{% include 'app_user/header.html' %}
+
+
+<style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+    {% include 'app_user/header.html' %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            
+              
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-12">
+
+                  
+                    <h4 class="card-title mb-0" style="text-align:center">Take Quiz</h4>
+                    <br><br>
+                  <form class="card" method="post">
+                     
+                    {% csrf_token %}
+                    {% if counts > 0 %}
+                      {% for item, count in quiz_questions %}
+                    <div class="card-header pb-0">
+                    
+                     
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div class="card bg-primary">
+                  <div class="card-body">
+                    <div class="media faq-widgets">
+                      <div class="media-body">
+                        <h5>Q{{ count }}</h5>
+                        <p>{{ item.title}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                          </div>
+                        
+                        <div class="row g-3">
+                        <div class="col-md-6 mb-2">
+                         <div class="radio radio-primary">
+                            <input id="{{ item.answer_a }}" type="radio"  name="selected_answer_{{ count }}" value="{{ count }}_a">
+                            <label class="mb-0" for="{{ item.answer_a }}">{{ item.answer_a }}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="radio radio-primary">
+                            <input id="{{ item.answer_b }}" type="radio" name="selected_answer_{{ count }}" value="{{ count }}_b">
+                            <label class="mb-0" for="{{ item.answer_b }}">{{ item.answer_b }}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="radio radio-primary">
+                            <input id="{{ item.answer_c }}" type="radio"name="selected_answer_{{ count }}" value="{{ count }}_c">
+                            <label class="mb-0" for="{{ item.answer_c }}">{{ item.answer_c }}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                          <div class="radio radio-primary">
+                            <input id="{{ item.answer_d }}" type="radio" name="selected_answer_{{ count }}" value="{{ count }}_d">
+                            <label class="mb-0" for="{{ item.answer_d }}">{{ item.answer_d }}</label>
+                          </div>
+                      </div>
+                    </div>
+
+                       
+
+
+                      </div>
+                       </div>
+
+                       {% endfor %}
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      
+                      <button style="width: 100%;" class="btn btn-primary" type="submit">Submit</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                {% else %}
+             <div class="col-lg-12" style="background-color: #f5f5f5; margin-bottom:">
+                <br><br>
+                
+                    <div class="col-lg-10" style="align-items: center; margin: auto;">
+                        <div class="section-title" style="align-items: center;"> 
+                             <p style="color: red;">No questions yet!, Sorry! <a href="{% url 'main:index' }%"> ...Back Home</a></p>
+                        </div>
+                    </div>
+            </div>
+
+        {% endif %}
+                
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+{% endblock %}

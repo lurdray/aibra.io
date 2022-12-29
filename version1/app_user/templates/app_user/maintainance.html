@@ -1,0 +1,27 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!-- Loader ends-->
+    <!-- Maintenance start-->
+    <section class="maintenance-sec">
+      <div class="page-wrapper">
+        <div class="error-wrapper maintenance-bg">
+          <div class="container">
+            <ul class="maintenance-icons">
+              <li><i class="fa fa-cog"></i></li>
+              <li><i class="fa fa-cog"></i></li>
+              <li><i class="fa fa-cog"></i></li>
+            </ul>
+            <div class="maintenance-heading">
+              <h2 class="headline">MAINTENANCE</h2>
+            </div>
+            <h4 class="sub-content">This page is currently under maintainance <br> Please check back in a bit</h4>
+            <div><a class="btn btn-primary btn-lg text-light" href="/app/">BACK TO HOME PAGE</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Maintenance end-->
+    {% endblock %}

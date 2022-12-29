@@ -1,0 +1,147 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+{% include 'app_user/header.html' %}
+
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>My Applications</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Job</li>
+                    <li class="breadcrumb-item active">My Applications</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row learning-block">
+              <div class="col-xl-12 col-md-12 ">
+                <div class="row">
+                	{% for item in my_applications %}
+                  <div class="col-xl-6 col-sm-6">
+                    <div class="card">
+                      <div class="blog-box blog-list row">
+                        <div class="col-xl-5 col-12">
+                          {% if item.app_user.agency_logo %}<img class="img-fluid sm-100-w" src="{{ item.app_user.agency_logo.url }}" alt="">{% endif %}</div>
+                        <div class="col-xl-6 col-12">
+                          <div class="blog-details">
+                            <div class="blog-date">{{ item.pub_date }}</div><a href="learning-detailed.html">
+                              <h6 style="text-transform:capitalize;">{{ item.title }}</h6></a>
+                            <div class="blog-bottom-content">
+                              <ul class="blog-social">
+                                <li style="text-transform:capitalize;">{{ item.app_user.agency_name }}</li>
+                                <li ><a href="{% url 'job:job_detail' item.id %}">View</a></li>
+                              </ul>
+                              <hr>
+                              <p class="mt-0" style="text-transform:capitalize;">{{ item.description }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
+
+                  
+                  
+                  
+                  
+                  
+                  
+                 
+              
+                        
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+
+            
+
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+{% endblock %}
+
+		<!-- 
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">My Applications.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	
+						  	<div class="col-lg-4">
+						  		<h3>Sent Applications:</h3>
+						  		{% for item in my_applications %}
+						  			<a href="{% url 'job:job_detail' item.id %}">{{ item.title }}</a><br />
+						  		{% endfor %}
+						  	</div>
+
+
+						  </div>
+						</div>
+						
+						<div class="box-footer">
+						  Footer
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+content -->
+	  
+
+
+
+

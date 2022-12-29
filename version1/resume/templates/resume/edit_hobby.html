@@ -1,0 +1,217 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    {% include 'app_user/header.html' %}
+    <style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #246956; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Add Hobby</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Hobby</li>
+                    <li class="breadcrumb-item active">Add Hobby</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+              	<div class="col-xl-8">
+
+                  <form class="card" method="post">
+                  	{% csrf_token %}
+                    <div class="card-header pb-0">
+                    <div class="u-pearls-xs row mb-5">
+
+                      <div class="u-pearl current col-3"><span class="u-pearl-number">5</span><span class="u-pearl-title"><a href="{% url 'resume:add_skill' %}">Skill</a></span></div>
+                      <div class="u-pearl current col-3"><span class="u-pearl-number">6</span><span class="u-pearl-title"><a href="{% url 'resume:add_project' %}">Project</a></span></div>
+                      <div class="u-pearl done col-3"><span class="u-pearl-number">7</span><span class="u-pearl-title"><a href="{% url 'resume:add_hobby' %}">Hobby</a></span></div>
+                      <div class="u-pearl  col-3"><span class="u-pearl-number">8</span><span class="u-pearl-title"><a href="{% url 'resume:add_award' %}">Awards</a></span></div>
+                    </div>
+                      <h4 class="card-title mb-0">Hobby</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12 mb-2">
+                          <div>
+                            <label class="form-label">Hobby</label>
+                            <input name="hobby" class="form-control digits" type="text" data-language="en" data-multiple-dates-separator=", " data-position="bottom left" value="{{ hobby.hobby }}">
+                          </div>
+
+                      </div>
+
+                      </div>
+                       </div>
+                    
+                    
+                    <div class="card-footer card-body btn-showcase">
+                      
+                      <!--<a class="btn btn-secondary" href="{% url 'resume:update_resume3' %}">Next</a>
+                      <a class="btn btn-primary" href="{% url 'app_user:app' %}">Skip</a>-->
+                      <button style="width: 100%" class="btn btn-primary" type="submit">Done ({{ app_user.resume.resume_cent }}%).</button>
+                    
+                    </div>
+                  </form>
+                </div>
+                <div class="col-xl-4">
+                  <div class="card">
+                    <div class="card-header pb-0">
+                      <h4 class="card-title mb-0">My Hobbies</h4>
+                      <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                       <form>
+                        {% if app_user.resume.hobbies.all %}
+
+                          {% for item in app_user.resume.hobbies.all %}
+                           
+                                <a href="{% url 'resume:edit_hobby' item.id %}"><button class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i>{{ item.hobby }}</button></a>
+                              
+                          {% endfor %}
+                          <p>Click on desired fields to Update</p>
+                        {% else %}
+                          <p>Sorry, nothing here to see!</p>
+                        {% endif %}
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+{% endblock %}
+
+
+		<!-- 
+		<section class="content">
+			<div class="row">
+				<div class="col-12">
+					<div class="box">
+						<div class="box-header with-border">
+						  <h4 class="box-title">Add Hobby.</h4>
+						</div>
+						<div class="box-body">
+						  <div class="row">
+						  	<div class="col-lg-2">
+						  		
+						  	</div>
+						  	<div class="col-lg-8">
+						  		<form method="post">
+						  			{% csrf_token %}
+						  			
+						  			Hobby
+						  			<input type="text" name="hobby"><br /><br />
+
+						  			<button type="submit">Submit.</button>
+						  			
+						  		</form>
+						  			
+						  		
+						  	</div>
+						  	<div class="col-lg-2">
+						  		<a href="{% url 'resume:update_resume1' %}">Opening Statement</a><br />
+						  		<a href="{% url 'resume:update_resume2' %}">Experience</a><br />
+						  		<a href="{% url 'resume:add_career' %}">Career</a><br />
+						  		<a href="{% url 'resume:add_education' %}">Education</a><br />
+						  		<a href="{% url 'resume:add_skill' %}">Skill</a><br />
+
+						  		<a href="{% url 'resume:add_project' %}">Project</a><br />
+						  		<a href="{% url 'resume:add_hobby' %}">Hobby</a><br />
+						  		<a href="{% url 'resume:add_award' %}">Awards</a><br />
+						  		<a href="{% url 'resume:add_referee' %}">Referee</a><br />
+						  	</div>
+
+						  </div>
+						</div>
+						
+						<div class="box-footer">
+						  Footer
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		content -->
