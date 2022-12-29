@@ -87,6 +87,7 @@ def IndexView(request):
 
 def SearchJobView(request, query_type, query):
     app_user = AppUser.objects.get(user__pk=request.user.id)
+    query = query.replace("%20", " ")
     if request.method == "POST":
         pass
 

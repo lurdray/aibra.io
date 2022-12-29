@@ -23,6 +23,7 @@ from django.contrib.auth.decorators import login_required
 
 import random
 import string
+from job.models import Job
 
 def ray_randomiser(length=6):
     landd = string.ascii_letters + string.digits
@@ -260,13 +261,40 @@ def SignOutView(request):
 
 
 def AppView(request):
+    #app_user = AppUser.objects.get(user__pk=request.user.id)
+    jobs = Job.objects.all().order_by('-pub_date')
+
+    job_types = set()
+    countries = set()
+    titles = set()
+    categories = set()
+
+    for item in jobs:
+        job_types.add(item.job_type)
+        countries.add(item.country)
+        titles.add(item.title)
+        categories.add(item.category)
+
     if request.method == "POST":
-        pass
+        location = request.POST.get("location")
+        job_type = request.POST.get("job_type")
+        category = request.POST.get("category")
+
+        job = Job.objects.filter(job_type=job_type, country=location.replace("%20", " "), category=category)
+
+        context = {"jobs": jobs,
+        "job_types": job_types, "countries": countries,
+        "titles": titles, "categories": categories}
+
+        return render(request, "app_user/search_job.html", context )
 
 
     else:
 
-        context = {}
+        context = {"jobs": jobs,
+        "job_types": job_types, "countries": countries,
+        "titles": titles, "categories": categories}
+
         return render(request, "app_user/app2.html", context )
 
 

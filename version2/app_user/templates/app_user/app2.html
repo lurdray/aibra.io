@@ -21,29 +21,28 @@
                             <div class="twm-bnr-discription">Type your keyword, then click search to find your perfect job.</div>
 
                             <div class="twm-bnr-search-bar">
-                                <form>
+                                <form method="post">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <!--Title-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
                                             <label>What</label>
-                                            <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-Job_Title" data-bv-field="size">
-                                                <option disabled selected value="">Select Category</option>
-                                                <option selected>Job Title</option>
-                                                <option>Web Designer</option>
-                                                <option>Developer</option>
-                                                <option>Acountant</option>
+                                            <select name="category" class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-Job_Title" data-bv-field="size">
+                                                <option  value="all" selected>All Categories</option>
+                                                {% for item in categories %}
+                                                    <option value="{{ item }}">{{ item }}</option>
+                                                {% endfor %} 
                                             </select>
                                         </div>
 
                                         <!--All Category-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                            <label>Type</label>
-                                            <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-All_Category" data-bv-field="size">
-                                                <option disabled selected value="">Select Category</option>
-                                                <option selected>All Category</option>
-                                                <option>Web Designer</option>
-                                                <option>Developer</option>
-                                                <option>Acountant</option>
+                                            <label>Job Type</label>
+                                            <select name="job_type" class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-All_Category" data-bv-field="size">
+                                                <option  value="all" selected>All Categories</option>
+                                                {% for item in job_types %}
+                                                    <option value="{{ item }}">{{ item }}</option>
+                                                {% endfor %} 
                                             </select>
                                         </div>
 
@@ -51,14 +50,14 @@
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
                                             <label>Location</label>
                                             <div class="twm-inputicon-box">
-                                                <input name="username" type="text" required class="form-control" placeholder="Search...">
+                                                <input name="location" type="text" required class="form-control" placeholder="Search..." required>
                                                 <i class="twm-input-icon fas fa-map-marker-alt"></i>
                                             </div>
                                         </div>
 
                                         <!--Find job btn-->
                                         <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                            <button type="button" class="site-button" style="background-color:#24695c">Find Job</button>
+                                            <button type="submit" class="site-button" style="background-color:#24695c">Find Job</button>
                                         </div>
 
                                     </div>

@@ -39,26 +39,6 @@
                                                                             
                                     <form method="post">
                                         
-
-                                        <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4">Category</h4>
-
-                                            <select class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
-                                                <option selected>All Category</option>
-                                                <option>Web Designer</option>
-                                                <option>Developer</option>
-                                                <option>Acountant</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4">Category</h4>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Job Title or Keyword">
-                                                <button class="btn" type="button"><i class="feather-search"></i></button>
-                                            </div>
-                                        </div>
-
                                         <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">Location</h4>
                                             <div class="input-group">
@@ -66,84 +46,47 @@
                                                 <button class="btn" type="button"><i class="feather-map-pin"></i></button>
                                             </div>
                                         </div>
-
-                                        <div class="twm-sidebar-ele-filter">
-                                            <h4 class="section-head-small mb-4">Category</h4>
-                                            <ul>
-                                                {% if categories %}
-                                                {% for item in categories %}
-                                                <li>
-                                                    <a href="{% url 'job:search_job' 'category' item %}">
-                                                    <div class=" form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">{{ item }}</label>
-                                                    </div>
-                                                    
-                                                </a>
-                                                </li>
-                                                {% endfor %}
-                                                {% else %}
-
-                                                {% endif %}
-
-                                                
-
-                                            </ul>
-                                        </div>
-
-                                        <div class="twm-sidebar-ele-filter">
+                                        
+                                        <div class="widget tw-sidebar-tags-wrap">
                                             <h4 class="section-head-small mb-4">Job Types</h4>
-                                            <ul>
-                                                {% if job_types %}
+                                            
+                                            <div class="tagcloud">
                                                 {% for item in job_types %}
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio1">
-                                                        <label class="form-check-label" for="exampleradio1">{{ item }}</label>
-                                                    </div>
-                                                </li>
+                                                    <a href="{% url 'job:search_job' 'job_type' item %}">{{ item }}</a>
                                                 {% endfor %}
-                                                {% else %}
-
-                                                {% endif %}
-                                                
-
-                             
-                                            </ul>
+                                            </div>
                                         </div>
 
-                                        <div class="twm-sidebar-ele-filter">
-                                            <h4 class="section-head-small mb-4">Type of employment</h4>
-                                            <ul>
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="Freelance1">
-                                                        <label class="form-check-label" for="Freelance1">Freelance</label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="FullTime1">
-                                                        <label class="form-check-label" for="FullTime1">Full Time</label>
-                                                    </div>
-                                                </li>
+                                        <div class="widget tw-sidebar-tags-wrap">
+                                            <h4 class="section-head-small mb-4">By Country</h4>
+                                            {% if countries %}
+                                                <div class="tagcloud">
+                                                    {% for item in countries %}
+                                                        <a href="{% url 'job:search_job' 'country' item %}">{{ item }}</a>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                            <div class="tagcloud">
+                                                Nothing yet!
+                                            </div>
+                                            {% endif %}
 
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="Intership1">
-                                                        <label class="form-check-label" for="Intership1">Intership</label>
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="Part-Time1">
-                                                        <label class="form-check-label" for="Part-Time1">Part Time</label>
-                                                    </div>
-                                                </li>
-                             
-                                            </ul>
                                         </div>
+
+                                        <div class="form-group mb-4">
+                                            <h4 class="section-head-small mb-4">Category</h4>
+                                            {% if categories %}
+                                                {% for item in categories %}
+                                                <a href="{% url 'job:search_job' 'category' item %}"><button type="submit" class="btn btn-outline-primary mb-2" type="button"><i class="icofont icofont-star-shape"></i> {{ item }}</button></a>
+                                                {% endfor %}
+                                            {% else %}
+
+                                            {% endif %}
+                                        </div>
+
+                                        
+
+                                        
                                         
                                     </form>
                                     
