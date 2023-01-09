@@ -8,6 +8,7 @@ urlpatterns = [
 
 	path("sign-in/", views.SignInView, name="sign_in"),
 	path("sign-up/", views.SignUpView, name="sign_up"),
+	path("sign-up/with-metamask/", views.SignUpView2, name="sign_up2"),
 	path("maintain/", views.MaintainView, name="maintain"),
 	path("sign-up/complete/", views.CompleteSignUpView, name="complete_sign_up"),
 	path("sign-out/", views.SignOutView, name="sign_out"),

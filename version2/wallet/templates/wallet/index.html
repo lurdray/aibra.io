@@ -56,7 +56,14 @@
                                                  <p style="text-align: center;"> <img width="50px" src="https://s2.coinmarketcap.com/static/img/coins/64x64/11079.png"></p>
                                                  <div class="twm-media">
                                                  
-                                                 <div class="twm-candidates-tag"><span>{{ app_user.wallet_address }}</span></div>
+                                                
+                                                 <div class="twm-candidates-tag"><span>
+                                                    {% if domain_name %}
+                                                        {{ domain_name }}
+                                                    {% else %}
+                                                        {{ app_user.wallet_address }}
+                                                    {% endif %}
+                                                </span></div>
 
                                              </div>
                                              <br>

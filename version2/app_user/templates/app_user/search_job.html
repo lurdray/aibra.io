@@ -40,24 +40,40 @@
                                     <div class="twm-media">
                                         <img src="{{ item.app_user.agency_logo.url }}" alt="#">
                                     </div>
-                                    <span class="twm-job-post-duration">1 days ago</span>
-                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                    <span class="twm-job-post-duration">{{ item.pub_date }}</span>
+                                    <div class="twm-jobs-category green"><span class="twm-bg-green">{{ item.job_type }}</span></div>
                                     <div class="twm-mid-content">
                                         <a href="{% url 'job:job_detail' item.id %}" class="twm-job-title">
                                             <h4>{{ item.title }}</h4>
                                         </a>
                                         <p class="twm-job-address">{{ item.description|truncatewords:20 }}...</p>
-                                        <a href="#" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                        <a target="_blank" href="{{ item.website }}" class="twm-job-websites site-text-primary">{{ item.website }}</a>
                                     </div>
                                     <div class="twm-right-content">
                                         
                                         <div class="twm-jobs-amount">${{ item.salary }} <span>/ Month</span></div>
-                                        <a href="#" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                        <a href="{% url 'job:job_detail' item.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
+
+                    <script type="text/javascript">
+                        const element = document.querySelector('.twm-job-post-duration');
+const dateString = element.innerHTML;
+const date = Date.parse(dateString);
+const now = Date.now();
+const diff = date.getTime() - now;
+const days = diff / 86400000;
+const daysRounded = Math.round(days);
+
+if (daysRounded >= 0) {
+  console.log(`${daysRounded} days ago`);
+} else {
+  console.log(`in ${Math.abs(daysRounded)} days`);
+}
+                    </script>
                     
                 </div>
             </div>

@@ -40,24 +40,17 @@
                                     <form method="post">
                                         
                                         <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4">Location</h4>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search location">
-                                                <button class="btn" type="button"><i class="feather-map-pin"></i></button>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="widget tw-sidebar-tags-wrap">
-                                            <h4 class="section-head-small mb-4">Job Types</h4>
-                                            
+                                            <h4 class="section-head-small mb-4">Job Type</h4>
                                             <div class="tagcloud">
                                                 {% for item in job_types %}
                                                     <a href="{% url 'job:search_job' 'job_type' item %}">{{ item }}</a>
                                                 {% endfor %}
                                             </div>
                                         </div>
+                                        
+                                        
 
-                                        <div class="widget tw-sidebar-tags-wrap">
+                                        <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">By Country</h4>
                                             {% if countries %}
                                                 <div class="tagcloud">
@@ -92,91 +85,108 @@
                                     
                                 </div>
 
-                                <div class="widget tw-sidebar-tags-wrap">
-                                    <h4 class="section-head-small mb-4">Tags</h4>
-                                    
-                                    <div class="tagcloud">
-                                        <a href="job-list.html">General</a>
-                                        <a href="job-list.html">Jobs </a>
-                                        <a href="job-list.html">Payment</a>                                            
-                                        <a href="job-list.html">Application </a>
-                                        <a href="job-list.html">Work</a>
-                                        <a href="job-list.html">Recruiting</a>
-                                        <a href="job-list.html">Employer</a>
-                                        <a href="job-list.html">Income</a>
-                                        <a href="job-list.html">Tips</a>
-                                    </div>
-                                </div>
+                                
 
                                 
                             </div>
 
-                            <div class="twm-advertisment" style="background-image:url(images/add-bg.jpg);">
-                               <div class="overlay"></div>
-                               <h4 class="twm-title">Recruiting?</h4>
-                               <p>Get Best Matched Jobs On your <br>
-                                Email. Add Resume NOW!</p>
-                                <a href="about-1.html" class="site-button white">Read More</a> 
-                            </div>
+                            
 
                         </div>
 
                         <div class="col-lg-8 col-md-12">
+                            
+
                             <!--Filter Short By-->
-                            <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-                                <span class="woocommerce-result-count-left">Showing 2,150 jobs</span>
-                               
-                                <form class="woocommerce-ordering twm-filter-select" method="get">
-                                    <span class="woocommerce-result-count">Short By</span>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Most Recent</option>
-                                        <option>Freelance</option>
-                                        <option>Full Time</option>
-                                        <option>Internship</option>
-                                        <option>Part Time</option>
-                                        <option>Temporary</option>
-                                    </select>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Show 10</option>
-                                        <option>Show 20</option>
-                                        <option>Show 30</option>
-                                        <option>Show 40</option>
-                                        <option>Show 50</option>
-                                        <option>Show 60</option>
-                                    </select>
+                            <div class="  m-b30">
+                                
+                               <div class="twm-bnr-search-bar">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+
+
+                                        <!--Title-->
+                                        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+                                            <label>category</label>
+                                            <select name="category" class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-Job_Title" data-bv-field="size">
+                                                <option  value="all" selected>All Categories</option>
+                                                {% for item in categories %}
+                                                    <option value="{{ item }}">{{ item }}</option>
+                                                {% endfor %} 
+                                            </select>
+                                        </div>
+
+                                        <!--All Category-->
+                                        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+                                            <label>Job Type</label>
+                                            <select name="job_type" class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-All_Category" data-bv-field="size">
+                                                <option  value="all" selected>All Categories</option>
+                                                {% for item in job_types %}
+                                                    <option value="{{ item }}">{{ item }}</option>
+                                                {% endfor %} 
+                                            </select>
+                                        </div>
+
+                                        <!--Location-->
+                                        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+                                            <label>Location</label>
+                                            <div class="twm-inputicon-box">
+                                                <input name="location" type="text" required class="form-control" placeholder="Search..." required>
+                                                <i class="twm-input-icon fas fa-map-marker-alt"></i>
+                                            </div>
+                                        </div>
+
+                                        <!--Find job btn-->
+                                        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+                                            <button type="submit" class="site-button" style="background-color:#24695c">Find Job</button>
+                                        </div>
+
+                                    </div>
                                 </form>
+                            </div>
+
+
+
+                                
 
                             </div>
 
-                             <div class="twm-jobs-list-wrap">
-                                <ul>
-                                	{% for item in jobs %}
-                                     <li>
-                                         <div class="twm-jobs-list-style1 mb-5">
-                                             <div class="twm-media">
-                                                 <img src="{{ item.app_user.agency_logo.url }}" alt="#">
-                                             </div>
-                                             <div class="twm-mid-content">
-                                                 <a href="{% url 'job:job_detail' item.id %}" class="twm-job-title">
-                                                     <h4>{{ item.title }}<span class="twm-job-post-duration">/ {{ item.pub_date }}</span></h4>
-                                                     <h6>{{ item.app_user.agency_name }}</h6>
-                                                 </a>
-                                                 <p class="twm-job-address">{{ item.description|safe|truncatewords:19 }}</p>
-                                                 <a target="_blank" href="{{ item.website }}" class="twm-job-websites site-text-primary">{{ item.website }}</a>
-                                             </div>
-                                             <div class="twm-right-content">
-                                                 <div class="twm-jobs-category green"><span class="twm-bg-green">{{ item.job_type }}</span></div>
-                                                 <div class="twm-jobs-amount"><span>${{ item.salary }} Year</span></div>
-                                                 <a href="{% url 'job:job_detail' item.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                             </div>
-                                         </div>
-                                     </li>
-                                     {% endfor %}
-     
-                                     
-                                 </ul>
-                             </div>
+                            <div class="row">
+                                <!--Block one-->
+                                {% for item in jobs %}
+                                <div class="col-lg-6 col-md-12 m-b30">
 
+                                    <div class="twm-jobs-grid-style1">
+                                        <div class="twm-media">
+                                            <img src="{{ item.app_user.agency_logo.url }}" alt="#">
+                                        </div>
+                                        
+                                        <div class="twm-jobs-category green"><span class="twm-bg-green">{{ item.job_type }}</span></div>
+                                        <div class="twm-mid-content">
+                                            <a href="{% url 'job:job_detail' item.id %}" class="twm-job-title">
+                                                <h4>{{ item.title }}</h4>
+                                            </a>
+                                            <p class="" style="color: #2db346">{{ item.pub_date }}</p>
+                                            <p class="twm-job-address">{{ item.description|safe|truncatewords:10 }}</p>
+                                            <a target="_blank" href="{{ item.website }}" class="twm-job-websites site-text-primary">{{ item.website }}</a>
+                                        </div>
+                                        <div class="twm-right-content">
+                                            
+                                            <div class="twm-jobs-amount">${{ item.salary }} <span>/ Year</span></div>
+                                            <a href="{% url 'job:job_detail' item.id %}" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {% endfor %}
+                                
+                                
+                                </div>
+                            </div>
+
+                             
+                        <!--
                             <div class="pagination-outer">
                                 <div class="pagination-style1">
                                     <ul class="clearfix">
@@ -190,7 +200,7 @@
                                     </ul>
                                 </div>
                             </div>
-
+                        -->
                         </div>
 
                     </div>

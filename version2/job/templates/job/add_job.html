@@ -63,6 +63,22 @@
                                                             <div class="ls-inputicon-box">  
                                                                 <select class="wt-select-box selectpicker"  data-live-search="true" title="" id="j-category" data-bv-field="size" name="category">
                                                                     <option disabled selected value="">Select Category</option>
+                                                                    <option value="Software Development">Software Development</option>
+                                                                    <option value="Data Science and Analytics">Data Science and Analytics</option>
+                                                                    <option value="DevOps">DevOps</option>
+                                                                    <option value="Information Security">Information Security</option>
+                                                                    <option value="Project and Program Management">Project and Program Management</option>
+                                                                    <option value="User Experience (UX) Design">User Experience (UX) Design</option>
+                                                                    <option value="Technical Writing and Documentation">Technical Writing and Documentation</option>
+                                                                    <option value="Quality Assurance and Testing">Quality Assurance and Testing</option>
+                                                                    <option value="Network and System Administration">Network and System Administration</option>
+                                                                    <option value="Database Administration">Database Administration</option>
+                                                                    <option value="Cloud Computing">Cloud Computing</option>
+                                                                
+                                                                    <option value="Artificial intelligence and Machine Learning">Artificial intelligence and Machine Learning</option>
+                                                                    <option value="Technical Support and Customer Service">Technical Support and Customer Service</option>
+                                                                    <option value="Blockchain">Blockchain</option>
+                                                                    <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
                                                                     <option value="Accounting and Finance">Accounting and Finance</option>
                                                                     <option value="Clerical and Data Entry">Clerical &amp; Data Entry</option>
                                                                     <option value="Court Administration">Court Administration</option>
@@ -86,10 +102,11 @@
                                                             <label>Job Type</label>
                                                             <div class="ls-inputicon-box">  
                                                                 <select class="wt-select-box selectpicker"  data-live-search="true" title="" id="s-category" data-bv-field="size" name="job_type">
-                                                                    <option class="bs-title-option" value="">Select Category</option>
+                                                                    <option class="bs-title-option" value="">Select Job Type</option>
                                                                     <option value="Full Time">Full Time</option>
                                                                     <option value="Freelance">Freelance</option>
                                                                     <option value="Part Time">Part Time</option>
+                                                                    <option value="Remote">Remote</option>
                                                                     <option value="Internship">Internship</option>
                                                                     <option value="hybrid">Hybrid</option>
                                                                     <option value="Temporary">Temporary</option>
@@ -411,6 +428,17 @@
                                                             <textarea name="description" class="form-control" rows="3" placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality."></textarea>
                                                         </div>
                                                     </div> 
+
+                                                    <!--Website-->
+                                                    <div class="col-xl-12">
+                                                        <div class="form-group">
+                                                            <label>Skills Tag</label>
+                                                            <div class="ls-inputicon-box"> 
+                                                                <input class="form-control" name="skill_tag" type="text" placeholder="e.g javascript, html, python," value="{{ job.skill_tag }}">
+                                                                <i class="fs-input-icon fa fa-user-graduate"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                     <!--Description-->
                                                     <div class="col-md-12">

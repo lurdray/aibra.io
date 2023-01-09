@@ -45,7 +45,7 @@ class Job(models.Model):
 	experience = models.CharField(max_length=120, default="none")
 	qualification = models.CharField(max_length=20, default="none", null=True)
 	responsibility = models.TextField(default="none")
-	#skill_tag = models.CharField(max_length=2000, default="no skill required", null=True)
+	skill_tag = models.CharField(max_length=2000, default="no skill required", null=True)
 	requirement = models.TextField(default="none")
 	contact_phone = models.CharField(max_length=20, default="none")
 	contact_email = models.CharField(max_length=30, default="none")

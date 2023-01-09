@@ -158,10 +158,7 @@
                                             <a href="javascript:;" class="dropdown-toggle" id="ID-ACCOUNT_dropdown" data-bs-toggle="dropdown">
                                                 <div class="user-name text-black">
                                                     <span>
-                                                        {% if app_user.profile_photo %}
-                                                            <img src="{{ app_user.profile_photo.url }}" alt="">
-                                                        {% else %}
-                                                        {% endif %}
+                                                        <img src="{{ app_user.profile_photo.url }}" alt="">
                                                     </span>{{ app_user.user.first_name }} {{ app_user.user.last_name }}
                                                 </div> 
                                             </a>

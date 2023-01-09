@@ -24,27 +24,26 @@
                                         <img src="https://aibra.io/static/main/images/aibra4.png" alt="" class="logo">
                                     </a> 
                                 </div>
-                                <div class="col-md-12">
-                                    <button class="enableEthereumButton btn" style="background-color:#D7C1B3">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/2048px-MetaMask_Fox.svg.png" alt="">
-                                        Sign In with Metamask
-                                    </button>
-                                    <div class="form-groups">
-                                        
-                                    </div>
-                                </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <p style="text-align: center;" class="center-text-or">Or</p>
-                                    </div>
-                                </div>
                                 <form method="post">
                                 {% csrf_token %}
                                 <div class="twm-log-reg-inner">
 
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <a href="{% url 'app_user:sign_up2' %}" class="log_with_google" style="background-color:#D7C1B3">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/2048px-MetaMask_Fox.svg.png" alt="">
+                                                Sign In with Metamask
+                                            </a>
+                                        </div>
+                                    </div>
 
-                                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <p style="text-align: center;" class="center-text-or">Or</p>
+                                        </div>
+                                    </div>
+
                                     <div class="twm-log-reg-head">
                                         <div class="twm-log-reg-logo">
                                             <span class="log-reg-form-title">Sign Up</span>
@@ -59,7 +58,7 @@
                                                         <div class="form-group">
                                                             <label>First Name</label>
                                                             <div class="ls-inputicon-box"> 
-                                                                <input class="form-control" name="first_name" type="text" placeholder="Devid">
+                                                                <input id="wallet_address" class="form-control" name="first_name" type="text" placeholder="Devid">
                                                                 <i class="fs-input-icon fas fa-user-tie"></i>
                                                             </div>
                                                         </div>

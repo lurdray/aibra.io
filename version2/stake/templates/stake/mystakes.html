@@ -91,7 +91,7 @@
                                             
                                             <div class="twm-jobs-amount">Unstake Date <span>{{ item.due_date }}</span></div>
                                             <a href="{% url 'staking:request_payment' item.id %}" class="twm-jobs-browse site-text-primary">Unstake</a>
-                                            <a href="{% url 'staking:stake' %}" class="twm-jobs-browse site-text-primary">Stake</a>
+                                            <a href="{% url 'staking:index' %}" class="twm-jobs-browse site-text-primary">Stake</a>
                                         </div>
                                     </div>
 
@@ -124,7 +124,7 @@
                                         </div>
                                         <div class="twm-right-content">
                                             
-                                            <a href="{% url 'staking:stake' %}" class=" ftr-nw-subcribe-btn twm-jobs-browse site-text-primary">Stake Now</a>
+                                            <a href="{% url 'staking:index' %}" class=" ftr-nw-subcribe-btn twm-jobs-browse site-text-primary">Stake Now</a>
                                         </div>
                                     </div>
 

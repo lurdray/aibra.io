@@ -228,6 +228,64 @@ def SignUpView(request):
     return render(request, "app_user/sign_up.html", context )
 
 
+
+def SignUpView2(request):
+    if request.method == "POST":
+
+        wallet_address = request.POST.get("wallet_address")
+
+        if wallet_address == "none":
+            messages.warning(request, "Sorry, connect to metamask first.")
+            return HttpResponseRedirect(reverse("app_user:sign_up"))
+
+            
+        else:
+            otp_code = ray_randomiser()
+
+            try:
+                user = User.objects.get(username=wallet_address)
+                
+            except:
+                user = User.objects.create(username=wallet_address)
+                user.set_password(otp_code)
+                user.save()
+                
+
+            try:
+                app_user = AppUser.objects.get(wallet_address=wallet_address)
+                
+            except:
+                app_user = AppUser.objects.create(user=user, wallet_address=wallet_address, account_type="candidate")
+                app_user.otp_code = otp_code
+                app_user.ec_status = True
+                app_user.status = True
+
+                resume = Resume.objects.create()
+                resume.save
+
+                app_user.resume = resume
+
+            app_user.save()
+
+            user = app_user.user
+            user.email = wallet_address
+            
+            user.save()
+
+            if user:
+                if user.is_active:
+                    login(request, user)
+
+            messages.warning(request, "Welcome onboard.")
+            return HttpResponseRedirect(reverse("job:index"))
+
+
+    else:
+        form = UserForm()
+        context = {"form": form}
+        return render(request, "app_user/sign_up2.html", context )
+
+        
 def CompleteSignUpView(request):
     app_user = AppUser.objects.get(user__pk=request.user.id)
     if request.method == "POST":
@@ -506,7 +564,7 @@ def ChangePasswordView(request):
         return render(request, "app_user/change_password.html", context)
 
 def error_404(request, exception):
-	return render(request,'app_user/404.html')
-	
+    return render(request,'app_user/404.html')
+    
 def error_500(request):
-	return render(request,'app_user/500.html')
+    return render(request,'app_user/500.html')

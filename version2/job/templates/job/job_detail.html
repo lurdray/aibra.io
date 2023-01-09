@@ -54,7 +54,7 @@
                                                     <p class="twm-job-address"><i class="feather-map-pin"></i>{{ job.address }}</p>
                                                     <div class="twm-job-self-mid">
                                                         <div class="twm-job-self-mid-left">
-                                                            <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                                            <a href="{{ job.website}}" class="twm-job-websites site-text-primary">{{ job.website}}</a>
                                                             <div class="twm-jobs-amount">${{ job.salary }} <span>/ Year</span></div>
                                                         </div>
                                                         <div class="twm-job-apllication-area">Application ends:
@@ -91,7 +91,7 @@
                                       
                                     
                                     <h4 class="twm-s-title">Requirments:</h4>
-                                    <ul class="description-list-2">
+                                    <ul class="description-list-2 req">
                                         <li>
                                             <i class="feather-check"></i>
                                             {{ job.requirement }}
@@ -100,16 +100,88 @@
 
                                     </ul>
 
-                                    <h4 class="twm-s-title">Responsabilities:</h4>
-                                    <ul class="description-list-2">
-                                        <li>
-                                            <i class="feather-check"></i>
-                                            {{ job.requirement|safe }}
-                                        </li>
-                                        
 
-                                    </ul>
-                                  
+<h4 class="twm-s-title">Responsabilities:</h4>
+<ul class="description-list-2 resp">
+  <li>
+    <i class="feather-check"></i>
+    {{ job.responsibility }}
+  </li>
+</ul>
+
+
+<script>
+  // Get the list element
+  var list = document.querySelector('.req');
+  
+  // Split the job.requirement string into an array of requirements
+  var requirements = '{{ job.requirement|escapejs }}'.split('#');
+
+  // Get the original list item element
+  var originalItem = list.querySelector('li');
+  
+  // Hide the original list item
+  originalItem.style.display = 'none';
+  
+  // Loop through the requirements array
+  for (var i = 0; i < requirements.length; i++) {
+    // Create a new list item element
+    var item = document.createElement('li');
+    
+    // Create a checkmark icon element
+    var icon = document.createElement('i');
+    icon.className = 'feather-check';
+    
+    // Create a text node with the requirement text
+    var text = document.createTextNode(requirements[i]);
+    
+    // Append the icon and text to the list item
+    item.appendChild(icon);
+    item.appendChild(text);
+    
+    // Append the list item to the list
+    list.appendChild(item);
+  }
+</script>
+
+
+
+<script>
+  // Get the list element
+  var list = document.querySelector('.resp');
+  
+  // Split the job.responsibility string into an array of responsibilities
+  var responsibilities = '{{ job.responsibility|escapejs }}'.split('#');
+  
+  // Get the original list item element
+  var originalItem = list.querySelector('li');
+  
+  // Hide the original list item
+  originalItem.style.display = 'none';
+  
+  // Loop through the responsibilities array
+  for (var i = 0; i < responsibilities.length; i++) {
+    // Create a new list item element
+    var item = document.createElement('li');
+    
+    // Create a checkmark icon element
+    var icon = document.createElement('i');
+    icon.className = 'feather-check';
+    
+    // Create a text node with the responsibility text
+    var text = document.createTextNode(responsibilities[i]);
+    
+    // Append the icon and text to the list item
+    item.appendChild(icon);
+    item.appendChild(text);
+    
+    // Append the list item to the list
+    list.appendChild(item);
+  }
+</script>
+
+
+
                                     <h4 class="twm-s-title">Share Profile</h4>
                                     <div class="twm-social-tags">
                                         <a href="{{ app_user.facebook_link}}" class="fb-clr">Facebook</a>
@@ -237,19 +309,14 @@
                                         <h4 class="section-head-small mb-4">Job Skills</h4>
                                         
                                         <div class="tagcloud">
-                                            <a href="javascript:void(0)">Html</a>
-                                            <a href="javascript:void(0)">Python</a>
-                                            <a href="javascript:void(0)">WordPress</a>                                            
-                                            <a href="javascript:void(0)">JavaScript</a>
-                                            <a href="javascript:void(0)">Figma</a>
-                                            <a href="javascript:void(0)">Angular</a>
-                                            <a href="javascript:void(0)">Reactjs</a>
-                                            <a href="javascript:void(0)">Drupal</a>
-                                            <a href="javascript:void(0)">Joomla</a>
+                                            <a href="javascript:void(0)">{{ job.skill_tag }}</a>
+                                            
                                         </div>
                                     </div>
 
                                 </div>
+
+                                
 
 
                                 <div class="twm-s-info3-wrap mb-5">
@@ -287,7 +354,7 @@
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-desktop"></i>
                                                     <span class="twm-title">Website</span>
-                                                    <div class="twm-s-info-discription">https://themeforest.net</div>
+                                                    <div class="twm-s-info-discription">{{ app_user.website }}</div>
                                                 </div>
                                             </li>
                                             <li>
@@ -327,5 +394,24 @@
      
         </div>
         <!-- CONTENT END -->
+
+<script type="text/javascript">
+
+let element = document.querySelector(".tagcloud");
+
+let content = element.textContent;
+
+let elementArray = content.split(",");
+
+let links = elementArray.map(function(element) {
+  return "<a href='javascript:void(0)'>" + element + "</a>";
+});
+
+let separatedLinks = links.join("");
+
+element.innerHTML = separatedLinks;
+
+
+</script>
 
 {% endblock %}

@@ -542,4 +542,21 @@
         </div>
         <!-- CONTENT END -->
 
+        <script type="text/javascript">
+
+let element = document.querySelector(".tagcloud");
+
+let content = element.textContent;
+
+let elementArray = content.split(",");
+
+let links = elementArray.map(function(element) {
+  return "<a href='javascript:void(0)'>" + element + "</a>";
+});
+
+let separatedLinks = links.join("");
+
+element.innerHTML = separatedLinks;
+</script>
+
 {% endblock %}

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-nqaj#e8@v*5m@y=s1$e7!1wyq8pxsywqbvhcc9qh=o(#vp2slw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["b74e-105-112-115-246.eu.ngrok.io", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -130,3 +130,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS = ["https://94e3-105-112-113-30.eu.ngrok.io"]

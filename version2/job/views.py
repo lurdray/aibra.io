@@ -31,29 +31,29 @@ def IndexView(request):
     app_user = AppUser.objects.get(user__pk=request.user.id)
     jobs = Job.objects.all().order_by('-pub_date')
 
+    job_types = set()
+    countries = set()
+    titles = set()
+    categories = set()
+
+    for item in jobs:
+        job_types.add(item.job_type)
+        countries.add(item.country)
+        titles.add(item.title)
+        categories.add(item.category)
+
     if request.method == "POST":
-        query = request.POST.get("query")
+        location = request.POST.get("location")
+        job_type = request.POST.get("job_type")
+        category = request.POST.get("category")
 
-        results = Job.objects.filter(title=query)
+        job = Job.objects.filter(job_type=job_type, country=location.replace("%20", " "), category=category)
 
-        job_types = set()
-        countries = set()
-        titles = set()
-        categories = set()
-
-        for item in jobs:
-            job_types.add(item.job_type)
-            countries.add(item.country)
-            titles.add(item.title)
-            categories.add(item.category)
-
-
-
-        context = {"app_user": app_user, "results": results, 
+        context = {"jobs": jobs,
         "job_types": job_types, "countries": countries,
         "titles": titles, "categories": categories}
 
-        return render(request, "job/search_job.html", context )
+        return render(request, "app_user/search_job.html", context )
 
 
 
@@ -87,7 +87,6 @@ def IndexView(request):
 
 def SearchJobView(request, query_type, query):
     app_user = AppUser.objects.get(user__pk=request.user.id)
-    query = query.replace("%20", " ")
     if request.method == "POST":
         pass
 
@@ -324,7 +323,8 @@ def EditJobView(request, job_id):
         experience = request.POST.get("experience")
         website = request.POST.get("website")
         job_type = request.POST.get("job_type")
-        #skill_tag = request.POST.get("skill_tag")
+        skill_tag = request.POST.get("skill_tag")
+        country = request.POST.get("country")
 
         job.title = title
         job.salary = salary
@@ -340,7 +340,8 @@ def EditJobView(request, job_id):
         job.website = website
         job.category = category
         job.job_type = job_type
-        #job.skill_tag = skill_tag 
+        job.skill_tag = skill_tag 
+        job.country = country
         job.save()
 
         messages.warning(request, "Job Updated!")
@@ -373,11 +374,11 @@ def AddJobView(request):
         deadline = request.POST.get("deadline")
         qualification = request.POST.get("qualification")
         experience = request.POST.get("experience")
-        #skill_tag = request.POST.get("skill_tag")
+        skill_tag = request.POST.get("skill_tag")
 
         job = Job.objects.create(app_user=app_user, title=title, salary=salary, category=category, address=address, country=country, description=description, job_type=job_type,
             responsibility=responsibility, requirement=requirement, contact_email=contact_email, contact_phone=contact_phone,
-            deadline=deadline, experience=experience, qualification=qualification)
+            deadline=deadline, experience=experience, qualification=qualification, skill_tag=skill_tag)
         job.save()
         
         for item in app_users[8:9]:

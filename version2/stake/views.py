@@ -16,6 +16,18 @@ from django.utils import timezone
 import datetime
 from django.contrib.auth.decorators import login_required
 
+from wallet.views import RayGetName
+
+@login_required(login_url='/app/sign-up/')
+def IndexView(request):
+    app_user = AppUser.objects.get(user__pk=request.user.id)
+
+    if app_user.user.username == app_user.wallet_address:
+        return HttpResponseRedirect(reverse("staking:stake_metamask2"))
+    else:
+        return HttpResponseRedirect(reverse("staking:stake"))
+
+
 
 @login_required(login_url='/app/sign-up/')
 def StakeView(request):
@@ -104,10 +116,128 @@ def StakeView(request):
         #data = resp["data"]
         bep_balance = requests.get("https://api.iotexchartapp.com/aibra/get-balance/%s/" % (app_user.wallet_address)).json()
         brise_balance = float(float(bep_balance["data"][0]["balance"]))
-        context = {"app_user": app_user, "brise_balance":brise_balance}
+        context = {"domain_name": RayGetName(app_user.wallet_address), "app_user": app_user, "brise_balance":brise_balance}
         return render(request, "stake/staking.html", context)
 
 
+@login_required(login_url='/app/sign-up/')
+def StakeWithMView(request):
+    app_user = AppUser.objects.get(user__pk=request.user.id)
+    if request.method == "POST":
+        amount = float(request.POST.get("amount"))
+        app_user = AppUser.objects.get(user__pk=request.user.id)
+        duration = request.POST.get("duration")
+
+        bep_balance = requests.get("https://api.iotexchartapp.com/aibra/get-balance/%s/" % (app_user.wallet_address)).json()
+
+        #return HttpResponse(str(float(bep_balance["data"][0]["balance"])))
+        if float(float(bep_balance["data"][0]["balance"])) > amount:
+            
+            sender = app_user.wallet_address
+            txn_hash = None
+            if txn_hash != None:
+                stake = Stake.objects.create(app_user=app_user, amount=amount, duration=duration)
+                stake.save()
+
+                #returns block
+                if duration == "60":
+                    returns = float(amount) + float(amount)*0.1 #25%
+                    returnsk = float(float(returns)*0.03) + float(float(amount)*0.01)
+                    returns = float(returns) - float(returnsk)
+            
+                else:
+                    returns = float(amount) + float(amount)*0.1 #25%
+                stake.returns = returns
+
+                payment_hash = txn_hash
+                stake.payment_hash = payment_hash
+                stake.payment_status = True
+                stake.amount_tax = float(float(amount)*0.01)
+                stake.returns_tax = float(float(returns)*0.03)
+                stake.total_tax = returnsk
+                stake.payment_confirmation_status = True
+                
+
+                today = timezone.now().date()
+                due_date = today + datetime.timedelta(days=int(duration))
+                stake.due_date = due_date
+
+                stake.save()
+
+                messages.warning(request, "Congratulations! you have successfully staked your asset! %s" % (txn_hash))
+                return HttpResponseRedirect(reverse("staking:my_stakes"))
+
+            else:
+                messages.warning(request, "Sorry!! your staking could not go through.(Try top-up your account.._")
+                return HttpResponseRedirect(reverse("staking:stake_metamask2"))
+
+        else:
+                messages.warning(request, "Sorry! something went wrong. (Try top-up your account.)")
+                return HttpResponseRedirect(reverse("staking:stake_metamask2"))
+
+
+    else:
+        #resp = requests.get("https://api.iotexchartapp.com/brise-get-balance/%s" % (app_user.wallet_address)).json()
+        #data = resp["data"]
+        bep_balance = requests.get("https://api.iotexchartapp.com/aibra/get-balance/%s/" % (app_user.wallet_address)).json()
+        brise_balance = float(float(bep_balance["data"][0]["balance"]))
+        context = {"app_user": app_user, "brise_balance":brise_balance}
+        return render(request, "stake/staking2.html", context)
+    
+@login_required(login_url='/app/sign-up/')
+def StakeWithM2View(request):
+    app_user = AppUser.objects.get(user__pk=request.user.id)
+    if request.method == "POST":
+        amount = float(request.POST.get("amount"))
+        txn_hash = request.POST.get("txn_hash")
+        duration = "60"
+
+        if txn_hash != "none": #it worked
+            
+            stake = Stake.objects.create(app_user=app_user, amount=amount, duration=duration)
+            stake.save()
+
+            #returns block
+            if duration == "60":
+                returns = float(amount) + float(amount)*0.1 #25%
+                returnsk = float(float(returns)*0.03) + float(float(amount)*0.01)
+                returns = float(returns) - float(returnsk)
+        
+            else:
+                returns = float(amount) + float(amount)*0.1 #25%
+            stake.returns = returns
+
+            payment_hash = txn_hash
+            stake.payment_hash = payment_hash
+            stake.payment_status = True
+            stake.amount_tax = float(float(amount)*0.01)
+            stake.returns_tax = float(float(returns)*0.03)
+            stake.total_tax = returnsk
+            stake.payment_confirmation_status = True
+            
+
+            today = timezone.now().date()
+            due_date = today + datetime.timedelta(days=int(duration))
+            stake.due_date = due_date
+
+            stake.save()
+
+            messages.warning(request, "Congratulations! you have successfully staked your asset! %s" % (txn_hash))
+            return HttpResponseRedirect(reverse("staking:my_stakes"))
+
+        else:
+            messages.warning(request, "Sorry! The transaction did not go through.")
+            return HttpResponseRedirect(reverse("staking:stake_metamask2"))
+
+
+
+    else:
+        #resp = requests.get("https://api.iotexchartapp.com/brise-get-balance/%s" % (app_user.wallet_address)).json()
+        #data = resp["data"]
+        bep_balance = requests.get("https://api.iotexchartapp.com/aibra/get-balance/%s/" % (app_user.wallet_address)).json()
+        brise_balance = float(float(bep_balance["data"][0]["balance"]))
+        context = {"domain_name": RayGetName(app_user.wallet_address), "app_user": app_user, "brise_balance":brise_balance}
+        return render(request, "stake/staking3.html", context)
 
 @login_required(login_url='/app/sign-up/')
 def MakePaymentView(request, staking_id):

@@ -12,7 +12,7 @@ class AppUser(models.Model):
 
     cprofile_status = models.BooleanField(default=False)
     cv = models.FileField(upload_to='account_files/profile_photos/', blank=True, default="default_files/default_face.jpg")
-    profile_photo = models.FileField(upload_to='account_files/profile_photos/', blank=True, null=True)
+    profile_photo = models.FileField(upload_to='account_files/profile_photos/', blank=True, default="default_files/default_face.jpg")
     address = models.TextField(default=" ")
     country = models.CharField(default=" ",max_length=100)
     postcode = models.CharField(default=" ",max_length=100, blank=True, null=True)
